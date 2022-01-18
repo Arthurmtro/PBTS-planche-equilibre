@@ -1,6 +1,6 @@
 const os = require("os");
 
-export default {
+module.exports = {
   hostname: os.hostname(),
   PORT: 8080,
 };
