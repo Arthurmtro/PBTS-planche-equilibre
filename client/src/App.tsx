@@ -16,7 +16,7 @@ export default function App() {
       <button
         onClick={() => {
           fetch(
-            "http://pied.local:8080/api/changeCylinderState?chanel=3&value=0.5"
+            "http://pied.local:8080/api/changeCylinderState?chanel=3&value=1"
           ).then(console.log);
         }}
       >
