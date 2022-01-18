@@ -1,7 +1,7 @@
 [
   {
     "id": "c1",
-    "channels": {
+    "chanels": {
       "open": 4,
       "closed": 3
     }
