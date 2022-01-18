@@ -10,8 +10,8 @@ apiRoutes.get("/hostname/", (req, res) => {
   res.send(`hostname is ${debug.hostname}`);
 });
 
-apiRoutes.get("/changeMoteurValue", async (req, res) => {
-  return await changeMoteurValue(Number(req.query.pulseLength), res);
+apiRoutes.get("/fetchCylindersInfos", async (req, res) => {
+  return await functions.fetchCylindersInfos(res);
 });
 
 apiRoutes.get("/changeCylinderState", (req, res) => {

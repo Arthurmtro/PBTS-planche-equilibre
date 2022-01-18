@@ -1,6 +1,8 @@
 const i2cBus = require("i2c-bus");
 const Pca9685Driver = require("pca9685").Pca9685Driver;
 
+const cylindersData = require("../config/cylinders.json");
+
 const options = {
   i2c: i2cBus.openSync(1),
   address: 0x40,
@@ -21,8 +23,17 @@ const sendError = (errorMessage, res) => {
     : null;
 };
 
+const fetchCylindersInfos = async (res) => {
+  try {
+    res.status(200).send(JSON.stringify(cylindersData));
+  } catch (error) {
+    return sendError(error);
+  }
+};
+
 const changeCylinderState = async (state, res) => {
   try {
+    // Shutdown all chanels for security
     pwm.allChannelsOff(() => {
       // (1er param: chanel, 2em: value 0-1)
       pwm.setDutyCycle(state.chanel, state.value);
@@ -39,4 +50,5 @@ const changeCylinderState = async (state, res) => {
 // or bundled together in an object
 module.exports = {
   changeCylinderState,
+  fetchCylindersInfos,
 };
