@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 // Config
-import debug from "../config/debug";
+const debug = require("../config/debug");
 
 // Controllers
-import { changeCylinderState } from "../controllers/api.controllers";
+const changeCylinderState =
+  require("../controllers/api.controllers").changeCylinderState;
 
 apiRoutes.get("/hostname/", (req, res) => {
   res.send(`hostname is ${debug.hostname}`);
