@@ -24,4 +24,4 @@ apiRoutes.get("/changeCylinderState", (req, res) => {
   );
 });
 
-export default apiRoutes;
+module.exports = apiRoutes;
