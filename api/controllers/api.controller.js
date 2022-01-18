@@ -23,8 +23,10 @@ const sendError = (errorMessage, res) => {
 
 const changeCylinderState = async (state, res) => {
   try {
-    // (1er param: chanel, 2em: value 0-1)
-    pwm.setDutyCycle(state.chanel, state.value);
+    pwm.allChannelsOff(() => {
+      // (1er param: chanel, 2em: value 0-1)
+      pwm.setDutyCycle(state.chanel, state.value);
+    });
 
     return res
       .status(200)
