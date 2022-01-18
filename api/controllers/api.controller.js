@@ -21,17 +21,7 @@ const sendError = (errorMessage, res) => {
     : null;
 };
 
-export const changeMoteurValue = async (value, res) => {
-  try {
-    pwm.setPulseLength(4, value, 0, (error) => console.log("error => ", error));
-
-    return res.status(200).send(`Pca9685Driver is ok`);
-  } catch (error) {
-    return sendError(error);
-  }
-};
-
-export const changeMoteurValue = async (state, res) => {
+const changeCylinderState = async (state, res) => {
   try {
     // (1er param: chanel, 2em: value 0-1)
     pwm.setDutyCycle(state.chanel, state.value);
@@ -42,4 +32,9 @@ export const changeMoteurValue = async (state, res) => {
   } catch (error) {
     return sendError(error);
   }
+};
+
+// or bundled together in an object
+module.exports = {
+  changeCylinderState,
 };
