@@ -7,13 +7,13 @@
 var app = require("../app");
 var debug = require("debug")("api:server");
 var http = require("http");
-var debug = require("../config/debug");
+var PORT = require("../config/debug").PORT;
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(debug.PORT);
+var port = normalizePort(PORT);
 app.set("port", port);
 
 /**
