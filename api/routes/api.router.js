@@ -14,6 +14,10 @@ apiRoutes.get("/fetchCylindersInfos", async (req, res) => {
   return await functions.fetchCylindersInfos(res);
 });
 
+apiRoutes.get("/fetchProfiles", async (req, res) => {
+  return await functions.fetchProfiles(res);
+});
+
 apiRoutes.get("/changeCylinderState", (req, res) => {
   console.log(req.query);
   return functions.changeCylinderState(
