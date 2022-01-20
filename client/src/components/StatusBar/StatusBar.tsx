@@ -1,19 +1,48 @@
+import styles from "./StatusBar.module.css";
+
 // Contexts
 import { useCylindersData } from "../../contexts/cylindersProdiver";
 
+// Components
+import Button from "../Button";
+import { CSSProperties } from "react";
+
 export default function StatusBar() {
   const { status, error } = useCylindersData();
+  const isPlayingProfile = false;
 
-  if (status === "loading") {
-    return <div>...</div>;
-  }
-  if (status === "error") {
-    return <div>{error!.message}</div>;
-  }
+  console.log("error :>> ", error?.message);
 
   return (
-    <div>
-      <span>Status infos : {status}</span>
-    </div>
+    <section className={styles["status-bar"]}>
+      {isPlayingProfile ? (
+        <div>
+          <Button disabled color="white">
+            En cours actuellement: PROFILE NAME
+          </Button>
+          <Button color="danger">STOP</Button>
+        </div>
+      ) : (
+        <span />
+      )}
+      <div>
+        Status infos :{" "}
+        <span
+          className={styles["status-text"]}
+          style={
+            {
+              "--status-color":
+                status === "success"
+                  ? "#1FB112"
+                  : status === "error"
+                  ? "#DF0D0D"
+                  : "var(--color-primary)",
+            } as CSSProperties
+          }
+        >
+          {status === "success" ? "Connecté" : status}
+        </span>
+      </div>
+    </section>
   );
 }

@@ -1,7 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+}
+
 :root {
   --color-primary: #8453fc;
   --color-secondary: #d3a0f8;
 
   --box-background: #f1f2f6;
   --box-border-radius: 38px;
+
+  --button-border-radius: 38px;
 }
