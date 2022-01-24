@@ -1,0 +1,16 @@
+.link {
+  width: 10rem;
+  height: 3rem;
+  box-shadow: inset 0px 4px 15px rgba(0, 0, 0, 0.2);
+
+  border-radius: var(--box-border-radius);
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link-active {
+  /* Style if active */
+}

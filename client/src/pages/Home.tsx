@@ -1,3 +1,9 @@
+import Box from "../components/Box";
+
 export default function HomePage() {
-  return <div></div>;
+  return (
+    <div>
+      <Box />
+    </div>
+  );
 }

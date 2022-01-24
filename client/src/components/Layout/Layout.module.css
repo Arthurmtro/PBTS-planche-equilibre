@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.app-content {
+  height: 100%;
+  width: calc(100% - 23rem);
+}
+
+.page-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}

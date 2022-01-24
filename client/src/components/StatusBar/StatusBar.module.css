@@ -3,12 +3,20 @@
   align-items: center;
   justify-content: space-between;
 
-  min-height: 3.5rem;
+  min-width: 100%;
+  min-height: 4rem;
 
   padding: 0 3rem;
 
   box-shadow: 0px 15px 16px rgba(0, 0, 0, 0.15);
   border-bottom-right-radius: 25px;
+}
+
+.playing-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .status-text {

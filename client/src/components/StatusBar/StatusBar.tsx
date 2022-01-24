@@ -9,14 +9,14 @@ import { CSSProperties } from "react";
 
 export default function StatusBar() {
   const { status, error } = useCylindersData();
-  const isPlayingProfile = false;
+  const isPlayingProfile = true;
 
   console.log("error :>> ", error?.message);
 
   return (
     <section className={styles["status-bar"]}>
       {isPlayingProfile ? (
-        <div>
+        <div className={styles["playing-status"]}>
           <Button disabled color="white">
             En cours actuellement: PROFILE NAME
           </Button>
