@@ -1,4 +1,7 @@
 .background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: var(--color-secondary);
   height: 200px;
   width: 1200px;
@@ -7,12 +10,10 @@
   border-radius: var(--box-border-radius);
 }
 
-.progress{
-  background: #F1F2F6 ;
+.progress {
+  background: #f1f2f6;
   height: 20px;
   width: 80%;
 
-
   border-radius: var(--box-border-radius);
-
 }
