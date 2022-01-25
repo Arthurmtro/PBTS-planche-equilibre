@@ -2,13 +2,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
   width: 15rem;
+  padding-top: 2rem;
 
   border-bottom-right-radius: 25px;
   border-top-right-radius: 25px;
 
   background: var(--color-primary);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (max-width: 1200px) {
+  .status-bar {
+    display: none;
+  }
 }
 
 .status-bar ul {

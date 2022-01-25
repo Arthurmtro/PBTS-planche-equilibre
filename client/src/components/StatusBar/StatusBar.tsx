@@ -17,8 +17,9 @@ export default function StatusBar() {
     <section className={styles["status-bar"]}>
       {isPlayingProfile ? (
         <div className={styles["playing-status"]}>
-          <Button disabled color="white">
-            En cours actuellement: PROFILE NAME
+          <Button disabled color="white" thin>
+            En cours actuellement:{" "}
+            <span className={styles["profile-title"]}>PROFILE NAME</span>
           </Button>
           <Button color="danger">STOP</Button>
         </div>
