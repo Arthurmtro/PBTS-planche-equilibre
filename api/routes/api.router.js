@@ -10,20 +10,16 @@ apiRoutes.get("/hostname/", (req, res) => {
   res.send(`hostname is ${debug.hostname}`);
 });
 
-apiRoutes.get("/fetchCylindersInfos", async (req, res) => {
+apiRoutes.get("/fetch-cylinders-infos", async (req, res) => {
   return await functions.fetchCylindersInfos(res);
 });
 
-apiRoutes.get("/fetchProfiles", async (req, res) => {
+apiRoutes.get("/fetch-profiles", async (req, res) => {
   return await functions.fetchProfiles(res);
 });
 
-apiRoutes.get("/changeCylinderState", (req, res) => {
-  console.log(req.query);
-  return functions.changeCylinderState(
-    { chanel: Number(req.query.chanel), value: Number(req.query.value) },
-    res
-  );
+apiRoutes.get("/run-profile", (req, res) => {
+  return functions.runProfileWithName(req.query.profileName, res);
 });
 
 module.exports = apiRoutes;

@@ -1,4 +1,6 @@
+const fs = require("fs");
 const Pca9685Driver = require("pca9685").Pca9685Driver;
+
 let i2cBus;
 
 const os = require("os");
@@ -16,9 +18,11 @@ const profilesData = require("../config/profiles.json");
 const options = {
   i2c: i2cBus?.openSync(1),
   address: 0x40,
-  frequency: 50,
+  frequency: 1000,
   debug: true,
 };
+
+const delay = (value) => new Promise((res) => setTimeout(res, value));
 
 const pwm =
   i2cBus &&
@@ -30,7 +34,6 @@ const pwm =
 
 const sendError = (error, res) => {
   console.log(`Errors => ${error.message}`);
-
   return res && res.status(500).json({ error: error.message ?? "Unknow" });
 };
 
@@ -50,28 +53,28 @@ const fetchProfiles = async (res) => {
   }
 };
 
-const changeCylinderState = async (state, res) => {
+const runProfileWithName = async (profileName, res) => {
   try {
-    if (!pwm) throw new Error("PWM is not initialised !");
-    // Shutdown all chanels for security
-    pwm.allChannelsOff((err) => {
-      if (err) {
-        throw new Error("Error canceling channels, ", err);
-      }
-      // (1er param: chanel, 2em: value 0-1)
-      pwm.setDutyCycle(state.chanel, state.value);
-    });
+    fs.readFile(
+      `./config/profiles/${profileName}.json`,
+      {
+        encoding: "utf8",
+        flag: "r",
+      },
+      (err, data) => {
+        if (err) throw new Error(err);
+        const config = JSON.parse(data);
 
-    return res
-      .status(200)
-      .send(`Chanel ${state.chanel} is ok : ${state.value * 100}%`);
+        res.status(200).send({ data: config });
+      }
+    );
   } catch (error) {
     return sendError(error, res);
   }
 };
 
 module.exports = {
-  changeCylinderState,
   fetchCylindersInfos,
   fetchProfiles,
+  runProfileWithName,
 };

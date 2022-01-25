@@ -1,0 +1,45 @@
+{
+  "name": "Profile 1",
+  "actions": [
+    {
+      "verrinName": "Verrin1",
+      "forwardId": 4,
+      "backwardId": 5,
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 0 },
+        { "action": "forward", "speed": 1, "time": 15000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 3000 },
+        { "action": "backward", "speed": 1, "time": 1500 },
+        { "action": "forward", "speed": 1, "time": 4000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 2000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 3000 },
+        { "action": "backward", "speed": 1, "time": 1500 },
+        { "action": "forward", "speed": 1, "time": 4000 },
+        { "action": "backward", "speed": 1, "time": 1000 }
+      ]
+    },
+    {
+      "verrinName": "Verrin2",
+      "forwardId": 2,
+      "backwardId": 3,
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 0 },
+        { "action": "forward", "speed": 1, "time": 15000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 3000 },
+        { "action": "backward", "speed": 1, "time": 1500 },
+        { "action": "forward", "speed": 1, "time": 4000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 2000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 3000 },
+        { "action": "backward", "speed": 1, "time": 1500 },
+        { "action": "forward", "speed": 1, "time": 4000 },
+        { "action": "backward", "speed": 1, "time": 1000 }
+      ]
+    }
+  ]
+}
