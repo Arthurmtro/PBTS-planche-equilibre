@@ -4,7 +4,9 @@ const Pca9685Driver = require("pca9685").Pca9685Driver;
 let i2cBus;
 
 const os = require("os");
-if (os.arch() == "arm") {
+
+console.log('os.arch()  :>> ', os.arch() );
+if (os.arch() === "arm" || os.arch() === "arm64" ) {
   // raspberrypi
   i2cBus = require("i2c-bus");
 } else {
@@ -96,9 +98,13 @@ const runProfileWithName = async (profileName, res) => {
 
         profile.actions.map((action) => {
           let verrin = cylindersData.find((x) => x.name === action.verrinName);
+
+          console.log('cylindersData :>> ', cylindersData);
+
+
           executeProfile(action, verrin).then(() =>
             console.log(
-              `Profil ${profilesJson.name} pour le Verrin "${action.verrinName}" terminé !`
+              `Profil ${profile.name} pour le Verrin "${action.verrinName}" terminé !`
             )
           );
         });
