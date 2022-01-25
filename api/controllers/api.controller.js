@@ -13,7 +13,7 @@ if (os.arch() == "arm") {
 }
 
 const cylindersData = require("../config/cylinders.json");
-const profilesData = require("../config/profiles.json");
+console.log("cylindersData", cylindersData);
 
 const options = {
   i2c: i2cBus?.openSync(1),
@@ -55,6 +55,8 @@ const fetchProfiles = async (res) => {
 
 const runProfileWithName = async (profileName, res) => {
   try {
+    if (!pwm) throw new Error("PWM is not initialised !");
+
     fs.readFile(
       `./config/profiles/${profileName}.json`,
       {
@@ -63,9 +65,45 @@ const runProfileWithName = async (profileName, res) => {
       },
       (err, data) => {
         if (err) throw new Error(err);
-        const config = JSON.parse(data);
+        const profile = JSON.parse(data);
 
-        res.status(200).send({ data: config });
+        function executeProfile(action, verrin) {
+          let commands = action.commands;
+          return commands.reduce(
+            (lastProm, val) =>
+              lastProm.then((resultArrSoFar) =>
+                delay(val.time)
+                  .then(() => {
+                    console.log("Execution de la séquence");
+                    pwm.channelOff(verrin.forwardId);
+                    pwm.channelOff(verrin.backwardId);
+                    switch (val.action) {
+                      case "forward":
+                        pwm.setDutyCycle(verrin.forwardId, val.speed);
+                        break;
+
+                      case "backward":
+                        pwm.setDutyCycle(verrin.backwardId, val.speed);
+                        break;
+                    }
+                    return val;
+                  })
+                  .then((result) => [...resultArrSoFar, result])
+              ),
+            Promise.resolve([])
+          );
+        }
+
+        profile.actions.map((action) => {
+          let verrin = cylindersData.find((x) => x.name === action.verrinName);
+          executeProfile(action, verrin).then(() =>
+            console.log(
+              `Profil ${profilesJson.name} pour le Verrin "${action.verrinName}" terminé !`
+            )
+          );
+        });
+
+        res.status(200).send({ profile });
       }
     );
   } catch (error) {

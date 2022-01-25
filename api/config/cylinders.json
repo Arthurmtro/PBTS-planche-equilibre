@@ -1,9 +1,12 @@
 [
   {
-    "id": "c1",
-    "chanels": {
-      "open": 4,
-      "closed": 3
-    }
+    "name": "Verrin1",
+    "forwardId": 4,
+    "backwardId": 5
+  },
+  {
+    "name": "Verrin2",
+    "forwardId": 2,
+    "backwardId": 3
   }
 ]
