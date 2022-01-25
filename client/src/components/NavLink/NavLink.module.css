@@ -1,5 +1,5 @@
 .link {
-  width: 10rem;
+  width: 11rem;
   height: 3rem;
   box-shadow: inset 0px 4px 15px rgba(0, 0, 0, 0.2);
 
@@ -7,10 +7,37 @@
   text-align: center;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem 0;
+
+  color: #fafafa;
+}
+
+.link:hover {
+  box-shadow: inset 0px 2px 15px rgba(0, 0, 0, 0.3);
 }
 
 .link-active {
-  /* Style if active */
+  width: 11rem;
+  height: 3rem;
+  box-shadow: inset 0px 4px 15px rgba(0, 0, 0, 0.2);
+
+  border-radius: var(--box-border-radius);
+  text-align: center;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem 0;
+
+  color: var(--color-secondary);
+}
+
+.link-active svg {
+  stroke: var(--color-secondary);
 }

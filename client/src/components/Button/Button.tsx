@@ -5,12 +5,14 @@ interface IButtonParams {
   children?: ReactNode;
   color?: "primary" | "secondary" | "white" | "danger";
   disabled?: boolean;
+  thin?: boolean;
 }
 
 export default function Button({
   children,
   color = "primary",
   disabled = false,
+  thin = false,
 }: IButtonParams) {
   return (
     <button
@@ -27,6 +29,7 @@ export default function Button({
               ? "#DF0D0D"
               : "#ffff",
           "--button-color": color === "white" ? "#000000" : "#f7f7f7",
+          "--font-weight": thin ? "thin" : "bold",
         } as CSSProperties
       }
     >
