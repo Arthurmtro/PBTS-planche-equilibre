@@ -1,0 +1,18 @@
+.background {
+  background: var(--color-secondary);
+  height: 200px;
+  width: 1200px;
+
+  box-shadow: 0px 16px 25px rgba(0, 0, 0, 0.2);
+  border-radius: var(--box-border-radius);
+}
+
+.progress{
+  background: #F1F2F6 ;
+  height: 20px;
+  width: 80%;
+
+
+  border-radius: var(--box-border-radius);
+
+}

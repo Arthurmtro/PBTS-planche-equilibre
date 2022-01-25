@@ -70,7 +70,7 @@ export default function NavLink({ label, path, icon }: INavLinkParams) {
           />
         </svg>
       ) : null}
-      <Link to={path} activeClassName={styles["link-active"]}>
+      <Link to={path} >
         {label}
       </Link>
     </li>
