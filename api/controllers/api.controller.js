@@ -120,6 +120,7 @@ const runProfileWithId = async (profileId, res) => {
                         pwm.setDutyCycle(verrin.backwardId, val.speed);
                         break;
                     }
+                    console.log("isActive ======>> ", isActive);
                     return val;
                   })
                   .then((result) => [...resultArrSoFar, result])
