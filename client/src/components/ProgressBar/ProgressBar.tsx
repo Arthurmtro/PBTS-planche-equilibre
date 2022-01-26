@@ -12,14 +12,20 @@ export default function Box() {
     if (!runningProfile) return;
 
     const interval = setInterval(function () {
-      setEcouledTime((prev) => (prev += 1000));
-    }, 1000);
+      setEcouledTime((prev) => (prev += 100));
+    }, 100);
 
     if (ecouledTime >= runningProfile.duration) {
       clearInterval(interval);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runningProfile]);
+
+  useEffect(() => {
+    console.log("ecouledTime :>> ", ecouledTime);
+    console.log("runningProfile.duration :>> ", runningProfile?.duration);
+  }, [ecouledTime]);
 
   return (
     <div className={styles.background}>
