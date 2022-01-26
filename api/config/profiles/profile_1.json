@@ -6,54 +6,39 @@
       "cylinderId": "Verrin1",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
-        { "action": "forward", "speed": 1, "time": 15000 },
+        { "action": "forward", "speed": 1, "time": 8000 },
         { "action": "backward", "speed": 1, "time": 1000 },
         { "action": "forward", "speed": 1, "time": 3000 },
         { "action": "backward", "speed": 1, "time": 1500 },
         { "action": "forward", "speed": 1, "time": 4000 },
         { "action": "backward", "speed": 1, "time": 1000 },
-        { "action": "forward", "speed": 1, "time": 2000 },
-        { "action": "backward", "speed": 1, "time": 1000 },
-        { "action": "forward", "speed": 1, "time": 3000 },
-        { "action": "backward", "speed": 1, "time": 1500 },
-        { "action": "forward", "speed": 1, "time": 4000 },
-        { "action": "backward", "speed": 1, "time": 1000 }
+        { "action": "forward", "speed": 1, "time": 2000 }
       ]
     },
     {
       "cylinderId": "Verrin2",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
-        { "action": "forward", "speed": 1, "time": 15000 },
+        { "action": "forward", "speed": 1, "time": 8000 },
         { "action": "backward", "speed": 1, "time": 1000 },
         { "action": "forward", "speed": 1, "time": 3000 },
         { "action": "backward", "speed": 1, "time": 1500 },
         { "action": "forward", "speed": 1, "time": 4000 },
         { "action": "backward", "speed": 1, "time": 1000 },
-        { "action": "forward", "speed": 1, "time": 2000 },
-        { "action": "backward", "speed": 1, "time": 1000 },
-        { "action": "forward", "speed": 1, "time": 3000 },
-        { "action": "backward", "speed": 1, "time": 1500 },
-        { "action": "forward", "speed": 1, "time": 4000 },
-        { "action": "backward", "speed": 1, "time": 1000 }
+        { "action": "forward", "speed": 1, "time": 2000 }
       ]
     },
     {
       "cylinderId": "Verrin3",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
-        { "action": "forward", "speed": 1, "time": 15000 },
+        { "action": "forward", "speed": 1, "time": 8000 },
         { "action": "backward", "speed": 1, "time": 1000 },
         { "action": "forward", "speed": 1, "time": 3000 },
         { "action": "backward", "speed": 1, "time": 1500 },
         { "action": "forward", "speed": 1, "time": 4000 },
         { "action": "backward", "speed": 1, "time": 1000 },
-        { "action": "forward", "speed": 1, "time": 2000 },
-        { "action": "backward", "speed": 1, "time": 1000 },
-        { "action": "forward", "speed": 1, "time": 3000 },
-        { "action": "backward", "speed": 1, "time": 1500 },
-        { "action": "forward", "speed": 1, "time": 4000 },
-        { "action": "backward", "speed": 1, "time": 1000 }
+        { "action": "forward", "speed": 1, "time": 2000 }
       ]
     }
   ]

@@ -7,35 +7,32 @@ import { useEffect, useState } from "react";
 let interval: NodeJS.Timer;
 
 export default function Box() {
-  const { runningProfile } = useRunningProfile();
+  const { runningProfile, setRunningProfile } = useRunningProfile();
   const [ecouledTime, setEcouledTime] = useState(0);
+  const [startedTime, setStartedTime] = useState(0);
 
   useEffect(() => {
     if (!runningProfile) return;
 
-    interval = setInterval(() => {
-      setEcouledTime((prev) => (prev += 100));
-    }, 100);
+    const minute = 1000 * 60;
+    const d = new Date();
+    setStartedTime(Math.round(d.getTime() / minute));
 
-    if (ecouledTime >= runningProfile.duration) {
-      console.log("sheesh");
-      clearInterval(interval);
-      setEcouledTime(0);
-    }
+    interval = setInterval(() => {
+      const minute = 1000 * 60;
+      const d = new Date();
+      setEcouledTime(Math.round(d.getTime() / minute) - startedTime);
+    }, 100);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runningProfile]);
 
   useEffect(() => {
     if (!runningProfile) return;
-
-    console.log("ecouledTime :>> ", ecouledTime);
-    console.log("runningProfile.duration :>> ", runningProfile?.duration);
-
     if (ecouledTime >= runningProfile?.duration) {
-      console.log("sheesh");
       clearInterval(interval);
       setEcouledTime(0);
+      setRunningProfile(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ecouledTime]);
