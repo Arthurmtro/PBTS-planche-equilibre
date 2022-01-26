@@ -39,7 +39,7 @@ export default function App() {
 
       console.log("timeSpend :>> ", Math.round(d.getTime()) - startedTime);
       console.log("runningProfile?.duration :>> ", runningProfile.duration);
-    }, 100);
+    }, 1000);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runningProfile]);
