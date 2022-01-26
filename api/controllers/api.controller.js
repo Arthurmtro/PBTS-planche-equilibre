@@ -104,6 +104,7 @@ const runProfileWithId = async (profileId, res) => {
               lastProm.then((resultArrSoFar) =>
                 delay(val.time)
                   .then(() => {
+                    if (!active) return;
                     console.log("Execution de la séquence");
                     pwm.channelOff(verrin.forwardId);
                     pwm.channelOff(verrin.backwardId);
@@ -125,6 +126,7 @@ const runProfileWithId = async (profileId, res) => {
         }
 
         profile.actions.map((action) => {
+          if (!active) return;
           let verrin = cylindersData.find((x) => x.id === action.cylinderId);
 
           console.log("cylindersData :>> ", cylindersData);
