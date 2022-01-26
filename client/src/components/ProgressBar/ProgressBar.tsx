@@ -23,14 +23,16 @@ export default function Box() {
       const d = new Date();
       setEcouledTime(Math.round(d.getTime()) - startedTime);
       console.log("EcouledTime :>> ", Math.round(d.getTime()) - startedTime);
+
+      console.log("runningProfile?.duration :>> ", runningProfile.duration);
     }, 100);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runningProfile]);
 
   useEffect(() => {
-    if (!runningProfile) return;
-    if (ecouledTime >= runningProfile?.duration) {
+    if (ecouledTime === 0) return;
+    if (!runningProfile || ecouledTime >= runningProfile?.duration) {
       clearInterval(interval);
       setEcouledTime(0);
       setRunningProfile(null);
