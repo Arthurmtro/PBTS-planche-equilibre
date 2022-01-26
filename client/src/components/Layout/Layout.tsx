@@ -28,16 +28,7 @@ export default function Layout({ children }: ParamsType) {
   }, [runningProfile]);
 
   useEffect(() => {
-    if (!runningProfile) return;
-    if (timeSpend >= runningProfile?.duration) {
-      clearInterval(interval);
-      setTimeSpend(0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeSpend]);
-
-  useEffect(() => {
-    if (timeSpend === 0) return;
+    // if (timeSpend === 0) return;
 
     console.log("runningProfile.duration :>> ", runningProfile?.duration);
     console.log("timeSpend :>> ", timeSpend);
