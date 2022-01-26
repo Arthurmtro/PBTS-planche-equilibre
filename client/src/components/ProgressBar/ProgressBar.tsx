@@ -19,7 +19,7 @@ export default function Box() {
           />
         </>
       ) : (
-        <h2>Bienvenu, lancez un profil</h2>
+        <h2>Bienvenue, lancez un profil</h2>
       )}
     </div>
   );
