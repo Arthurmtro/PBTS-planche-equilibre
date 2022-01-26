@@ -28,12 +28,15 @@ export default function Layout({ children }: ParamsType) {
   }, [runningProfile]);
 
   useEffect(() => {
-    if (timeSpend === 0) return;
+    // if (timeSpend === 0) return;
+    if (runningProfile === null) {
+      return clearInterval(interval);
+    }
 
-    console.log("runningProfile.duration :>> ", runningProfile?.duration);
+    console.log("runningProfile :>> ", runningProfile);
     console.log("timeSpend :>> ", timeSpend);
 
-    if (runningProfile === null || timeSpend >= runningProfile.duration) {
+    if (timeSpend >= runningProfile.duration) {
       clearInterval(interval);
       setTimeSpend(0);
       setRunningProfile(null);
