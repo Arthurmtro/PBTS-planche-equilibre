@@ -96,7 +96,7 @@ const runProfileWithId = async (profileId, res) => {
         isActive = true;
 
         function executeProfile(action, verrin) {
-          if (!isActive) throw new Error("Canceling profile !");
+          if (!isActive) return;
 
           let commands = action.commands;
           return commands.reduce(
@@ -104,7 +104,7 @@ const runProfileWithId = async (profileId, res) => {
               lastProm.then((resultArrSoFar) =>
                 delay(val.time)
                   .then(() => {
-                    if (!isActive) throw new Error("Canceling profile !");
+                    if (!isActive) return;
 
                     console.log("isActive ======>> ", isActive);
 
@@ -129,7 +129,7 @@ const runProfileWithId = async (profileId, res) => {
         }
 
         profile.actions.map((action) => {
-          if (!isActive) throw new Error("Canceling profile !");
+          if (!isActive) return;
           let verrin = cylindersData.find((x) => x.id === action.cylinderId);
 
           executeProfile(action, verrin).then(() =>
