@@ -1,5 +1,5 @@
 import styles from "./Layout.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // Context
 import { useRunningProfile } from "../../contexts/runningProvider";
@@ -15,31 +15,26 @@ type ParamsType = {
 var interval: NodeJS.Timer;
 
 export default function Layout({ children }: ParamsType) {
-  const [startedTime, setStartedTime] = useState(0);
-
   const { runningProfile, setRunningProfile, timeSpend, setTimeSpend } =
     useRunningProfile();
 
   useEffect(() => {
-    if (runningProfile === null) {
-      return setTimeSpend(0);
-    }
-
-    const d = new Date();
-    setStartedTime(d.getTime());
-
-    console.log("StartedTime :>> ", d.getTime());
+    if (!runningProfile) return;
 
     interval = setInterval(() => {
-      const d = new Date();
-      setTimeSpend(d.getTime() - startedTime);
-
-      console.log("timeSpend :>> ", d.getTime() - startedTime);
-      console.log("runningProfile?.duration :>> ", runningProfile.duration);
-    }, 1000);
-
+      setTimeSpend(timeSpend + 100);
+    }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runningProfile]);
+
+  useEffect(() => {
+    if (!runningProfile) return;
+    if (timeSpend >= runningProfile?.duration) {
+      clearInterval(interval);
+      setTimeSpend(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeSpend]);
 
   useEffect(() => {
     if (timeSpend === 0) return;
