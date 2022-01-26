@@ -3,6 +3,7 @@ import styles from "./Button.module.css";
 
 interface IButtonParams {
   children?: ReactNode;
+  onClick?: () => {};
   color?: "primary" | "secondary" | "white" | "danger";
   disabled?: boolean;
   thin?: boolean;
@@ -10,6 +11,7 @@ interface IButtonParams {
 
 export default function Button({
   children,
+  onClick,
   color = "primary",
   disabled = false,
   thin = false,
@@ -18,6 +20,7 @@ export default function Button({
     <button
       disabled={disabled}
       className={styles.button}
+      onClick={onClick}
       style={
         {
           "--button-background":

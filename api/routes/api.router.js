@@ -19,7 +19,7 @@ apiRoutes.get("/fetch-profiles", async (req, res) => {
 });
 
 apiRoutes.get("/run-profile", (req, res) => {
-  return functions.runProfileWithName(req.query.profileName, res);
+  return functions.runProfileWithId(req.query.profileId, res);
 });
 
 module.exports = apiRoutes;

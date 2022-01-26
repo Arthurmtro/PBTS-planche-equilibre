@@ -4,9 +4,7 @@ const Pca9685Driver = require("pca9685").Pca9685Driver;
 let i2cBus;
 
 const os = require("os");
-
-console.log('os.arch()  :>> ', os.arch() );
-if (os.arch() === "arm" || os.arch() === "arm64" ) {
+if (os.arch() === "arm" || os.arch() === "arm64") {
   // raspberrypi
   i2cBus = require("i2c-bus");
 } else {
@@ -15,7 +13,6 @@ if (os.arch() === "arm" || os.arch() === "arm64" ) {
 }
 
 const cylindersData = require("../config/cylinders.json");
-console.log("cylindersData", cylindersData);
 
 const options = {
   i2c: i2cBus?.openSync(1),
@@ -36,7 +33,7 @@ const pwm =
 
 const sendError = (error, res) => {
   console.log(`Errors => ${error.message}`);
-  return res && res.status(500).json({ error: error.message ?? "Unknow" });
+  return res && res.status(666).json({ error: error.message ?? "Unknow" });
 };
 
 const fetchCylindersInfos = async (res) => {
@@ -49,24 +46,50 @@ const fetchCylindersInfos = async (res) => {
 
 const fetchProfiles = async (res) => {
   try {
-    res.status(200).send(JSON.stringify(profilesData));
+    const profilesFiles = fs.readdirSync(`./config/profiles/`);
+    if (profilesFiles.length === 0) throw new Error("No profiles detected !");
+
+    const allProfiles = [];
+
+    for (let index = 0; index < profilesFiles.length; index++) {
+      const file = fs.readFileSync(
+        `./config/profiles/${profilesFiles[index]}`,
+        {
+          encoding: "utf8",
+          flag: "r",
+        }
+      );
+
+      const stringifiedFile = JSON.parse(file);
+
+      Object.assign(stringifiedFile, {
+        fileName: profilesFiles[index].slice(
+          0,
+          profilesFiles[index].indexOf(".")
+        ),
+      });
+
+      allProfiles.push(stringifiedFile);
+    }
+
+    res.status(200).send(allProfiles);
   } catch (error) {
     return sendError(error, res);
   }
 };
 
-const runProfileWithName = async (profileName, res) => {
+const runProfileWithId = async (profileId, res) => {
   try {
     if (!pwm) throw new Error("PWM is not initialised !");
 
     fs.readFile(
-      `./config/profiles/${profileName}.json`,
+      `./config/profiles/${profileId}.json`,
       {
         encoding: "utf8",
         flag: "r",
       },
       (err, data) => {
-        if (err) throw new Error(err);
+        if (err) throw new Error(err.message);
         const profile = JSON.parse(data);
 
         function executeProfile(action, verrin) {
@@ -97,14 +120,13 @@ const runProfileWithName = async (profileName, res) => {
         }
 
         profile.actions.map((action) => {
-          let verrin = cylindersData.find((x) => x.name === action.verrinName);
+          let verrin = cylindersData.find((x) => x.id === action.cylinderId);
 
-          console.log('cylindersData :>> ', cylindersData);
-
+          console.log("cylindersData :>> ", cylindersData);
 
           executeProfile(action, verrin).then(() =>
             console.log(
-              `Profil ${profile.name} pour le Verrin "${action.verrinName}" terminé !`
+              `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
             )
           );
         });
@@ -120,5 +142,5 @@ const runProfileWithName = async (profileName, res) => {
 module.exports = {
   fetchCylindersInfos,
   fetchProfiles,
-  runProfileWithName,
+  runProfileWithId,
 };

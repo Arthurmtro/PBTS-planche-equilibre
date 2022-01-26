@@ -1,10 +1,8 @@
 {
-  "name": "Profile 1",
+  "label": "Profile 1",
   "actions": [
     {
-      "verrinName": "Verrin1",
-      "forwardId": 4,
-      "backwardId": 5,
+      "cylinderId": "Verrin1",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
         { "action": "forward", "speed": 1, "time": 15000 },
@@ -22,9 +20,7 @@
       ]
     },
     {
-      "verrinName": "Verrin2",
-      "forwardId": 2,
-      "backwardId": 3,
+      "cylinderId": "Verrin2",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
         { "action": "forward", "speed": 1, "time": 15000 },

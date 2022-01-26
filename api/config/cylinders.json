@@ -1,11 +1,11 @@
 [
   {
-    "name": "Verrin1",
+    "id": "Verrin1",
     "forwardId": 4,
     "backwardId": 5
   },
   {
-    "name": "Verrin2",
+    "id": "Verrin2",
     "forwardId": 2,
     "backwardId": 3
   }
