@@ -16,6 +16,7 @@ export default function Box() {
     }, 100);
 
     if (ecouledTime >= runningProfile.duration) {
+      console.log("sheesh");
       clearInterval(interval);
       setEcouledTime(0);
     }
