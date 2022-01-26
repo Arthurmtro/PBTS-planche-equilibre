@@ -95,10 +95,9 @@ const runProfileWithId = async (profileId, res) => {
 
         isActive = true;
 
-        function executeProfile(action, verrin) {
-          if (!isActive) return;
+        if (!isActive) return;
 
-          profile.actions.map((action) => {
+        profile.actions.map((action) => {
           if (!isActive) return;
           let verrin = cylindersData.find((x) => x.id === action.cylinderId);
 
