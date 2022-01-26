@@ -24,13 +24,20 @@ export default function App() {
                 <Route
                   path="*"
                   element={
-                    <>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
                       <h1>Page not found 404 </h1>
                       <img
                         alt="404"
                         src="https://i.pinimg.com/originals/ce/57/77/ce5777bf7b7bd966ef14f4a0c7e4c845.gif"
                       />
-                    </>
+                    </div>
                   }
                 />
               </Routes>

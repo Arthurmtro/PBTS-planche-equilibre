@@ -8,7 +8,7 @@ export default function Box() {
 
   return (
     <div className={styles.background}>
-      {runningProfile && (
+      {runningProfile ? (
         <>
           <h4>timer: {runningProfile.duration}</h4>
           <progress
@@ -18,6 +18,8 @@ export default function Box() {
             className={styles.progress}
           />
         </>
+      ) : (
+        <h2>Bienvenu, lancez un profil</h2>
       )}
     </div>
   );
