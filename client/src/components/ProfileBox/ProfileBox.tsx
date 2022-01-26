@@ -21,15 +21,18 @@ type ProfileBoxParams = {
 export default function ProfileBox({ profile }: ProfileBoxParams) {
   const { runningProfile, setRunningProfile, timeSpend } = useRunningProfile();
 
-  console.log("runningProfile :>> ", runningProfile);
-
   const setProfile = () => {
+    if (!profile.fileName) return;
+
     setRunningProfile(profile);
     runProfile(profile.fileName);
   };
 
   const stopProfile = () => {
-    setRunningProfile(null);
+    setRunningProfile({
+      label: "init",
+      duration: 20000,
+    });
     initPlanche();
   };
 

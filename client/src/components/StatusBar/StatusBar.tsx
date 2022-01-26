@@ -21,7 +21,10 @@ export default function StatusBar() {
   }
 
   const stopProfile = () => {
-    setRunningProfile(null);
+    setRunningProfile({
+      label: "init",
+      duration: 20000,
+    });
     initPlanche();
   };
 
