@@ -27,7 +27,7 @@ export default function StatusBar() {
       ) : (
         <span />
       )}
-      <div>
+      <div className={styles['status-info']}>
         Status infos :{" "}
         <span
           className={styles["status-text"]}
@@ -44,7 +44,9 @@ export default function StatusBar() {
         >
           {status === "success" ? "Connecté" : status}
         </span>
-          <div><Badge disabled color="success" /></div>
+          
+        <Badge disabled color="success" />
+          
           
       </div>
     </section>
