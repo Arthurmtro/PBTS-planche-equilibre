@@ -14,13 +14,15 @@ import Badge from "../Badge";
 
 export default function StatusBar() {
   const { status, error } = useCylindersData();
-  const { runningProfile, setRunningProfile } = useRunningProfile();
+  const { runningProfile, setRunningProfile, setTimeSpend } =
+    useRunningProfile();
 
   if (error) {
     console.log("error :>> ", error?.message);
   }
 
   const stopProfile = () => {
+    setTimeSpend(0);
     setRunningProfile({
       label: "init",
       duration: 20000,
@@ -46,7 +48,7 @@ export default function StatusBar() {
         ) : runningProfile !== null && runningProfile.label === "init" ? (
           <>
             <Button disabled color="white" thin>
-              Initialising{" "}
+              initialising{" "}
               <span className={styles["profile-title"]}>planche</span>
             </Button>
           </>

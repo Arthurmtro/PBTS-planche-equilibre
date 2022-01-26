@@ -38,8 +38,8 @@ export default function Layout({ children }: ParamsType) {
 
     if (timeSpend >= runningProfile.duration) {
       clearInterval(interval);
-      setTimeSpend(0);
       setRunningProfile(null);
+      setTimeSpend(0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeSpend]);

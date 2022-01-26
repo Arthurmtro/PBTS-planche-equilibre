@@ -19,16 +19,19 @@ type ProfileBoxParams = {
 };
 
 export default function ProfileBox({ profile }: ProfileBoxParams) {
-  const { runningProfile, setRunningProfile, timeSpend } = useRunningProfile();
+  const { runningProfile, setRunningProfile, setTimeSpend } =
+    useRunningProfile();
 
   const setProfile = () => {
     if (!profile.fileName) return;
 
+    setTimeSpend(0);
     setRunningProfile(profile);
     runProfile(profile.fileName);
   };
 
   const stopProfile = () => {
+    setTimeSpend(0);
     setRunningProfile({
       label: "init",
       duration: 20000,
@@ -55,7 +58,7 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
             </Button>
           ) : (
             <Button
-              disabled={timeSpend > 0}
+              disabled={runningProfile !== null}
               color="secondary"
               onClick={() => setProfile()}
             >
