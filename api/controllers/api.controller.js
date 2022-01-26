@@ -133,11 +133,12 @@ const runProfileWithId = async (profileId, res) => {
           if (!isActive) return;
           let verrin = cylindersData.find((x) => x.id === action.cylinderId);
 
-          executeProfile(action, verrin).then(() =>
+          executeProfile(action, verrin).then(() => {
+            pwm.allChannelsOff();
             console.log(
               `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
-            )
-          );
+            );
+          });
         });
 
         res.status(200).send({ profile });
