@@ -5,12 +5,15 @@ import Badge from "../Badge";
 
 import { Iprofile } from "../../types/Infos";
 import runProfile from "../../api/runProfile";
+import { useRunningProfile } from "../../contexts/runningProvider";
 
 type ProfileBoxParams = {
   profile: Iprofile;
 };
 
 export default function ProfileBox({ profile }: ProfileBoxParams) {
+  const { runningProfile, setRunningProfile } = useRunningProfile();
+
   return (
     <Box>
       <div className={styles.content}>
@@ -20,12 +23,18 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
         </div>
         <div className={styles.actions}>
           <Badge disabled color="danger" />
-          <Button
-            color="secondary"
-            onClick={() => runProfile(profile.fileName)}
-          >
-            lancer
-          </Button>
+          {runningProfile && runningProfile.fileName === profile.fileName ? (
+            <Button color="danger" onClick={() => setRunningProfile(null)}>
+              Stop
+            </Button>
+          ) : (
+            <Button
+              color="secondary"
+              onClick={() => runProfile(profile.fileName)}
+            >
+              lancer
+            </Button>
+          )}
         </div>
       </div>
     </Box>

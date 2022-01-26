@@ -1,32 +1,54 @@
 import styles from "./StatusBar.module.css";
+import { CSSProperties } from "react";
+
+// Api
+import initPlanche from "../../api/initPlanche";
 
 // Contexts
 import { useCylindersData } from "../../contexts/cylindersProdiver";
+import { useRunningProfile } from "../../contexts/runningProvider";
 
 // Components
 import Button from "../Button";
-import { CSSProperties } from "react";
 import Badge from "../Badge";
 
 export default function StatusBar() {
   const { status, error } = useCylindersData();
-  const isPlayingProfile = true;
+  const { runningProfile, setRunningProfile } = useRunningProfile();
 
-  console.log("error :>> ", error?.message);
+  if (error) {
+    console.log("error :>> ", error?.message);
+  }
+
+  const stopProfile = () => {
+    setRunningProfile(null);
+    initPlanche();
+  };
 
   return (
     <section className={styles["status-bar"]}>
-      {isPlayingProfile ? (
-        <div className={styles["playing-status"]}>
-          <Button disabled color="white" thin>
-            En cours actuellement:{" "}
-            <span className={styles["profile-title"]}>PROFILE NAME</span>
-          </Button>
-          <Button color="danger">STOP</Button>
-        </div>
-      ) : (
-        <span />
-      )}
+      <div className={styles["playing-status"]}>
+        {runningProfile !== null ? (
+          <>
+            <Button disabled color="white" thin>
+              En cours actuellement:{" "}
+              <span className={styles["profile-title"]}>
+                {runningProfile.label.toUpperCase()}
+              </span>
+            </Button>
+            <Button color="danger" onClick={() => stopProfile()}>
+              STOP
+            </Button>
+          </>
+        ) : (
+          <>
+            Aucun profil en cours:
+            <Button color="primary" onClick={() => initPlanche()}>
+              INIT PLANCHE
+            </Button>
+          </>
+        )}
+      </div>
       <div>
         Status infos :{" "}
         <span
@@ -44,8 +66,9 @@ export default function StatusBar() {
         >
           {status === "success" ? "Connecté" : status}
         </span>
-          <div><Badge disabled color="success" /></div>
-          
+        <div>
+          <Badge disabled color="success" />
+        </div>
       </div>
     </section>
   );

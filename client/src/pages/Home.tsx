@@ -8,14 +8,23 @@ import ProfileBox from "../components/ProfileBox";
 export default function HomePage() {
   const { profiles, status, error } = useProfilesData();
 
-  console.log("profiles :>> ", profiles);
-
   return (
     <div>
       <ProgressBar />
-      {profiles?.map((profile) => (
-        <ProfileBox key={profile.fileName} profile={profile} />
-      ))}
+
+      <div>
+        {status === "loading" || status === "idle" ? (
+          <h1>Loading ...</h1>
+        ) : (
+          <>
+            {status === "error" && <h1>Error : {error?.message}</h1>}
+            {status === "success" &&
+              profiles?.map((profile) => (
+                <ProfileBox key={profile.fileName} profile={profile} />
+              ))}
+          </>
+        )}
+      </div>
     </div>
   );
 }

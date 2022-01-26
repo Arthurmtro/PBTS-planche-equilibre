@@ -139,8 +139,28 @@ const runProfileWithId = async (profileId, res) => {
   }
 };
 
+const init = async (res) => {
+  try {
+    if (!pwm) throw new Error("PWM is not initialised !");
+
+    console.log("Execution de la séquence");
+    for (let index = 0; index < cylindersData.length; index++) {
+      console.log("Cylinder " + cylindersData[index].id);
+      pwm.channelOff(cylindersData[index].backwardId);
+      pwm.channelOff(cylindersData[index].forwardId);
+      pwm.setDutyCycle(cylindersData[index].forwardId, 1);
+    }
+    delay(20000).then(() => {
+      res.sendStatus(200);
+    });
+  } catch (error) {
+    return sendError(error, res);
+  }
+};
+
 module.exports = {
   fetchCylindersInfos,
   fetchProfiles,
   runProfileWithId,
+  init,
 };

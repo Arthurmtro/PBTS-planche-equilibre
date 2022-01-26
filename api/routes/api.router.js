@@ -22,4 +22,8 @@ apiRoutes.get("/run-profile", (req, res) => {
   return functions.runProfileWithId(req.query.profileId, res);
 });
 
+apiRoutes.get("/init", (req, res) => {
+  return functions.init(res);
+});
+
 module.exports = apiRoutes;

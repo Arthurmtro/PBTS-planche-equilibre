@@ -3,7 +3,7 @@ import styles from "./Button.module.css";
 
 interface IButtonParams {
   children?: ReactNode;
-  onClick?: () => {};
+  onClick?: () => void;
   color?: "primary" | "secondary" | "white" | "danger";
   disabled?: boolean;
   thin?: boolean;
