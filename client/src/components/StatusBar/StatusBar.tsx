@@ -28,7 +28,7 @@ export default function StatusBar() {
   return (
     <section className={styles["status-bar"]}>
       <div className={styles["playing-status"]}>
-        {runningProfile !== null ? (
+        {runningProfile !== null && runningProfile.label !== "init" ? (
           <>
             <Button disabled color="white" thin>
               En cours actuellement:{" "}
@@ -38,6 +38,13 @@ export default function StatusBar() {
             </Button>
             <Button color="danger" onClick={() => stopProfile()}>
               STOP
+            </Button>
+          </>
+        ) : runningProfile !== null && runningProfile.label === "init" ? (
+          <>
+            <Button disabled color="white" thin>
+              Initialising{" "}
+              <span className={styles["profile-title"]}>planche</span>
             </Button>
           </>
         ) : (
