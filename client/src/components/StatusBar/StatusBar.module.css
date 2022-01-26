@@ -35,3 +35,10 @@
     border-bottom-left-radius: 25px;
   }
 }
+
+.status-info{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
