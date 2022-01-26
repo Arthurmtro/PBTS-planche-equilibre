@@ -3,6 +3,7 @@
   "actions": [
     {
       "cylinderId": "Verrin1",
+      "duration": 38000,
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
         { "action": "forward", "speed": 1, "time": 15000 },

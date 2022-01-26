@@ -161,9 +161,8 @@ const init = async (res) => {
       pwm.channelOff(cylindersData[index].forwardId);
       pwm.setDutyCycle(cylindersData[index].backwardId, 1);
     }
-    delay(20000).then(() => {
-      res.sendStatus(200);
-    });
+    delay(20000);
+    res.status(200).send("Initializing");
   } catch (error) {
     return sendError(error, res);
   }

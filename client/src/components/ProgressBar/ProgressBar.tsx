@@ -8,8 +8,17 @@ export default function Box() {
 
   return (
     <div className={styles.background}>
-      timer: {runningProfile?.duration}
-      <progress id="file" max="100" value="30" className={styles.progress} />
+      {runningProfile && (
+        <>
+          <h4>timer: {runningProfile.duration}</h4>
+          <progress
+            id="file"
+            max={runningProfile.duration}
+            value="30"
+            className={styles.progress}
+          />
+        </>
+      )}
     </div>
   );
 }
