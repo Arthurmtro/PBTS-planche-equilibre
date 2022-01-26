@@ -6,6 +6,15 @@ import { useRunningProfile } from "../../contexts/runningProvider";
 export default function Box() {
   const { runningProfile } = useRunningProfile();
 
+  const startTimer = () => {
+    const date = new Date();
+    let time = date.getMilliseconds();
+
+    console.log("time :>> ", time);
+  };
+
+  startTimer();
+
   return (
     <div className={styles.background}>
       {runningProfile && (
