@@ -13,6 +13,8 @@ export default function HomePage() {
       <ProgressBar />
       <Box />
       <ProfileBox />
+      <ProfileBox />
+      <ProfileBox />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { useCylindersData } from "../../contexts/cylindersProdiver";
 // Components
 import Button from "../Button";
 import { CSSProperties } from "react";
+import Badge from "../Badge";
 
 export default function StatusBar() {
   const { status, error } = useCylindersData();
@@ -43,6 +44,8 @@ export default function StatusBar() {
         >
           {status === "success" ? "Connecté" : status}
         </span>
+          <div><Badge disabled color="success" /></div>
+          
       </div>
     </section>
   );

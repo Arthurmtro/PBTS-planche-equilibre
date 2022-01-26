@@ -3,7 +3,7 @@ import styles from "./Badge.module.css";
 
 interface IBadgeParams {
   children?: ReactNode;
-  color?: "primary" | "secondary" | "white" | "danger";
+  color?: "primary" | "success" | "white" | "danger";
   disabled?: boolean;
 }
 
@@ -15,22 +15,21 @@ export default function Badge({
   return (
     <button
       disabled={disabled}
-      className={styles.button}
+      className={styles.badge}
       style={
         {
           "--button-background":
             color === "primary"
-              ? "var(--color-primary)"
-              : color === "secondary"
-              ? "var(--color-secondary)"
+            ? "var(--color-primary)"
+              : color === "success"
+              ? "#38EC28"
               : color === "danger"
               ? "#DF0D0D"
-              : "#ffff",
-          "--button-color": color === "white" ? "#000000" : "#f7f7f7",
+              : "#0000",
         } as CSSProperties
       }
     >
-      {children}
+      
     </button>
   );
 }
