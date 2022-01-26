@@ -1,5 +1,16 @@
-.titre{
 
-  color: black;
-  
+
+.content{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    padding: 1rem 1.5rem;
 }
+
+.actions{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-direction: column;
+    padding-bottom: 2.9rem;
+} 
