@@ -18,10 +18,16 @@ export default function Box() {
     const d = new Date();
     setStartedTime(Math.round(d.getTime() / minute));
 
+    console.log("StartedTime :>> ", Math.round(d.getTime() / minute));
+
     interval = setInterval(() => {
       const minute = 1000 * 60;
       const d = new Date();
       setEcouledTime(Math.round(d.getTime() / minute) - startedTime);
+      console.log(
+        "EcouledTime :>> ",
+        Math.round(d.getTime() / minute) - startedTime
+      );
     }, 100);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
