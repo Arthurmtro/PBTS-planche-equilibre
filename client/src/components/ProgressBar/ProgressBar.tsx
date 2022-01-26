@@ -2,20 +2,24 @@ import styles from "./ProgressBar.module.css";
 
 // Contexts
 import { useRunningProfile } from "../../contexts/runningProvider";
+import { useEffect, useState } from "react";
 
 export default function Box() {
   const { runningProfile } = useRunningProfile();
+  const [ecouledTime, setEcouledTime] = useState(0);
 
-  const startTimer = () => {
-    const start = Date.now();
+  useEffect(() => {
+    if (!runningProfile) return;
 
-    // After a certain amount of time, run this to see how much time passed.
-    const milliseconds = Date.now() - start;
+    const interval = setInterval(function () {
+      setEcouledTime((prev) => (prev += 1000));
+    }, 1000);
 
-    console.log("Seconds passed = " + milliseconds / 1000);
-  };
-
-  startTimer();
+    if (ecouledTime >= runningProfile.duration) {
+      clearInterval(interval);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runningProfile]);
 
   return (
     <div className={styles.background}>
@@ -25,7 +29,7 @@ export default function Box() {
           <progress
             id="file"
             max={runningProfile.duration}
-            value="30"
+            value={ecouledTime}
             className={styles.progress}
           />
         </>
