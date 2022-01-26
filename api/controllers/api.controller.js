@@ -105,6 +105,9 @@ const runProfileWithId = async (profileId, res) => {
                 delay(val.time)
                   .then(() => {
                     if (!isActive) throw new Error("Canceling profile !");
+
+                    console.log("isActive ======>> ", isActive);
+
                     console.log("Execution de la séquence");
                     pwm.channelOff(verrin.forwardId);
                     pwm.channelOff(verrin.backwardId);
