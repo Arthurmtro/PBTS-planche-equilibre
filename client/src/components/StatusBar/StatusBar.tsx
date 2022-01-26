@@ -47,21 +47,19 @@ export default function StatusBar() {
           </>
         ) : runningProfile !== null && runningProfile.label === "init" ? (
           <>
-            <Button disabled color="white" thin>
-              initialising{" "}
-              <span className={styles["profile-title"]}>planche</span>
+            <Button disabled color="secondary" thin>
+              initialising planche: wait
             </Button>
           </>
         ) : (
           <>
-            Aucun profil en cours:
-            <Button color="primary" onClick={() => initPlanche()}>
-              INIT PLANCHE
+            <Button color="primary" onClick={() => stopProfile()}>
+              initialiser planche
             </Button>
           </>
         )}
       </div>
-      <div>
+      <div className={styles.status}>
         Status infos :{" "}
         <span
           className={styles["status-text"]}

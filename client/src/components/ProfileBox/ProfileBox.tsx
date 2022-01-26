@@ -40,14 +40,21 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
   };
 
   return (
-    <Box>
+    <Box size="fill">
       <div className={styles.content}>
         <div>
           <h1>{profile.label}</h1>
-          <h3>Category</h3>
+          <h3>{profile.category}</h3>
         </div>
         <div className={styles.actions}>
-          <Badge disabled color="danger" />
+          <Badge
+            disabled
+            color={
+              runningProfile && runningProfile.fileName === profile.fileName
+                ? "success"
+                : "danger"
+            }
+          />
           {runningProfile && runningProfile.fileName === profile.fileName ? (
             <Button
               disabled={runningProfile.label === "init"}

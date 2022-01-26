@@ -32,10 +32,6 @@ export default function Layout({ children }: ParamsType) {
     if (runningProfile === null) {
       return clearInterval(interval);
     }
-
-    console.log("runningProfile :>> ", runningProfile);
-    console.log("timeSpend :>> ", timeSpend);
-
     if (timeSpend >= runningProfile.duration) {
       clearInterval(interval);
       setRunningProfile(null);

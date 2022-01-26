@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: space-between;
 
-  min-width: 100%;
   min-height: 4rem;
 
   padding: 0 3rem;
@@ -15,13 +14,19 @@
 .playing-status {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
 }
 
 .status-text {
   color: var(--status-color);
   font-weight: bold;
+  margin-right: 1rem;
+  margin-left: 0.3rem;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .profile-title {
@@ -36,7 +41,7 @@
   }
 }
 
-.status-info{
+.status-info {
   display: flex;
   align-items: center;
   justify-content: space-between;

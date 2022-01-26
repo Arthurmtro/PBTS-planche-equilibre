@@ -6,7 +6,7 @@
 
 .app-content {
   height: 100%;
-  width: calc(100% - 23rem);
+  width: 100%;
 }
 
 .page-content {
@@ -15,9 +15,8 @@
   margin-top: 2rem;
 }
 
-@media screen and (max-width: 1200px) {
+/* @media screen and (max-width: 1200px) {
   .app-content {
-    width: 100%;
-    padding: 0;
+    padding: 0 2rem;
   }
-}
+} */
