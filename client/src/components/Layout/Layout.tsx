@@ -26,15 +26,15 @@ export default function Layout({ children }: ParamsType) {
     }
 
     const d = new Date();
-    setStartedTime(Math.round(d.getTime()));
+    setStartedTime(d.getTime());
 
-    console.log("StartedTime :>> ", Math.round(d.getTime()));
+    console.log("StartedTime :>> ", d.getTime());
 
     interval = setInterval(() => {
       const d = new Date();
-      setTimeSpend(Math.round(d.getTime()) - startedTime);
+      setTimeSpend(d.getTime() - startedTime);
 
-      console.log("timeSpend :>> ", Math.round(d.getTime()) - startedTime);
+      console.log("timeSpend :>> ", d.getTime() - startedTime);
       console.log("runningProfile?.duration :>> ", runningProfile.duration);
     }, 1000);
 
