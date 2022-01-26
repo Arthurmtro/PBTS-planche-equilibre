@@ -8,6 +8,7 @@ export interface ICylinderInfos {
 
 export interface Iprofile {
   label: string;
+  fileName: string;
   actions: IAction[];
 }
 

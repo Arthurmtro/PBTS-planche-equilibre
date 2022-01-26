@@ -1,7 +1,9 @@
+// Contexts
+import { useProfilesData } from "../contexts/profilesProvider";
+
+// Components
 import ProgressBar from "../components/ProgressBar";
 import ProfileBox from "../components/ProfileBox";
-import Box from "../components/Box";
-import { useProfilesData } from "../contexts/profilesProvider";
 
 export default function HomePage() {
   const { profiles, status, error } = useProfilesData();
@@ -11,10 +13,9 @@ export default function HomePage() {
   return (
     <div>
       <ProgressBar />
-      <Box />
-      <ProfileBox />
-      <ProfileBox />
-      <ProfileBox />
+      {profiles?.map((profile) => (
+        <ProfileBox key={profile.fileName} profile={profile} />
+      ))}
     </div>
   );
 }
