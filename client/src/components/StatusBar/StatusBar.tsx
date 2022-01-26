@@ -45,7 +45,7 @@ export default function StatusBar() {
           {status === "success" ? "Connecté" : status}
         </span>
           
-        <Badge disabled color="success" />
+        <Badge disabled color={status === "success" ? "success" : status ==="loading"?"primary":"danger"} />
           
           
       </div>
