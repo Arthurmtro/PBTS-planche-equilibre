@@ -1,11 +1,18 @@
+// Api
+import runProfile from "../../api/runProfile";
+import initPlanche from "../../api/initPlanche";
+
+// types
+import { Iprofile } from "../../types/Infos";
+
+// Contexts
+import { useRunningProfile } from "../../contexts/runningProvider";
+
+// Components
 import styles from "./ProfileBox.module.css";
-import Box from "../Box";
 import Button from "../Button";
 import Badge from "../Badge";
-
-import { Iprofile } from "../../types/Infos";
-import runProfile from "../../api/runProfile";
-import { useRunningProfile } from "../../contexts/runningProvider";
+import Box from "../Box";
 
 type ProfileBoxParams = {
   profile: Iprofile;
@@ -13,6 +20,11 @@ type ProfileBoxParams = {
 
 export default function ProfileBox({ profile }: ProfileBoxParams) {
   const { runningProfile, setRunningProfile } = useRunningProfile();
+
+  const stopProfile = () => {
+    setRunningProfile(null);
+    initPlanche();
+  };
 
   return (
     <Box>
@@ -24,7 +36,7 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
         <div className={styles.actions}>
           <Badge disabled color="danger" />
           {runningProfile && runningProfile.fileName === profile.fileName ? (
-            <Button color="danger" onClick={() => setRunningProfile(null)}>
+            <Button color="danger" onClick={() => stopProfile}>
               Stop
             </Button>
           ) : (
