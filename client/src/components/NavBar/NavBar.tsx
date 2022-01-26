@@ -18,7 +18,7 @@ export default function NavBar() {
           icon="configuration"
         />
       </ul>
-      <span>Sheeshh</span>
+      <span>{process.env.REACT_APP_API_URL}</span>
     </section>
   );
 }
