@@ -22,7 +22,7 @@ export default function Layout({ children }: ParamsType) {
     if (!runningProfile) return;
 
     interval = setInterval(() => {
-      setTimeSpend(timeSpend + 100);
+      setTimeSpend((prev) => prev + 100);
     }, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runningProfile]);

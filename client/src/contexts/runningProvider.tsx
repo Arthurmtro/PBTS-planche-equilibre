@@ -7,7 +7,7 @@ type cylinderInfosType = {
   runningProfile: Iprofile | null;
   setRunningProfile: (arg1: Iprofile | null) => void;
   timeSpend: number;
-  setTimeSpend: (arg1: number) => void;
+  setTimeSpend: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const RunningProfile = createContext<cylinderInfosType>(undefined!);
