@@ -38,7 +38,11 @@ export default function Layout({ children }: ParamsType) {
 
   useEffect(() => {
     if (timeSpend === 0) return;
-    if (runningProfile === null || timeSpend >= runningProfile?.duration) {
+
+    console.log("runningProfile.duration :>> ", runningProfile?.duration);
+    console.log("timeSpend :>> ", timeSpend);
+
+    if (runningProfile === null || timeSpend >= runningProfile.duration) {
       clearInterval(interval);
       setTimeSpend(0);
       setRunningProfile(null);
