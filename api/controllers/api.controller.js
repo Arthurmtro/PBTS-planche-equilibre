@@ -1,5 +1,6 @@
 const fs = require("fs");
 const Pca9685Driver = require("pca9685").Pca9685Driver;
+const cylindersData = require("../config/cylinders.json");
 
 let i2cBus;
 
@@ -12,7 +13,7 @@ if (os.arch() === "arm" || os.arch() === "arm64") {
   i2cBus = null;
 }
 
-const cylindersData = require("../config/cylinders.json");
+let isActive = false;
 
 const options = {
   i2c: i2cBus?.openSync(1),
@@ -92,7 +93,11 @@ const runProfileWithId = async (profileId, res) => {
         if (err) throw new Error(err.message);
         const profile = JSON.parse(data);
 
+        isActive = true;
+
         function executeProfile(action, verrin) {
+          if (!isActive) return;
+
           let commands = action.commands;
           return commands.reduce(
             (lastProm, val) =>
@@ -142,6 +147,8 @@ const runProfileWithId = async (profileId, res) => {
 const init = async (res) => {
   try {
     if (!pwm) throw new Error("PWM is not initialised !");
+
+    isActive = false;
 
     console.log("Execution de la séquence");
     for (let index = 0; index < cylindersData.length; index++) {
