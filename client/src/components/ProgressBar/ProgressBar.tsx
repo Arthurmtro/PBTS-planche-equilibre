@@ -11,12 +11,13 @@ export default function Box() {
   useEffect(() => {
     if (!runningProfile) return;
 
-    const interval = setInterval(function () {
+    const interval = setInterval(() => {
       setEcouledTime((prev) => (prev += 100));
     }, 100);
 
     if (ecouledTime >= runningProfile.duration) {
       clearInterval(interval);
+      setEcouledTime(0);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
