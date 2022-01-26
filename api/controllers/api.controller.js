@@ -96,7 +96,7 @@ const runProfileWithId = async (profileId, res) => {
         isActive = true;
 
         function executeProfile(action, verrin) {
-          if (!isActive) return;
+          if (!isActive) throw new Error("Canceling profile !");
 
           let commands = action.commands;
           return commands.reduce(
@@ -104,7 +104,7 @@ const runProfileWithId = async (profileId, res) => {
               lastProm.then((resultArrSoFar) =>
                 delay(val.time)
                   .then(() => {
-                    if (!isActive) return;
+                    if (!isActive) throw new Error("Canceling profile !");
                     console.log("Execution de la séquence");
                     pwm.channelOff(verrin.forwardId);
                     pwm.channelOff(verrin.backwardId);
@@ -126,10 +126,8 @@ const runProfileWithId = async (profileId, res) => {
         }
 
         profile.actions.map((action) => {
-          if (!isActive) return;
+          if (!isActive) throw new Error("Canceling profile !");
           let verrin = cylindersData.find((x) => x.id === action.cylinderId);
-
-          console.log("cylindersData :>> ", cylindersData);
 
           executeProfile(action, verrin).then(() =>
             console.log(
