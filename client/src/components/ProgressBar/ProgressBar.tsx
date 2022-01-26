@@ -2,43 +2,9 @@ import styles from "./ProgressBar.module.css";
 
 // Contexts
 import { useRunningProfile } from "../../contexts/runningProvider";
-import { useEffect, useState } from "react";
-
-let interval: NodeJS.Timer;
 
 export default function Box() {
-  const { runningProfile, setRunningProfile } = useRunningProfile();
-  const [ecouledTime, setEcouledTime] = useState(0);
-  const [startedTime, setStartedTime] = useState(0);
-
-  useEffect(() => {
-    if (!runningProfile) return;
-
-    const d = new Date();
-    setStartedTime(Math.round(d.getTime()));
-
-    console.log("StartedTime :>> ", Math.round(d.getTime()));
-
-    interval = setInterval(() => {
-      const d = new Date();
-      setEcouledTime(Math.round(d.getTime()) - startedTime);
-      console.log("EcouledTime :>> ", Math.round(d.getTime()) - startedTime);
-
-      console.log("runningProfile?.duration :>> ", runningProfile.duration);
-    }, 100);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [runningProfile]);
-
-  useEffect(() => {
-    if (ecouledTime === 0) return;
-    if (!runningProfile || ecouledTime >= runningProfile?.duration) {
-      clearInterval(interval);
-      setEcouledTime(0);
-      setRunningProfile(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ecouledTime]);
+  const { runningProfile, timeSpend } = useRunningProfile();
 
   return (
     <div className={styles.background}>
@@ -48,7 +14,7 @@ export default function Box() {
           <progress
             id="file"
             max={runningProfile.duration}
-            value={ecouledTime}
+            value={timeSpend}
             className={styles.progress}
           />
         </>
