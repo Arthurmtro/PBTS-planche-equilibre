@@ -7,10 +7,12 @@ export default function Box() {
   const { runningProfile } = useRunningProfile();
 
   const startTimer = () => {
-    const date = new Date();
-    let time = date.getMilliseconds();
+    const start = Date.now();
 
-    console.log("time :>> ", time);
+    // After a certain amount of time, run this to see how much time passed.
+    const milliseconds = Date.now() - start;
+
+    console.log("Seconds passed = " + milliseconds / 1000);
   };
 
   startTimer();
