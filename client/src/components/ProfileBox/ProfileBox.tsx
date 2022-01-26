@@ -21,6 +21,13 @@ type ProfileBoxParams = {
 export default function ProfileBox({ profile }: ProfileBoxParams) {
   const { runningProfile, setRunningProfile } = useRunningProfile();
 
+  console.log("runningProfile :>> ", runningProfile);
+
+  const setProfile = () => {
+    setRunningProfile(profile);
+    runProfile(profile.fileName);
+  };
+
   const stopProfile = () => {
     setRunningProfile(null);
     initPlanche();
@@ -36,14 +43,11 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
         <div className={styles.actions}>
           <Badge disabled color="danger" />
           {runningProfile && runningProfile.fileName === profile.fileName ? (
-            <Button color="danger" onClick={() => stopProfile}>
+            <Button color="danger" onClick={() => stopProfile()}>
               Stop
             </Button>
           ) : (
-            <Button
-              color="secondary"
-              onClick={() => runProfile(profile.fileName)}
-            >
+            <Button color="secondary" onClick={() => setProfile()}>
               lancer
             </Button>
           )}

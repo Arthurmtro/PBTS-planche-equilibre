@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 
 // Types
 import { Iprofile } from "../types/Infos";
@@ -16,11 +16,13 @@ export default function RunningProfileProvider({
   children: React.ReactNode;
 }) {
   const [runningProfile, setRunningProfile] = useState<Iprofile | null>(null);
+  const value = useMemo(
+    () => ({ runningProfile, setRunningProfile }),
+    [runningProfile]
+  );
 
   return (
-    <RunningProfile.Provider value={{ runningProfile, setRunningProfile }}>
-      {children}
-    </RunningProfile.Provider>
+    <RunningProfile.Provider value={value}>{children}</RunningProfile.Provider>
   );
 }
 

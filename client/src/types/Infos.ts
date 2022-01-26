@@ -10,6 +10,7 @@ export interface Iprofile {
   label: string;
   fileName: string;
   actions: IAction[];
+  duration: number;
 }
 
 export interface IAction {

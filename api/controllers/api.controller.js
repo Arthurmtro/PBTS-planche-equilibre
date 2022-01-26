@@ -148,7 +148,7 @@ const init = async (res) => {
       console.log("Cylinder " + cylindersData[index].id);
       pwm.channelOff(cylindersData[index].backwardId);
       pwm.channelOff(cylindersData[index].forwardId);
-      pwm.setDutyCycle(cylindersData[index].forwardId, 1);
+      pwm.setDutyCycle(cylindersData[index].backwardId, 1);
     }
     delay(20000).then(() => {
       res.sendStatus(200);
