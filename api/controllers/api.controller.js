@@ -1,9 +1,7 @@
 const fs = require("fs");
 const Pca9685Driver = require("pca9685").Pca9685Driver;
-const cylindersData = require("../config/cylinders.json");
 
 let i2cBus;
-
 const os = require("os");
 if (os.arch() === "arm" || os.arch() === "arm64") {
   // raspberrypi
@@ -12,6 +10,8 @@ if (os.arch() === "arm" || os.arch() === "arm64") {
   console.warn("Not using I2C, You are not on raspberrypi", os.arch());
   i2cBus = null;
 }
+
+const cylindersData = require("../config/cylinders.json");
 
 let isActive = false;
 

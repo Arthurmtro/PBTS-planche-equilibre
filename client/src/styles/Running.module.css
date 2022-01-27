@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.header-titles {
+  display: flex;
+  align-items: center;
+}
+
+.header-titles h1 {
+  margin-right: 2rem;
+}

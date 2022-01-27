@@ -1,4 +1,5 @@
 const apiRoutes = require("express").Router();
+const os = require("os");
 
 // Config
 const debug = require("../config/debug");
@@ -7,7 +8,7 @@ const debug = require("../config/debug");
 const functions = require("../controllers/api.controller");
 
 apiRoutes.get("/hostname/", (req, res) => {
-  res.send(`hostname is ${debug.hostname}`);
+  res.send(`hostname is ${os.hostname()}`);
 });
 
 apiRoutes.get("/fetch-cylinders-infos", async (req, res) => {

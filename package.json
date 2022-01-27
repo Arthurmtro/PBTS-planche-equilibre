@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm-run-all -p start:client start:api",
+    "prod": "git pull && yarn && npm-run-all -p start:client start:api",
     "dev": "npm-run-all -p dev:client dev:api",
     "install": "npm-run-all -p install:client install:api",
     "start:client": "cd client && yarn start",

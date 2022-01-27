@@ -3,12 +3,15 @@ import { Routes, Route } from "react-router-dom";
 
 // Contexts
 import CylindersDataProvider from "./contexts/cylindersProdiver";
-import ProfilesDataProvider from "./contexts/profilesProvider";
 import RunningProfileProvider from "./contexts/runningProvider";
+import ProfilesDataProvider from "./contexts/profilesProvider";
+
+// Pages
+import RunningPage from "./pages/Running";
+import HomePage from "./pages/Home";
 
 // Components
 import Layout from "./components/Layout";
-import HomePage from "./pages/Home";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,7 @@ export default function App() {
             <Layout>
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/running" element={<RunningPage />} />
                 <Route
                   path="*"
                   element={
