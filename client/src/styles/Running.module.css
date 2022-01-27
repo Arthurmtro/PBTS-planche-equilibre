@@ -13,3 +13,17 @@
 .header-titles h1 {
   margin-right: 2rem;
 }
+
+.infos-contents {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.commands {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}

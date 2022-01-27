@@ -26,10 +26,18 @@ export default function RunningPage() {
           </section>
           <ProgressBar />
 
-          <div>
-            <Box>
-              <h5>Durée : {runningProfile.duration}</h5>
-            </Box>
+          <Box size="fill">
+            <h5>Durée : {runningProfile.duration}</h5>
+          </Box>
+          <div className={styles["infos-contents"]}>
+            {runningProfile.actions &&
+              runningProfile.actions.map((action) => (
+                <div key={action.cylinderId} className={styles.commands}>
+                  {action.commands.map((command, idx) => (
+                    <Box key={idx}>{command.action}</Box>
+                  ))}
+                </div>
+              ))}
           </div>
         </>
       ) : (
