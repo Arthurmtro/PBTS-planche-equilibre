@@ -31,7 +31,7 @@ const pwm = new Pca9685Driver(options, function (err) {
   pwm.allChannelsOff();
 
   // il fais avancer et reculer mais on choisie la vitesse sa vas de 0.1 a 1
-  pwm.setDutyCycle(4, 1); // gérer 1 verin 5 desendre / 4 monter
+  pwm.setDutyCycle(5, 1); // gérer 1 verin 5 desendre / 4 monter
   pwm.setDutyCycle(2, 1); // gérer l autre 3 desendre / 2 monter
   pwm.setDutyCycle(7, 1); // gérer l autre 7 desendre / 6 monter
 
