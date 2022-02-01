@@ -35,6 +35,7 @@ const pwm = new Pca9685Driver(options, function (err) {
   pwm.setDutyCycle(2, 1); // gérer l autre 3 desendre / 2 monter
   pwm.setDutyCycle(7, 1); // gérer l autre 7 desendre / 6 monter
   pwm.setDutyCycle(15, 1); // teste osciloscope
+  pwm.allChannelsOff();
   /* pwm.setPulseRange(1, 50, 255, function() {
          if (err) {
              console.error("Error setting pulse range.");
