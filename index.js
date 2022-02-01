@@ -31,10 +31,10 @@ const pwm = new Pca9685Driver(options, function (err) {
   pwm.allChannelsOff();
 
   // il fais avancer et reculer mais on choisie la vitesse sa vas de 0.1 a 1 (regler le cicle de service )
-  pwm.setDutyCycle(5, 1); // gérer 1 verin 5 desendre / 4 monter
-  pwm.setDutyCycle(2, 1); // gérer l autre 3 desendre / 2 monter
-  pwm.setDutyCycle(7, 1); // gérer l autre 7 desendre / 6 monter
-
+  pwm.setDutyCycle(4, 0.85); // gérer 1 verin 5 desendre / 4 monter
+  pwm.setDutyCycle(3, 0.5); // gérer l autre 3 desendre / 2 monter
+  pwm.setDutyCycle(6, 1); // gérer l autre 7 desendre / 6 monter
+  //pwm.setDutyCycle(7, 1); // teste osciloscope
   /* pwm.setPulseRange(1, 50, 255, function() {
          if (err) {
              console.error("Error setting pulse range.");
