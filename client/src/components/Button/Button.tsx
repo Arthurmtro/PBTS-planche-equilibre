@@ -25,9 +25,9 @@ export default function Button({
         {
           "--button-background":
             color === "primary"
-              ? "var(--color-primary)"
+              ? "var(--color-rgb-primary)"
               : color === "secondary"
-              ? "var(--color-secondary)"
+              ? "var(--color-rgb-secondary)"
               : color === "danger"
               ? "#DF0D0D"
               : "#ffff",

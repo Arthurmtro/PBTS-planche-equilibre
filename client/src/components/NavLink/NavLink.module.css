@@ -1,7 +1,7 @@
 .link {
   width: 11rem;
   height: 3rem;
-  box-shadow: inset 0px 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 7px 7px 16px #7649dd, inset -7px -7px 16px #965dff;
 
   border-radius: var(--box-border-radius);
   text-align: center;
@@ -17,13 +17,14 @@
 }
 
 .link:hover {
-  box-shadow: inset 0px 2px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 7px 7px 16px #6d43cb, inset -7px -7px 16px #9f63ff;
 }
 
 .link-active {
   width: 11rem;
   height: 3rem;
-  box-shadow: inset 0px 4px 15px rgba(0, 0, 0, 0.2);
+
+  box-shadow: inset 7px 7px 16px #6d43cb, inset -7px -7px 16px #9f63ff;
 
   border-radius: var(--box-border-radius);
   text-align: center;
@@ -35,7 +36,7 @@
   padding: 0.5rem 1.5rem;
   margin: 0.5rem 0;
 
-  color: var(--color-secondary);
+  color: #fafafa;
 }
 
 .link-active svg {
