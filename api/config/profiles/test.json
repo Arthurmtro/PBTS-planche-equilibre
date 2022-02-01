@@ -10,7 +10,7 @@
         { "action": "forward", "speed": 1, "time": 20000},
         { "action": "backward", "speed": 0.5, "time": 20000 },
         { "action": "backward", "speed": 1, "time": 5000 },
-        { "action": "forward", "speed": 1, "time": 10000 }
+        { "action": "forward", "speed": 1, "time": 40000 }
       ]
     },
     {
@@ -20,7 +20,7 @@
         { "action": "forward", "speed": 1, "time": 20000},
         { "action": "backward", "speed": 0.5, "time": 20000 },
         { "action": "backward", "speed": 1, "time": 5000 },
-        { "action": "forward", "speed": 1, "time": 10000 }
+        { "action": "forward", "speed": 1, "time": 40000 }
       ]
     },
     {
@@ -30,7 +30,7 @@
         { "action": "forward", "speed": 1, "time": 20000},
         { "action": "backward", "speed": 0.5, "time": 20000 },
         { "action": "backward", "speed": 1, "time": 5000 },
-        { "action": "forward", "speed": 1, "time": 10000 }
+        { "action": "forward", "speed": 1, "time": 40000 }
       ]
     }
   ]
