@@ -1,11 +1,11 @@
 ////////////////////////////////////////bibliothèque///////////////////////////////////////////////////////
-var i2cBus = require("i2c-bus"); // bibliothèque pour les pine
-var Pca9685Driver = require("pca9685").Pca9685Driver; // bibliothèque pour PCA9685
+var i2cBus = require("i2c-bus"); // bibliothèque pour l i2c ou on inport
+var Pca9685Driver = require("pca9685").Pca9685Driver; // bibliothèque pour PCA9685 ou on import
 
 /////////////////////////////////////////option/////////////////////////////////////////////////////////////
 
 var options = {
-  // option de la carte bleu
+  // option de la carte PCA9685
   i2c: i2cBus.openSync(1), //  ouvre le port i2c
   address: 0x40, // adresse carte
   frequency: 50,
@@ -30,8 +30,8 @@ const pwm = new Pca9685Driver(options, function (err) {
 
   pwm.allChannelsOff();
 
-  // il fais avancer et reculer mais on choisie la vitesse sa vas de 0.1 a 1
-  pwm.setDutyCycle(5, 1); // gérer 1 verin 5 desendre / 4 monter
+  // il fais avancer et reculer mais on choisie la vitesse sa vas de 0.1 a 1 (regler le cicle de service )
+  pwm.setDutyCycle(4, 1); // gérer 1 verin 5 desendre / 4 monter
   pwm.setDutyCycle(2, 1); // gérer l autre 3 desendre / 2 monter
   pwm.setDutyCycle(7, 1); // gérer l autre 7 desendre / 6 monter
 
@@ -43,7 +43,7 @@ const pwm = new Pca9685Driver(options, function (err) {
             }
  */
 
-  //pwm.setPulseLength(0, 300);// pour le serveau moteur sa marche
+  //pwm.setPulseLength(0, 300);// pour le serveau moteur sa marche (regler sicle d inpultion)
   // a 100% le chanel il fais avancer et reculer le verrin
   //pwm.channelOff(5);
   //pwm.channelOn(4);
