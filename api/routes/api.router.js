@@ -1,9 +1,6 @@
 const apiRoutes = require("express").Router();
 const os = require("os");
 
-// Config
-const debug = require("../config/debug");
-
 // Controllers
 const functions = require("../controllers/api.controller");
 
