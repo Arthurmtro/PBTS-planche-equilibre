@@ -1,13 +1,14 @@
 {
   "label": "Mcdo",
   "category": "debug",
-  "duration": 10000,
+  "duration": 20000,
   "actions": [
     {
       "cylinderId": "Verin1",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0},
         { "action": "backward", "speed": 1, "time": 5000},
+        { "action": "forward", "speed": 1, "time": 5000 },
         { "action": "forward", "speed": 1, "time": 5000 }
       ]
     },
