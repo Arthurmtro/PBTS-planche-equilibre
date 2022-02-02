@@ -140,11 +140,7 @@ const runProfileWithId = async (profileId, res) => {
             );
           });
         });
-        res
-          .status(200)
-          .send(
-            `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
-          );
+        res.status(200).send(`Profil ${profile.name} running !`);
       }
     );
   } catch (error) {

@@ -1,5 +1,4 @@
 // Api
-import initPlanche from "../api/initPlanche";
 import runProfileWithId from "../api/runProfile";
 
 // Types
