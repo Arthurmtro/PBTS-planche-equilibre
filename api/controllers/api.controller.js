@@ -19,7 +19,7 @@ const options = {
   i2c: i2cBus?.openSync(1),
   address: 0x40,
   frequency: 1000,
-  debug: true,
+  debug: false,
 };
 
 const delay = (value) => new Promise((res) => setTimeout(res, value));
@@ -100,8 +100,6 @@ const runProfileWithId = async (profileId, res) => {
         const executeProfile = async (action, cylinder) => {
           if (!isActive) return;
 
-          let commands = action.commands;
-
           for (const command of action.commands) {
             if (!isActive) return;
             console.log("Execution de la séquence ", command);
@@ -126,11 +124,11 @@ const runProfileWithId = async (profileId, res) => {
           executeProfile(action, cylinder).then(() => {
             pwm.allChannelsOff();
             console.log(
-              `Profil ${profile.name}, cylinder "${action.cylinderId}": terminé !`
+              `Profil ${profile.label}, cylinder "${action.cylinderId}": terminé !`
             );
           });
         }
-        res.status(200).send(`Profil ${profile.name} running !`);
+        res.status(200).send(`Profil ${profile.label} running !`);
       }
     );
   } catch (error) {
