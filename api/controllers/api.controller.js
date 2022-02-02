@@ -100,7 +100,6 @@ const runProfileWithId = async (profileId, res) => {
         const executeProfile = async (action, cylinder) => {
           if (!isActive) return;
 
-          console.log(" ==========  cylinder", cylinder);
           for (const command of action.commands) {
             if (!isActive) return;
             console.log("Execution de la séquence ", command);
@@ -125,6 +124,7 @@ const runProfileWithId = async (profileId, res) => {
             console.log(
               `Profil ${profile.label}, cylinder "${action.cylinderId}": terminé !`
             );
+            init();
           });
         }
 
@@ -136,7 +136,7 @@ const runProfileWithId = async (profileId, res) => {
   }
 };
 
-const init = async (res) => {
+const init = async (res = null) => {
   try {
     if (!pwm) throw new Error("PWM is not initialised !");
 
@@ -150,7 +150,9 @@ const init = async (res) => {
       pwm.setDutyCycle(cylindersData[index].backwardId, 1);
     }
     delay(23000);
-    res.status(200).send("Initialised !");
+    if (res) {
+      res.status(200).send("Initialised !");
+    }
   } catch (error) {
     return sendError(error, res);
   }
