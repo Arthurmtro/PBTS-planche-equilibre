@@ -113,7 +113,7 @@ const runProfileWithId = async (profileId, res) => {
           return;
         };
 
-        profile.actions.foreach((action) => {
+        profile.actions.forEach((action) => {
           if (!isActive) return;
           const cylinder = cylindersData.find(({ id }) => action.cylinderId);
 
