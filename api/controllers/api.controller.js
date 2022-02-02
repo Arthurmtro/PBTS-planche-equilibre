@@ -95,51 +95,41 @@ const runProfileWithId = async (profileId, res) => {
 
         isActive = true;
 
-        const executeProfile = (action, verrin) => {
+        const executeProfile = async (action, cylinder) => {
           if (!isActive) return;
 
           let commands = action.commands;
 
-          return commands.reduce((lastProm, val) => {
-            return lastProm
-              .then((resultArrSoFar) => {
-                if (!isActive) return;
+          for (let index = 0; index < action.commands.length; index++) {
+            if (!isActive) return;
+            console.log("Execution de la séquence ", index);
+            pwm.channelOff(cylinder.forwardId);
+            pwm.channelOff(cylinder.backwardId);
 
-                console.log("isActive ======>> ", isActive);
+            console.log(`val speed is ${val.speed}`);
 
-                console.log("Execution de la séquence");
-                pwm.channelOff(verrin.forwardId);
-                pwm.channelOff(verrin.backwardId);
+            pwm.setDutyCycle(cylinder[`${val.action}Id`], val.speed);
 
-                console.log(`val speed is ${val.speed}`);
-
-                switch (val.action) {
-                  case "forward":
-                    pwm.setDutyCycle(verrin.forwardId, val.speed);
-                    break;
-
-                  case "backward":
-                    pwm.setDutyCycle(verrin.backwardId, val.speed);
-                    break;
-                }
-                console.log("isActive ======>> ", isActive);
-                return val;
-              })
-              .then(delay(val.time));
-          });
+            await delay(val.time);
+            return val;
+          }
+          return;
         };
 
-        profile.actions.map((action) => {
+        for (const action of profile.actions) {
           if (!isActive) return;
-          let verrin = cylindersData.find((x) => x.id === action.cylinderId);
 
-          executeProfile(action, verrin).then(() => {
+          const cylinder = cylinderData.find(({ id }) => action.cylinderId);
+
+          const execution = await executeProfile(action, cylinder);
+
+          if (execution) {
             pwm.allChannelsOff();
             console.log(
-              `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
+              `Profil ${profile.name}, cylinder "${action.cylinderId}": terminé !`
             );
-          });
-        });
+          }
+        }
         res.status(200).send(`Profil ${profile.name} running !`);
       }
     );
