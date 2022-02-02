@@ -37,6 +37,16 @@ const sendError = (error, res) => {
   return res && res.status(666).json({ error: error.message ?? "Unknow" });
 };
 
+const fetchStatus = async (res) => {
+  try {
+    if (!pwm) throw new Error("PWM is not initialised !");
+
+    res.status(200).send("Connexion OK");
+  } catch (error) {
+    return sendError(error, res);
+  }
+};
+
 const fetchCylindersInfos = async (res) => {
   try {
     res.status(200).send(JSON.stringify(cylindersData));
@@ -106,7 +116,9 @@ const runProfileWithId = async (profileId, res) => {
             pwm.channelOff(cylinder.forwardId);
             pwm.channelOff(cylinder.backwardId);
 
-            pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed);
+            if (command.action !== "stop") {
+              pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed);
+            }
 
             await delay(command.time).then(() => command);
           }
@@ -160,7 +172,8 @@ const init = async (res = null) => {
 
 module.exports = {
   fetchCylindersInfos,
-  fetchProfiles,
   runProfileWithId,
+  fetchProfiles,
+  fetchStatus,
   init,
 };

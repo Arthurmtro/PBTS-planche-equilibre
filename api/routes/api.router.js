@@ -8,6 +8,10 @@ apiRoutes.get("/hostname/", (req, res) => {
   res.send(`hostname is ${os.hostname()}`);
 });
 
+apiRoutes.get("/fetch-status", async (req, res) => {
+  return await functions.fetchStatus(res);
+});
+
 apiRoutes.get("/fetch-cylinders-infos", async (req, res) => {
   return await functions.fetchCylindersInfos(res);
 });

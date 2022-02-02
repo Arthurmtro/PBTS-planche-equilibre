@@ -1,13 +1,14 @@
 {
   "label": "Profile 1",
   "category": "Sport",
-  "duration": 20500,
+  "duration": 28500,
   "actions": [
     {
       "cylinderId": "Verin1",
       "commands": [
         { "action": "forward", "speed": 1, "time": 8000 },
         { "action": "forward", "speed": 1, "time": 4000 },
+        { "action": "stop", "time": 8000 },
         { "action": "forward", "speed": 1, "time": 2000 },
         { "action": "forward", "speed": 1, "time": 3000 },
         { "action": "backward", "speed": 1, "time": 1500 },
@@ -23,6 +24,7 @@
         { "action": "backward", "speed": 1, "time": 1500 },
         { "action": "forward", "speed": 1, "time": 3000 },
         { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "stop", "time": 8000 },
         { "action": "forward", "speed": 1, "time": 2000 },
         { "action": "backward", "speed": 1, "time": 1000 }
       ]
@@ -31,6 +33,7 @@
       "cylinderId": "Verin3",
       "commands": [
         { "action": "forward", "speed": 1, "time": 8000 },
+        { "action": "stop", "time": 8000 },
         { "action": "backward", "speed": 1, "time": 1000 },
         { "action": "backward", "speed": 1, "time": 1000 },
         { "action": "forward", "speed": 1, "time": 4000 },

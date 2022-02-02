@@ -9,7 +9,6 @@ import ProfilesDataProvider from "./contexts/profilesProvider";
 // Pages
 import RunningPage from "./pages/Running";
 import HomePage from "./pages/Home";
-import Configurationpage from "./pages/Configuration";
 
 // Components
 import Layout from "./components/Layout";
