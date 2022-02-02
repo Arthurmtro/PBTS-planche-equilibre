@@ -18,6 +18,7 @@ export const runProfile = async (
     runProfileWithId(profile.fileName);
 
     setTimeout(() => {
+      console.log("LAUNCHING FUNC : stopProfile");
       stopProfile(setTimeSpend, setRunningProfile);
     }, profile.duration);
   } catch (error) {
