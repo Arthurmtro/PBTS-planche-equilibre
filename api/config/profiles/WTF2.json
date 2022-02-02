@@ -1,0 +1,45 @@
+{
+  "label": "WTF2",
+  "category": "debug",
+  "duration": 18500,
+  "actions": [
+    {
+      "cylinderId": "Verin1",
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 12500 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 },
+        { "action": "backward", "speed": 1, "time": 1000 }
+
+        
+      ]
+    },
+    {
+      "cylinderId": "Verin2",
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 12500 },
+        { "action": "forward", "speed": 1, "time": 1000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 }
+      ]
+    },
+    {
+      "cylinderId": "Verin3",
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 12500 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "backward", "speed": 1, "time": 1000 },
+        { "action": "forward", "speed": 1, "time": 1000 }
+      ]
+    }
+  ]
+}

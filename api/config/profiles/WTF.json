@@ -1,36 +1,45 @@
 {
   "label": "WTF",
   "category": "debug",
-  "duration": 51723,
+  "duration": 76005,
   "actions": [
     {
       "cylinderId": "Verin1",
       "commands": [
-        { "action": "forward", "speed": 1, "time": 2988},
-        { "action": "backward", "speed": 1, "time": 22988 },
+        { "action": "forward", "speed": 1, "time": 13988},
+        { "action": "backward", "speed": 0.5, "time": 22988 },
         { "action": "forward", "speed": 1, "time": 2747 },
         { "action": "backward", "speed": 1, "time": 1547 },
+        { "action": "forward", "speed": 0.5, "time": 13747 },
+        { "action": "backward", "speed": 1, "time": 10747 },
+        { "action": "forward", "speed": 0.25, "time": 2747 },
+        { "action": "backward", "speed": 1, "time": 4747 },
         { "action": "forward", "speed": 1, "time": 2747 }
       ]
     },
     {
       "cylinderId": "Verin2",
       "commands": [
-        { "action": "forward", "speed": 1, "time": 4988},
-        { "action": "backward", "speed": 1, "time": 22988 },
+        { "action": "forward", "speed": 1, "time": 13988},
+        { "action": "backward", "speed": 0.75, "time": 22988 },
         { "action": "forward", "speed": 1, "time": 6747 },
         { "action": "backward", "speed": 1, "time":5247 },
+        { "action": "forward", "speed": 1, "time": 6747 },
+        { "action": "backward", "speed": 0.25, "time": 10747 },
+        { "action": "forward", "speed": 1, "time": 10747 },
+        { "action": "backward", "speed": 0.5, "time": 10837 },
         { "action": "forward", "speed": 1, "time": 6747 }
       ]
     },
     {
       "cylinderId": "Verin3",
       "commands": [
-        { "action": "forward", "speed": 1, "time": 3988},
-        { "action": "backward", "speed": 1, "time": 2988 },
-        { "action": "forward", "speed": 1, "time": 3647 },
-        { "action": "backward", "speed": 1, "time":4247 },
-        { "action": "forward", "speed": 1, "time": 6747 }
+        { "action": "forward", "speed": 1, "time": 13988},
+        { "action": "backward", "speed": 0.5, "time": 20000 },
+        { "action": "backward", "speed": 1, "time": 10000 },
+        { "action": "forward", "speed": 0.5, "time":30000 },
+        { "action": "backward", "speed": 1, "time": 20000 }
+        
       ]
     }
   ]
