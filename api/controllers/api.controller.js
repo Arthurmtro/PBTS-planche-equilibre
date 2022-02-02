@@ -113,7 +113,7 @@ const runProfileWithId = async (profileId, res) => {
           return;
         };
 
-        for (const action of profile.actions) {
+        profile.actions.foreach((action) => {
           if (!isActive) return;
           const cylinder = cylindersData.find(({ id }) => action.cylinderId);
 
@@ -123,7 +123,7 @@ const runProfileWithId = async (profileId, res) => {
               `Profil ${profile.label}, cylinder "${action.cylinderId}": terminé !`
             );
           });
-        }
+        });
         res.status(200).send(`Profil ${profile.label} running !`);
       }
     );
