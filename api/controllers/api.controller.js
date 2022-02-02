@@ -93,6 +93,8 @@ const runProfileWithId = async (profileId, res) => {
         if (err) throw new Error(err.message);
         const profile = JSON.parse(data);
 
+        console.log("profile", profile);
+
         isActive = true;
 
         const executeProfile = async (action, cylinder) => {
