@@ -29,8 +29,8 @@ export default function Button({
               : color === "secondary"
               ? "var(--color-rgb-secondary)"
               : color === "danger"
-              ? "#DF0D0D"
-              : "#ffff",
+              ? "223, 13, 13"
+              : "255, 255, 255",
           "--button-color": color === "white" ? "#000000" : "#f7f7f7",
           "--font-weight": thin ? "thin" : "bold",
         } as CSSProperties

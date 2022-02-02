@@ -6,7 +6,7 @@ export interface ICylinderInfos {
   };
 }
 
-export interface Iprofile {
+export interface IProfile {
   label: string;
   category?: string;
   fileName?: string;

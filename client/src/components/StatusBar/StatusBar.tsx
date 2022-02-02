@@ -1,9 +1,6 @@
 import styles from "./StatusBar.module.css";
 import { CSSProperties } from "react";
 
-// Api
-import initPlanche from "../../api/initPlanche";
-
 // Contexts
 import { useCylindersData } from "../../contexts/cylindersProdiver";
 import { useRunningProfile } from "../../contexts/runningProvider";
@@ -11,6 +8,7 @@ import { useRunningProfile } from "../../contexts/runningProvider";
 // Components
 import Button from "../Button";
 import Badge from "../Badge";
+import { stopProfile } from "../../utils/stopProfile";
 
 export default function StatusBar() {
   const { status, error } = useCylindersData();
@@ -20,15 +18,6 @@ export default function StatusBar() {
   if (error) {
     console.log("error :>> ", error?.message);
   }
-
-  const stopProfile = () => {
-    setTimeSpend(0);
-    setRunningProfile({
-      label: "init",
-      duration: 20000,
-    });
-    initPlanche();
-  };
 
   return (
     <section className={styles["status-bar"]}>
@@ -41,7 +30,10 @@ export default function StatusBar() {
                 {runningProfile.label.toUpperCase()}
               </span>
             </Button>
-            <Button color="danger" onClick={() => stopProfile()}>
+            <Button
+              color="danger"
+              onClick={() => stopProfile(setTimeSpend, setRunningProfile)}
+            >
               STOP
             </Button>
           </>
@@ -53,7 +45,10 @@ export default function StatusBar() {
           </>
         ) : (
           <>
-            <Button color="primary" onClick={() => stopProfile()}>
+            <Button
+              color="primary"
+              onClick={() => stopProfile(setTimeSpend, setRunningProfile)}
+            >
               initialiser planche
             </Button>
           </>

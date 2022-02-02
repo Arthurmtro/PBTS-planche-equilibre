@@ -5,10 +5,10 @@ import { useQuery } from "react-query";
 import fetchAllProfiles from "../api/fetchAllProfiles";
 
 // Types
-import { Iprofile } from "../types/Infos";
+import { IProfile } from "../types/Infos";
 
 type cylinderInfosType = {
-  profiles: Iprofile[] | undefined;
+  profiles: IProfile[] | undefined;
   status: "idle" | "error" | "loading" | "success";
   error: Error | null;
 };
@@ -24,7 +24,7 @@ export default function ProfilesDataProvider({
     data: profiles,
     status,
     error,
-  } = useQuery<Iprofile[], Error>("profiles", fetchAllProfiles);
+  } = useQuery<IProfile[], Error>("profiles", fetchAllProfiles);
 
   return (
     <ProfilesData.Provider value={{ profiles, status, error }}>
