@@ -121,14 +121,12 @@ const runProfileWithId = async (profileId, res) => {
 
           const cylinder = cylinderData.find(({ id }) => action.cylinderId);
 
-          const execution = await executeProfile(action, cylinder);
-
-          if (execution) {
+          executeProfile(action, cylinder).then(() => {
             pwm.allChannelsOff();
             console.log(
               `Profil ${profile.name}, cylinder "${action.cylinderId}": terminé !`
             );
-          }
+          });
         }
         res.status(200).send(`Profil ${profile.name} running !`);
       }
