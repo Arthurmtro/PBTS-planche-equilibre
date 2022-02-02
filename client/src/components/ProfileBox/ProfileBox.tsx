@@ -1,3 +1,7 @@
+// Api
+import runProfile from "../../api/runProfile";
+import initPlanche from "../../api/initPlanche";
+
 // types
 import { IProfile } from "../../types/Infos";
 
@@ -9,8 +13,6 @@ import styles from "./ProfileBox.module.css";
 import Button from "../Button";
 import Badge from "../Badge";
 import Box from "../Box";
-import { runProfile } from "../../utils/runProfile";
-import { stopProfile } from "../../utils/stopProfile";
 
 type ProfileBoxParams = {
   profile: IProfile;
@@ -19,6 +21,23 @@ type ProfileBoxParams = {
 export default function ProfileBox({ profile }: ProfileBoxParams) {
   const { runningProfile, setRunningProfile, setTimeSpend } =
     useRunningProfile();
+
+  const setProfile = () => {
+    if (!profile.fileName) return;
+
+    setTimeSpend(0);
+    setRunningProfile(profile);
+    runProfile(profile.fileName);
+  };
+
+  const stopProfile = () => {
+    setTimeSpend(0);
+    setRunningProfile({
+      label: "init",
+      duration: 23000,
+    });
+    initPlanche();
+  };
 
   return (
     <Box size="fill">
@@ -40,7 +59,7 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
             <Button
               disabled={runningProfile.label === "init"}
               color="danger"
-              onClick={() => stopProfile(setTimeSpend, setRunningProfile)}
+              onClick={() => stopProfile()}
             >
               Stop
             </Button>
@@ -48,9 +67,7 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
             <Button
               disabled={runningProfile !== null}
               color="secondary"
-              onClick={() =>
-                runProfile(profile, setTimeSpend, setRunningProfile)
-              }
+              onClick={() => setProfile()}
             >
               lancer
             </Button>
