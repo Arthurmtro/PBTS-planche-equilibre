@@ -1,6 +1,6 @@
 {
   "label": "Test",
-  "category": "Test",
+  "category": "debug",
   "duration": 20500,
   "actions": [
     {

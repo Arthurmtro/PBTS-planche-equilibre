@@ -1,13 +1,13 @@
 {
-  "label": "Profile 2",
-  "category": "Test",
+  "label": "allllllllller plus haut",
+  "category": "debug",
   "duration": 20500,
   "actions": [
     {
       "cylinderId": "Verin1",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
-        { "action": "forward", "speed": 1, "time": 80000 }
+        { "action": "forward", "speed": 0.2, "time": 80000 }
         
       ]
     },
@@ -15,14 +15,14 @@
       "cylinderId": "Verin2",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
-        { "action": "forward", "speed": 1, "time": 80000 }
+        { "action": "forward", "speed": 0.2, "time": 80000 }
       ]
     },
     {
       "cylinderId": "Verin3",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
-        { "action": "forward", "speed": 1, "time": 80000 }
+        { "action": "forward", "speed": 0.2, "time": 80000 }
       ]
     }
   ]
