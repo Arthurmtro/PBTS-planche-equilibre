@@ -17,6 +17,7 @@ export const runProfile = async (
     setRunningProfile(profile);
     runProfileWithId(profile.fileName);
 
+    console.log("LAUNCHING setTimeout for " + profile.duration + "s");
     setTimeout(() => {
       console.log("LAUNCHING FUNC : stopProfile");
       stopProfile(setTimeSpend, setRunningProfile);
