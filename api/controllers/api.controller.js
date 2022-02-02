@@ -100,6 +100,7 @@ const runProfileWithId = async (profileId, res) => {
         const executeProfile = async (action, cylinder) => {
           if (!isActive) return;
 
+          console.log(" ==========  cylinder", cylinder);
           for (const command of action.commands) {
             if (!isActive) return;
             console.log("Execution de la séquence ", command);
@@ -113,9 +114,11 @@ const runProfileWithId = async (profileId, res) => {
           return;
         };
 
-        profile.actions.forEach((action) => {
+        for (const action of actions) {
           if (!isActive) return;
-          const cylinder = cylindersData.find(({ id }) => action.cylinderId);
+          const cylinder = cylindersData.find(
+            ({ id }) => id === action.cylinderId
+          );
 
           executeProfile(action, cylinder).then(() => {
             pwm.allChannelsOff();
@@ -123,7 +126,8 @@ const runProfileWithId = async (profileId, res) => {
               `Profil ${profile.label}, cylinder "${action.cylinderId}": terminé !`
             );
           });
-        });
+        }
+
         res.status(200).send(`Profil ${profile.label} running !`);
       }
     );
