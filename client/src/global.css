@@ -43,4 +43,9 @@ li {
   --box-border-radius: 38px;
 
   --button-border-radius: 38px;
+
+  --color-success: 56, 236, 40;
+  --color-danger: 223, 13, 13;
+  --color-rgb-primary: 132, 83, 252;
+  --color-rgb-secondary: 211, 160, 248;
 }
