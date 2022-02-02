@@ -1,32 +1,26 @@
 {
   "label": "Mcdo",
   "category": "debug",
-  "duration": 20000,
+  "duration": 10000,
   "actions": [
     {
       "cylinderId": "Verin1",
       "commands": [
-        { "action": "forward", "speed": 1, "time": 0},
-        { "action": "backward", "speed": 1, "time": 5000},
-        { "action": "forward", "speed": 1, "time": 5000 },
+        { "action": "backward", "speed": 1, "time": 5000 },
         { "action": "forward", "speed": 1, "time": 5000 }
       ]
     },
     {
       "cylinderId": "Verin2",
       "commands": [
-        { "action": "forward", "speed": 1, "time": 0},
-        { "action": "backward", "speed": 1, "time": 5000},
-        { "action": "forward", "speed": 1, "time": 5000},
+        { "action": "backward", "speed": 1, "time": 5000 },
         { "action": "forward", "speed": 1, "time": 5000 }
       ]
     },
     {
       "cylinderId": "Verin3",
       "commands": [
-        { "action": "forward", "speed": 1, "time": 0},
-        { "action": "backward", "speed": 1, "time": 5000},
-        { "action": "forward", "speed": 1, "time": 5000},
+        { "action": "backward", "speed": 1, "time": 5000 },
         { "action": "forward", "speed": 1, "time": 5000 }
       ]
     }
