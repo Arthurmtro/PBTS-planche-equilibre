@@ -100,9 +100,6 @@ const runProfileWithId = async (profileId, res) => {
         const executeProfile = async (action, cylinder) => {
           if (!isActive) return;
 
-          console.log("action", action);
-          console.log("cylinder", cylinder);
-
           for (const command of action.commands) {
             if (!isActive) return;
             console.log("Execution de la séquence ", command);
@@ -111,8 +108,7 @@ const runProfileWithId = async (profileId, res) => {
 
             pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed);
 
-            await delay(command.time);
-            return command;
+            await delay(command.time).then(() => command);
           }
           return;
         };
