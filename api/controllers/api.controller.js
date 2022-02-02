@@ -102,7 +102,7 @@ const runProfileWithId = async (profileId, res) => {
 
           for (const command of action.commands) {
             if (!isActive) return;
-            console.log("Execution de la séquence ", index);
+            console.log("Execution de la séquence ", command);
             pwm.channelOff(cylinder.forwardId);
             pwm.channelOff(cylinder.backwardId);
 
