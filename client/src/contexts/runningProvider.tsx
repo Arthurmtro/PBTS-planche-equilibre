@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useMemo } from "react";
 
 // Types
-import { Iprofile } from "../types/Infos";
+import { IProfile } from "../types/Infos";
 
 type cylinderInfosType = {
-  runningProfile: Iprofile | null;
-  setRunningProfile: (arg1: Iprofile | null) => void;
+  runningProfile: IProfile | null;
+  setRunningProfile: (arg1: IProfile | null) => void;
   timeSpend: number;
   setTimeSpend: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -17,7 +17,7 @@ export default function RunningProfileProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [runningProfile, setRunningProfile] = useState<Iprofile | null>(null);
+  const [runningProfile, setRunningProfile] = useState<IProfile | null>(null);
   const [timeSpend, setTimeSpend] = useState<number>(0);
   const value = useMemo(
     () => ({ runningProfile, setRunningProfile, timeSpend, setTimeSpend }),

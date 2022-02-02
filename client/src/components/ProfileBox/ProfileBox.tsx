@@ -3,7 +3,7 @@ import runProfile from "../../api/runProfile";
 import initPlanche from "../../api/initPlanche";
 
 // types
-import { Iprofile } from "../../types/Infos";
+import { IProfile } from "../../types/Infos";
 
 // Contexts
 import { useRunningProfile } from "../../contexts/runningProvider";
@@ -15,7 +15,7 @@ import Badge from "../Badge";
 import Box from "../Box";
 
 type ProfileBoxParams = {
-  profile: Iprofile;
+  profile: IProfile;
 };
 
 export default function ProfileBox({ profile }: ProfileBoxParams) {
@@ -34,7 +34,7 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
     setTimeSpend(0);
     setRunningProfile({
       label: "init",
-      duration: 20000,
+      duration: 23000,
     });
     initPlanche();
   };
