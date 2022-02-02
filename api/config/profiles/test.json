@@ -1,7 +1,7 @@
 {
   "label": "Test",
   "category": "debug",
-  "duration": 31033,
+  "duration": 51723,
   "actions": [
     {
       "cylinderId": "Verin1",
@@ -9,7 +9,7 @@
         { "action": "forward", "speed": 1, "time": 0},
         { "action": "forward", "speed": 1, "time": 22988},
         { "action": "backward", "speed": 0.5, "time": 22988 },
-        { "action": "backward", "speed": 1, "time": 5747 }
+        { "action": "forward", "speed": 1, "time": 5747 }
       ]
     },
     {
@@ -18,7 +18,7 @@
         { "action": "forward", "speed": 1, "time": 0},
         { "action": "forward", "speed": 1, "time": 22988},
         { "action": "backward", "speed": 0.5, "time": 22988 },
-        { "action": "backward", "speed": 1, "time": 5747 }
+        { "action": "forward", "speed": 1, "time": 5747 }
       ]
     },
     {
@@ -27,7 +27,7 @@
         { "action": "forward", "speed": 1, "time": 0},
         { "action": "forward", "speed": 1, "time": 22988},
         { "action": "backward", "speed": 0.5, "time": 22988 },
-        { "action": "backward", "speed": 1, "time": 5747 }
+        { "action": "forward", "speed": 1, "time": 5747 }
       ]
     }
   ]
