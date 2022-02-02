@@ -19,7 +19,7 @@ const options = {
   i2c: i2cBus?.openSync(1),
   address: 0x40,
   frequency: 1000,
-  debug: true,
+  debug: false,
 };
 
 const delay = (value) => new Promise((res) => setTimeout(res, value));
@@ -93,54 +93,39 @@ const runProfileWithId = async (profileId, res) => {
         if (err) throw new Error(err.message);
         const profile = JSON.parse(data);
 
+        console.log("profile", profile);
+
         isActive = true;
 
-        const executeProfile = (action, verrin) => {
+        const executeProfile = async (action, cylinder) => {
           if (!isActive) return;
 
-          let commands = action.commands;
+          for (const command of action.commands) {
+            if (!isActive) return;
+            console.log("Execution de la séquence ", command);
+            pwm.channelOff(cylinder.forwardId);
+            pwm.channelOff(cylinder.backwardId);
 
-          return commands.reduce((lastProm, val) => {
-            lastProm
-              .then(() => {
-                if (!isActive) return;
+            pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed);
 
-                console.log("isActive ======>> ", isActive);
-
-                console.log("Execution de la séquence");
-                pwm.channelOff(verrin.forwardId);
-                pwm.channelOff(verrin.backwardId);
-
-                console.log(`val speed is ${val.speed}`);
-
-                switch (val.action) {
-                  case "forward":
-                    pwm.setDutyCycle(verrin.forwardId, val.speed);
-                    break;
-
-                  case "backward":
-                    pwm.setDutyCycle(verrin.backwardId, val.speed);
-                    break;
-                }
-                console.log("isActive ======>> ", isActive);
-                return val;
-              })
-              .then(delay(val.time));
-          });
+            await delay(command.time).then(() => command);
+          }
+          return;
         };
 
-        profile.actions.map((action) => {
+        for (const action of profile.actions) {
           if (!isActive) return;
-          let verrin = cylindersData.find((x) => x.id === action.cylinderId);
 
-          executeProfile(action, verrin).then(() => {
+          const cylinder = cylindersData.find(({ id }) => action.cylinderId);
+
+          executeProfile(action, cylinder).then(() => {
             pwm.allChannelsOff();
             console.log(
-              `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
+              `Profil ${profile.label}, cylinder "${action.cylinderId}": terminé !`
             );
           });
-        });
-        res.status(200).send(`Profil ${profile.name} running !`);
+        }
+        res.status(200).send(`Profil ${profile.label} running !`);
       }
     );
   } catch (error) {
