@@ -17,7 +17,8 @@
       "commands": [
         { "action": "forward", "speed": 1, "time": 0},
         { "action": "backward", "speed": 1, "time": 5000},
-        { "action": "forward", "speed": 1, "time": 5000}
+        { "action": "forward", "speed": 1, "time": 5000},
+        { "action": "forward", "speed": 1, "time": 5000 }
       ]
     },
     {
@@ -25,7 +26,8 @@
       "commands": [
         { "action": "forward", "speed": 1, "time": 0},
         { "action": "backward", "speed": 1, "time": 5000},
-        { "action": "forward", "speed": 1, "time": 5000}
+        { "action": "forward", "speed": 1, "time": 5000},
+        { "action": "forward", "speed": 1, "time": 5000 }
       ]
     }
   ]
