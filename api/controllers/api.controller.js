@@ -114,7 +114,7 @@ const runProfileWithId = async (profileId, res) => {
           return;
         };
 
-        for (const action of actions) {
+        for (const action of profile.actions) {
           if (!isActive) return;
           const cylinder = cylindersData.find(
             ({ id }) => id === action.cylinderId
