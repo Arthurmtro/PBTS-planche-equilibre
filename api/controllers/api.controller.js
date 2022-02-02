@@ -100,18 +100,18 @@ const runProfileWithId = async (profileId, res) => {
 
           let commands = action.commands;
 
-          for (const action of action.commands) {
+          for (const command of action.commands) {
             if (!isActive) return;
             console.log("Execution de la séquence ", index);
             pwm.channelOff(cylinder.forwardId);
             pwm.channelOff(cylinder.backwardId);
 
-            console.log(`val speed is ${action.speed}`);
+            console.log(`val speed is ${command.speed}`);
 
-            pwm.setDutyCycle(cylinder[`${action.action}Id`], action.speed);
+            pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed);
 
-            await delay(action.time);
-            return action;
+            await delay(command.time);
+            return command;
           }
           return;
         };
