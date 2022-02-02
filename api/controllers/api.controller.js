@@ -119,7 +119,7 @@ const runProfileWithId = async (profileId, res) => {
         for (const action of profile.actions) {
           if (!isActive) return;
 
-          const cylinder = cylinderData.find(({ id }) => action.cylinderId);
+          const cylinder = cylindersData.find(({ id }) => action.cylinderId);
 
           executeProfile(action, cylinder).then(() => {
             pwm.allChannelsOff();
