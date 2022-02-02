@@ -3,7 +3,6 @@ import runProfileWithId from "../api/runProfile";
 
 // Types
 import { IProfile } from "../types/Infos";
-import { stopProfile } from "./stopProfile";
 
 export const runProfile = async (
   profile: IProfile,
@@ -12,16 +11,9 @@ export const runProfile = async (
 ) => {
   try {
     if (!profile.fileName) throw new Error("Le profile n'est pas correct");
-
     setTimeSpend(0);
     setRunningProfile(profile);
     runProfileWithId(profile.fileName);
-
-    console.log("LAUNCHING setTimeout for " + profile.duration / 1000 + "s");
-    setTimeout(() => {
-      console.log("LAUNCHING FUNC : stopProfile");
-      stopProfile(setTimeSpend, setRunningProfile);
-    }, profile.duration);
   } catch (error) {
     console.log("error running profile => ", error);
   }
