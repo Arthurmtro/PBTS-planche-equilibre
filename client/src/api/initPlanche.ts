@@ -6,5 +6,5 @@ export default async function initPlanche() {
     throw new Error("Problem init");
   }
 
-  return console.log("res", response.json());
+  return console.log("res", response);
 }

@@ -6,6 +6,6 @@ export default async function runProfileWithId(profileId: string) {
     throw new Error("Problem running profiles");
   }
 
-  console.log("res", response.json());
+  console.log("res", response);
   return response;
 }
