@@ -95,42 +95,39 @@ const runProfileWithId = async (profileId, res) => {
 
         isActive = true;
 
-        function executeProfile(action, verrin) {
+        const executeProfile = (action, verrin) => {
           if (!isActive) return;
 
           let commands = action.commands;
-          return commands.reduce(
-            (lastProm, val) =>
-              lastProm.then((resultArrSoFar) =>
-                delay(val.time)
-                  .then(() => {
-                    if (!isActive) return;
 
-                    console.log("isActive ======>> ", isActive);
+          return commands.reduce((lastProm, val) => {
+            lastProm
+              .then(() => {
+                if (!isActive) return;
 
-                    console.log("Execution de la séquence");
-                    pwm.channelOff(verrin.forwardId);
-                    pwm.channelOff(verrin.backwardId);
+                console.log("isActive ======>> ", isActive);
 
-                    console.log(`val speed is ${val.speed}`);
+                console.log("Execution de la séquence");
+                pwm.channelOff(verrin.forwardId);
+                pwm.channelOff(verrin.backwardId);
 
-                    switch (val.action) {
-                      case "forward":
-                        pwm.setDutyCycle(verrin.forwardId, val.speed);
-                        break;
+                console.log(`val speed is ${val.speed}`);
 
-                      case "backward":
-                        pwm.setDutyCycle(verrin.backwardId, val.speed);
-                        break;
-                    }
-                    console.log("isActive ======>> ", isActive);
-                    return val;
-                  })
-                  .then((result) => [...resultArrSoFar, result])
-              ),
-            Promise.resolve([])
-          );
-        }
+                switch (val.action) {
+                  case "forward":
+                    pwm.setDutyCycle(verrin.forwardId, val.speed);
+                    break;
+
+                  case "backward":
+                    pwm.setDutyCycle(verrin.backwardId, val.speed);
+                    break;
+                }
+                console.log("isActive ======>> ", isActive);
+                return val;
+              })
+              .then(delay(val.time));
+          });
+        };
 
         profile.actions.map((action) => {
           if (!isActive) return;
