@@ -8,6 +8,7 @@ export const stopProfile = (
   setTimeSpend: (value: React.SetStateAction<number>) => void,
   setRunningProfile: (arg1: IProfile | null) => void
 ) => {
+  console.log("IT SHOULD STOP !!");
   setTimeSpend(0);
   setRunningProfile({
     label: "init",

@@ -1,5 +1,4 @@
 // Api
-import initPlanche from "../api/initPlanche";
 import runProfileWithId from "../api/runProfile";
 
 // Types
@@ -16,10 +15,13 @@ export const runProfile = async (
 
     setTimeSpend(0);
     setRunningProfile(profile);
-    const profileRes = await runProfileWithId(profile.fileName);
+    runProfileWithId(profile.fileName);
 
-    if (profileRes) {
+    setTimeout(() => {
+      console.log("LAUNCHING FUNC : stopProfile");
       stopProfile(setTimeSpend, setRunningProfile);
-    }
-  } catch (e) {}
+    }, profile.duration);
+  } catch (error) {
+    console.log("error running profile => ", error);
+  }
 };
