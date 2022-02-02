@@ -4,7 +4,7 @@
   "duration": 20500,
   "actions": [
     {
-      "cylinderId": "Verrin1",
+      "cylinderId": "Verin1",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
         { "action": "forward", "speed": 1, "time": 8000 },
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "cylinderId": "Verrin2",
+      "cylinderId": "Verin2",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
         { "action": "forward", "speed": 1, "time": 8000 },
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "cylinderId": "Verrin3",
+      "cylinderId": "Verin3",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
         { "action": "forward", "speed": 1, "time": 8000 },
