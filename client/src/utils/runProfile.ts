@@ -15,10 +15,12 @@ export const runProfile = async (
 
     setTimeSpend(0);
     setRunningProfile(profile);
-    const profileRes = await runProfileWithId(profile.fileName);
+    runProfileWithId(profile.fileName);
 
-    if (profileRes) {
+    setTimeout(() => {
       stopProfile(setTimeSpend, setRunningProfile);
-    }
-  } catch (e) {}
+    }, profile.duration);
+  } catch (error) {
+    console.log("error running profile => ", error);
+  }
 };
