@@ -101,8 +101,8 @@ const runProfileWithId = async (profileId, res) => {
           let commands = action.commands;
 
           return commands.reduce((lastProm, val) => {
-            lastProm
-              .then(() => {
+            return lastProm
+              .then((resultArrSoFar) => {
                 if (!isActive) return;
 
                 console.log("isActive ======>> ", isActive);
