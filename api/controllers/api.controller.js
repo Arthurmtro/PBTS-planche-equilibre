@@ -111,6 +111,9 @@ const runProfileWithId = async (profileId, res) => {
                     console.log("Execution de la séquence");
                     pwm.channelOff(verrin.forwardId);
                     pwm.channelOff(verrin.backwardId);
+
+                    console.log(`val speed is ${val.speed}`);
+
                     switch (val.action) {
                       case "forward":
                         pwm.setDutyCycle(verrin.forwardId, val.speed);
