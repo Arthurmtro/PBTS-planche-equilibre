@@ -138,13 +138,13 @@ const runProfileWithId = async (profileId, res) => {
             console.log(
               `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
             );
-            res
-              .status(200)
-              .send(
-                `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
-              );
           });
         });
+        res
+          .status(200)
+          .send(
+            `Profil ${profile.name} pour le Verrin "${action.cylinderId}" terminé !`
+          );
       }
     );
   } catch (error) {
@@ -166,8 +166,10 @@ const init = async (res) => {
       pwm.setDutyCycle(cylindersData[index].backwardId, 1);
     }
     delay(23000).then(() => {
-      res.status(200).send("Initialised !");
+      pwm.channelOff(cylindersData[index].backwardId);
+      pwm.channelOff(cylindersData[index].forwardId);
     });
+    res.status(200).send("Initialised !");
   } catch (error) {
     return sendError(error, res);
   }
