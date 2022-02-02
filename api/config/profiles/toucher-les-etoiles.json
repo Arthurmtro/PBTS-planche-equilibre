@@ -1,13 +1,13 @@
 {
   "label": "allllllllller plus haut",
   "category": "debug",
-  "duration": 20500,
+  "duration": 23000,
   "actions": [
     {
       "cylinderId": "Verin1",
       "commands": [
         { "action": "forward", "speed": 1, "time": 0 },
-        { "action": "forward", "speed": 1, "time": 80000 }
+        { "action": "forward", "speed": 1, "time": 23000 }
         
       ]
     },
