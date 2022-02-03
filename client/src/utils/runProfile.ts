@@ -3,6 +3,7 @@ import runProfileWithId from "../api/runProfile";
 
 // Types
 import { IProfile } from "../types/Infos";
+import { stopProfile } from "./stopProfile";
 
 export const runProfile = async (
   profile: IProfile,
@@ -14,6 +15,8 @@ export const runProfile = async (
     setTimeSpend(0);
     setRunningProfile(profile);
     runProfileWithId(profile.fileName);
+
+    stopProfile(setTimeSpend, setRunningProfile);
   } catch (error) {
     console.log("error running profile => ", error);
   }
