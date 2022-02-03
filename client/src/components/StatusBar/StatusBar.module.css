@@ -9,6 +9,8 @@
 
   box-shadow: 0px 15px 16px rgba(0, 0, 0, 0.15);
   border-bottom-right-radius: 25px;
+
+  background-color: #fefefe;
 }
 
 .playing-status {

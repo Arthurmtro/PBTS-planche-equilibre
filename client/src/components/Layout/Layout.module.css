@@ -11,10 +11,14 @@
 
 .page-content {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
   margin-top: 2rem;
+}
+
+.page-content div {
+  max-width: 100rem;
 }
 
 /* @media screen and (max-width: 1200px) {

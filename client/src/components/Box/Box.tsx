@@ -2,7 +2,7 @@ import { CSSProperties, ReactNode } from "react";
 import styles from "./Box.module.css";
 
 interface IBoxParams {
-  size?: "lg" | "md" | "sm" | "fill";
+  size?: "lg" | "md" | "sm" | "fill" | "block";
   children?: ReactNode;
 }
 
@@ -17,6 +17,8 @@ export default function Box({ size = "md", children }: IBoxParams) {
         return { height: "25rem", width: "30rem" };
       case "fill":
         return { height: "15rem", width: "100%" };
+      case "block":
+        return { height: "5rem", width: "100%" };
       default:
         return { height: "15rem", width: "25rem" };
     }

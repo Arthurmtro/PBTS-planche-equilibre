@@ -45,7 +45,9 @@ export default function Layout({ children }: ParamsType) {
       <NavBar />
       <div className={styles["app-content"]}>
         <StatusBar />
-        <div className={styles["page-content"]}>{children}</div>
+        <div className={styles["page-content"]}>
+          <div>{children}</div>
+        </div>
       </div>
     </div>
   );

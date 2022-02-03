@@ -15,6 +15,7 @@ export default function RunningPage() {
     <>
       {runningProfile !== null ? (
         <>
+          <ProgressBar />
           <section className={styles.header}>
             <div className={styles["header-titles"]}>
               <h1>{runningProfile.label}</h1>
@@ -24,21 +25,29 @@ export default function RunningPage() {
               Edit Profile
             </Button>
           </section>
-          <ProgressBar />
 
-          <Box size="fill">
-            <h5>Durée : {runningProfile.duration}</h5>
-          </Box>
-          <div className={styles["infos-contents"]}>
-            {runningProfile.actions &&
-              runningProfile.actions.map((action) => (
-                <div key={action.cylinderId} className={styles.commands}>
-                  {action.commands.map((command, idx) => (
-                    <Box key={idx}>{command.action}</Box>
-                  ))}
+          <section className={styles["running-infos"]}>
+            <div className={styles["infos-contents"]}>
+              <Box size="block">
+                <div className={styles.info}>
+                  <span />
+                  <h4>
+                    Durée :{" "}
+                    <strong>{runningProfile.duration / 1000} secondes</strong>
+                  </h4>
+                  <span />
                 </div>
-              ))}
-          </div>
+              </Box>
+              <Box size="block">
+                <div className={styles.info}>
+                  <span />
+                  <h4>Donnée temps `réel` :</h4>
+                  <span />
+                </div>
+              </Box>
+            </div>
+            <Box size="fill">3D view</Box>
+          </section>
         </>
       ) : (
         <>

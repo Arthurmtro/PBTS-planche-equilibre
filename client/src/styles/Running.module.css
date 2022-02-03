@@ -14,16 +14,25 @@
   margin-right: 2rem;
 }
 
-.infos-contents {
-  margin-top: 2rem;
+.running-infos {
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  gap: 5rem;
+  width: 100%;
 }
 
-.commands {
+.infos-contents {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
   flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.info {
+  padding: 0 1.5rem;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
