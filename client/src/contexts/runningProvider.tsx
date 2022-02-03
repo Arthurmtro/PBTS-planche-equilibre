@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, useMemo } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useEffect,
+  ReactNode,
+} from "react";
 
 // Types
 import { IProfile } from "../types/Infos";
@@ -15,7 +22,7 @@ const RunningProfile = createContext<cylinderInfosType>(undefined!);
 export default function RunningProfileProvider({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const [runningProfile, setRunningProfile] = useState<IProfile | null>(null);
   const [timeSpend, setTimeSpend] = useState<number>(0);
@@ -23,6 +30,18 @@ export default function RunningProfileProvider({
     () => ({ runningProfile, setRunningProfile, timeSpend, setTimeSpend }),
     [runningProfile, timeSpend]
   );
+
+  useEffect(() => {
+    if (!runningProfile) return;
+    if (runningProfile?.label === "init") return;
+    if (timeSpend < runningProfile.duration) return;
+
+    setTimeSpend(0);
+    setRunningProfile({
+      label: "init",
+      duration: 23000,
+    });
+  }, [runningProfile, timeSpend]);
 
   return (
     <RunningProfile.Provider value={value}>{children}</RunningProfile.Provider>
