@@ -16,9 +16,9 @@ export default function Box({ size = "md", children }: IBoxParams) {
 			case "sm":
 				return { height: "25rem", width: "30rem" }
 			case "fill":
-				return { height: "15rem", width: "100%" }
+				return { height: "15vw", width: "100%" }
 			case "block":
-				return { height: "5rem", width: "100%" }
+				return { height: "5vw", width: "100%" }
 			default:
 				return { height: "15rem", width: "25rem" }
 		}

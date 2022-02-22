@@ -1,22 +1,22 @@
-.status-bar {
+.navbar {
 	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	flex-direction: column;
-	padding-top: 2vw;
+	padding-top: 10vh;
 
 	background: var(--color-primary);
 	box-shadow: 0 0 1vw rgba(0, 0, 0, 0.603);
 }
 
 @media screen and (max-width: 1200px) {
-	.status-bar {
+	.navbar {
 		display: none;
 	}
 }
 
-.status-bar ul {
+.navbar ul {
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -24,6 +24,12 @@
 	flex-direction: column;
 
 	padding: 0;
+	margin: 0;
 
 	height: 30%;
+}
+
+.app-logo {
+	width: 10vw;
+	margin-bottom: 6vw;
 }

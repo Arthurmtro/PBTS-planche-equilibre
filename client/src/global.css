@@ -6,6 +6,38 @@
 	font-display: swap;
 }
 
+#root {
+	height: 100%;
+	width: 100%;
+}
+
+:root {
+	--color-primary: #8453fc;
+	--color-secondary: #d3a0f8;
+	--color-background: #fefefe;
+
+	--box-background: #f1f2f6;
+	--box-border-radius: 3vw;
+
+	--button-border-radius: 3vw;
+
+	--color-success: 56, 236, 40;
+	--color-danger: 223, 13, 13;
+	--color-rgb-primary: 132, 83, 252;
+	--color-rgb-secondary: 211, 160, 248;
+}
+
+html.dark {
+	--color-primary: #8453fc;
+	--color-secondary: #d3a0f8;
+	--color-background: #181818;
+}
+
+html.theming,
+html.theming * {
+	transition: all 0.2s linear;
+}
+
 html {
 	width: 100%;
 	height: 100%;
@@ -21,7 +53,7 @@ body {
 	font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
 		sans-serif;
 
-	background-color: #fefefe;
+	background-color: var(--color-background);
 }
 
 a {
@@ -30,26 +62,6 @@ a {
 
 li {
 	list-style: none;
-}
-
-#root {
-	height: 100%;
-	width: 100%;
-}
-
-:root {
-	--color-primary: #8453fc;
-	--color-secondary: #d3a0f8;
-
-	--box-background: #f1f2f6;
-	--box-border-radius: 3vw;
-
-	--button-border-radius: 3vw;
-
-	--color-success: 56, 236, 40;
-	--color-danger: 223, 13, 13;
-	--color-rgb-primary: 132, 83, 252;
-	--color-rgb-secondary: 211, 160, 248;
 }
 
 ::-webkit-scrollbar {

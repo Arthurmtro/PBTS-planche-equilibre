@@ -43,7 +43,7 @@ export default function Layout({ children }: ParamsType) {
 		<div className={styles.layout}>
 			<StatusBar />
 			<div className={styles["app-content"]}>
-				<div className={styles["status-bar"]}>
+				<div className={styles["nav-bar"]}>
 					<NavBar />
 				</div>
 

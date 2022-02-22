@@ -39,6 +39,7 @@ const pwm: Pca9685Driver =
 		if (err) {
 			throw new Error("Error initializing, PCA9685 is null")
 		}
+		init()
 	})
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

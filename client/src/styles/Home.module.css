@@ -1,11 +1,36 @@
 .profiles-boxes {
 	display: grid;
 
-	padding: 2rem 4rem;
+	padding: 2.5vw 0;
 	margin: 0 auto;
 
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: auto;
-	column-gap: 1.5rem;
-	row-gap: 2rem;
+	column-gap: 2vw;
+	row-gap: 2vw;
+}
+
+@media screen and (max-width: 1200px) {
+	.profiles-boxes {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto;
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.profiles-boxes {
+		grid-template-columns: repeat(3, 1fr);
+		/* grid-template-columns: minmax(20vw, auto); */
+		/* grid-template-columns: minmax(min-content, 20vw) minmax(10vw, 1fr) 150px; */
+		grid-template-rows: auto;
+	}
+}
+
+@media screen and (min-width: 2500px) {
+	.profiles-boxes {
+		grid-template-columns: repeat(4, 1fr);
+		/* grid-template-columns: minmax(20vw, auto); */
+		/* grid-template-columns: minmax(min-content, 20vw) minmax(10vw, 1fr) 150px; */
+		grid-template-rows: auto;
+	}
 }

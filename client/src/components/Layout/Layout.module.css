@@ -14,7 +14,7 @@
 	flex-direction: row;
 }
 
-.status-bar {
+.nav-bar {
 	width: 15%;
 }
 
@@ -26,13 +26,28 @@
 	overflow: hidden;
 	overflow-y: scroll;
 
-	margin-top: 4%;
-	padding: 2%;
+	margin-top: 3.5vw;
+	padding: 2vw;
 	width: 85%;
 }
 
 .page-content div {
 	width: 100%;
+}
+
+@media screen and (max-width: 1200px) {
+	.nav-bar {
+		width: 0;
+		display: none;
+	}
+
+	.app-content {
+		width: 100%;
+	}
+
+	.app-content div {
+		width: 100%;
+	}
 }
 
 /* @media screen and (max-width: 1200px) {

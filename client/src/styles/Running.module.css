@@ -1,38 +1,38 @@
 .header {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
 }
 
 .header-titles {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .header-titles h1 {
-  margin-right: 2rem;
+	margin-right: 2vw;
 }
 
 .running-infos {
-  display: flex;
-  justify-content: space-around;
-  gap: 5rem;
-  width: 100%;
+	display: flex;
+	justify-content: space-around;
+	gap: 5vw;
+	width: 100%;
 }
 
 .infos-contents {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5vw;
+	width: 100%;
 }
 
 .info {
-  padding: 0 1.5rem;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+	padding: 0 1.5vw;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
