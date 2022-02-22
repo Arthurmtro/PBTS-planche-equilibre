@@ -1,53 +1,73 @@
 @font-face {
-  font-family: "Nunito";
-  src: url("./assets/fonts/Nunito-Regular.ttf");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
+	font-family: "Nunito";
+	src: url("./assets/fonts/Nunito-Regular.ttf");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
 }
 
 html {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: content-box;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	box-sizing: content-box;
 
-  font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+		sans-serif;
 
-  background-color: #fefefe;
+	background-color: #fefefe;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 li {
-  list-style: none;
+	list-style: none;
 }
 
 #root {
-  height: 100%;
-  width: 100%;
+	height: 100%;
+	width: 100%;
 }
 
 :root {
-  --color-primary: #8453fc;
-  --color-secondary: #d3a0f8;
+	--color-primary: #8453fc;
+	--color-secondary: #d3a0f8;
 
-  --box-background: #f1f2f6;
-  --box-border-radius: 38px;
+	--box-background: #f1f2f6;
+	--box-border-radius: 38px;
 
-  --button-border-radius: 38px;
+	--button-border-radius: 38px;
 
-  --color-success: 56, 236, 40;
-  --color-danger: 223, 13, 13;
-  --color-rgb-primary: 132, 83, 252;
-  --color-rgb-secondary: 211, 160, 248;
+	--color-success: 56, 236, 40;
+	--color-danger: 223, 13, 13;
+	--color-rgb-primary: 132, 83, 252;
+	--color-rgb-secondary: 211, 160, 248;
+}
+
+::-webkit-scrollbar {
+	width: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: var(--color-secondary);
+	border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-primary);
 }

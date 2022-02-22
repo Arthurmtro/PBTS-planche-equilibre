@@ -1,34 +1,32 @@
 .button {
-  background: rgb(var(--button-background));
-  color: var(--button-color);
-  max-height: 2.5rem;
+	background: rgb(var(--button-background));
+	color: var(--button-color);
+	max-height: 2.5rem;
 
-  padding: 0.6rem 2rem;
+	padding: 0.6rem 2rem;
 
-  font-size: 1rem;
-  font-weight: bold;
-  font-weight: var(--font-weight);
+	font-size: 1rem;
+	font-weight: bold;
+	font-weight: var(--font-weight);
 
-  box-shadow: 4px 4px 10px #c7c7c7, -4px -4px 10px #f9f9f993,
-    inset 4px 4px 5px rgba(var(--button-background), 0),
-    inset -4px -4px 5px rgba(var(--button-background), 0);
+	box-shadow: 4px 4px 10px #c7c7c7, -4px -4px 10px #f9f9f993, inset 4px 4px 5px rgba(var(--button-background), 0),
+		inset -4px -4px 5px rgba(var(--button-background), 0);
 
-  border: none;
-  border-radius: var(--button-border-radius);
+	border: none;
+	border-radius: var(--button-border-radius);
 
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
 }
 
 .button:hover:enabled {
-  cursor: pointer;
+	cursor: pointer;
 
-  box-shadow: 2px 2px 5px #c8c9cc00, -2px -2px 5px #ffffff00,
-    inset 3px 3px 10px #00000036, inset -3px -3px 5px #ffffff46;
+	box-shadow: 2px 2px 5px #c8c9cc00, -2px -2px 5px #ffffff00, inset 3px 3px 10px #00000036, inset -3px -3px 5px #ffffff46;
 }
 
 .button:disabled {
-  background: rgba(var(--button-background), 0.5);
+	background: rgba(var(--button-background), 0.5);
 }
