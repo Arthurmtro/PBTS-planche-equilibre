@@ -14,8 +14,9 @@
 	flex-direction: row;
 }
 
-/* .status-bar {
-} */
+.status-bar {
+	width: 20%;
+}
 
 .page-content {
 	display: flex;
@@ -29,6 +30,7 @@
 
 	margin-top: 4rem;
 	padding: 2rem;
+	width: 80%;
 }
 
 .page-content div {

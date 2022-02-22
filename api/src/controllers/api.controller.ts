@@ -1,15 +1,16 @@
+import path from "path"
 import { profileType } from "./../types/profileTypes"
 import { Pca9685Driver } from "pca9685"
 import { Response } from "express"
 import fs from "fs"
 import os from "os"
 
-// Config
-import cylindersData from "../config/cylinders.json"
-
 // Types
 import { cylinderType } from "../types/cylinderType"
 import { actionType } from "../types/profileTypes"
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const cylindersData = require(path.join(__dirname, "../../config/cylinders.json"))
 
 let i2cBus
 
