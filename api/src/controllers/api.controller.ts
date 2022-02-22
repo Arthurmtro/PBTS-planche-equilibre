@@ -137,7 +137,7 @@ export const runProfileWithId = async (profileId: string, res: Response) => {
 					executeProfile(action, cylinder).then(() => {
 						pwm.allChannelsOff()
 						console.log(`Profil ${profile.label}, cylinder "${action.cylinderId}": terminé !`)
-						init(res)
+						init()
 					})
 				}
 
@@ -149,7 +149,7 @@ export const runProfileWithId = async (profileId: string, res: Response) => {
 	}
 }
 
-export const init = async (res: Response) => {
+export const init = async (res: Response | undefined = undefined) => {
 	try {
 		if (!pwm) throw new Error("PWM is not initialised !")
 
@@ -167,6 +167,8 @@ export const init = async (res: Response) => {
 			res.status(200).send("Initialised !")
 		}
 	} catch (error) {
-		return sendError(error, res)
+		if (res) {
+			return sendError(error, res)
+		}
 	}
 }

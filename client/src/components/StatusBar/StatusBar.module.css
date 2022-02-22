@@ -8,12 +8,11 @@
 	align-items: center;
 	justify-content: space-between;
 
-	min-height: 4rem;
+	height: 8.5vh;
 
-	padding: 0 3rem;
+	padding: 0 3vw;
 
 	box-shadow: 0px 15px 16px rgba(0, 0, 0, 0.15);
-	border-bottom-right-radius: 25px;
 
 	background-color: #fefefe;
 }
@@ -26,14 +25,15 @@
 .status-text {
 	color: var(--status-color);
 	font-weight: bold;
-	margin-right: 1rem;
-	margin-left: 0.3rem;
+	margin-right: 1vw;
+	margin-left: 0.4vw;
 }
 
 .status {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	font-size: 1.25vw;
 }
 
 .profile-title {
@@ -52,5 +52,4 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 0.5rem;
 }

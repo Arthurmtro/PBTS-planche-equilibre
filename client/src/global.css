@@ -42,9 +42,9 @@ li {
 	--color-secondary: #d3a0f8;
 
 	--box-background: #f1f2f6;
-	--box-border-radius: 38px;
+	--box-border-radius: 3vw;
 
-	--button-border-radius: 38px;
+	--button-border-radius: 3vw;
 
 	--color-success: 56, 236, 40;
 	--color-danger: 223, 13, 13;
@@ -53,7 +53,7 @@ li {
 }
 
 ::-webkit-scrollbar {
-	width: 1rem;
+	width: 1vw;
 }
 
 /* Track */

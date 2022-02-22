@@ -12,7 +12,7 @@ export default function NavBar() {
 				/>
 				<NavLink path="/" label="Accueil" icon="home" />
 				<NavLink path="/running" label="Running" icon="running" />
-				<NavLink path="/configuration" label="Configuration" icon="configuration" />
+				<NavLink path="/configuration" label="Options" icon="configuration" />
 			</ul>
 			<span>{process.env.REACT_APP_API_URL}</span>
 		</section>
