@@ -36,9 +36,3 @@ app.use((err, req, res, _next) => {
 })
 
 export default app
-
-const test = {
-	temp: "122",
-}
-
-document?.getElementById("dwadaw")?.innerHTML = test.temp
