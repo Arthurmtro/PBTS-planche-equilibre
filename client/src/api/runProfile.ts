@@ -8,10 +8,6 @@ export default async function runProfileWithId(profileId: string) {
 		console.log("error >> ", response)
 		return
 	}
-	response.json().then((json) => console.log("response.json()", json))
-	console.log("response", response)
-
-	toast(response.json())
-	console.log("res", response.statusText)
+	response.json().then((json) => toast.success(json.message))
 	return response.statusText
 }
