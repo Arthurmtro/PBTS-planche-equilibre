@@ -1,0 +1,15 @@
+.model-container {
+	height: 35vw;
+	width: 25vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border: 6px solid red;
+
+	z-index: 10;
+}
+
+.model-container * {
+	z-index: 100;
+}
