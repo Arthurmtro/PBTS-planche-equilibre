@@ -5,7 +5,8 @@ export default async function runProfileWithId(profileId: string) {
 	const response = await fetch(`${api_url}/run-profile?profileId=${profileId}`)
 	if (!response.ok) {
 		toast.error("Problem running profile !")
-		throw new Error("Problem running profile")
+		console.log("error >> ", response)
+		return
 	}
 
 	console.log("response.json()", response.json())
