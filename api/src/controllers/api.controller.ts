@@ -97,6 +97,7 @@ export const fetchProfiles = async (res: Response) => {
 export const runProfileWithId = async (profileId: string, res: Response) => {
 	try {
 		if (!pwm) throw new Error("PWM is not initialised !")
+		if (profileId) throw new Error("Their is no profile ID")
 
 		fs.readFile(
 			`./config/profiles/${profileId}.json`,

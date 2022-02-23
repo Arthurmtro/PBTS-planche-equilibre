@@ -16,7 +16,7 @@ export default function HomePage() {
 
 			<div>
 				{status === "loading" || status === "idle" ? (
-					<h1>Loading ...</h1>
+					<h1>Chargement ...</h1>
 				) : (
 					<div className={styles["profiles-boxes"]}>
 						{status === "error" && <h1>Error : {error?.message}</h1>}

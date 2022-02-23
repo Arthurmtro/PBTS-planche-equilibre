@@ -21,7 +21,7 @@ export default function RunningPage() {
 							<h1>{runningProfile.label}</h1>
 							<h5>{runningProfile.category}</h5>
 						</div>
-						<Button disabled={runningProfile.label === "init"}>Edit Profile</Button>
+						<Button disabled={runningProfile.label === "init"}>Editer</Button>
 					</section>
 
 					<section className={styles["running-infos"]}>
@@ -48,7 +48,7 @@ export default function RunningPage() {
 				</>
 			) : (
 				<>
-					<h1>No profile Running</h1>
+					<h1>Aucun profil en cours</h1>
 				</>
 			)}
 		</>

@@ -8,7 +8,7 @@ export default function NavBar() {
 		<section className={styles.navbar}>
 			<ul>
 				<NavLink path="/" label="Accueil" icon="home" />
-				<NavLink path="/running" label="Running" icon="running" />
+				<NavLink path="/running" label="En cours" icon="running" />
 				<NavLink path="/configuration" label="Options" icon="configuration" />
 			</ul>
 			<span>

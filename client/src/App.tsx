@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from "react-query"
 import { Routes, Route } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 // Contexts
 import CylindersDataProvider from "./contexts/cylindersProdiver"
@@ -24,6 +26,18 @@ export default function App() {
 				<CylindersDataProvider>
 					<ProfilesDataProvider>
 						<RunningProfileProvider>
+							<ToastContainer
+								position="bottom-right"
+								autoClose={2000}
+								hideProgressBar={false}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								theme="colored"
+							/>
 							<Layout>
 								<Routes>
 									<Route path="/" element={<HomePage />} />
