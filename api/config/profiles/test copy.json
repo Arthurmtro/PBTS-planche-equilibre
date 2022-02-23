@@ -1,0 +1,31 @@
+{
+  "label": "Test",
+  "category": "debug",
+  "duration": 51723,
+  "actions": [
+    {
+      "cylinderId": "Verin1",
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 22988},
+        { "action": "backward", "speed": 1, "time": 22988 },
+        { "action": "forward", "speed": 1, "time": 5747 }
+      ]
+    },
+    {
+      "cylinderId": "Verin2",
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 22988},
+        { "action": "backward", "speed": 1, "time": 22988 },
+        { "action": "forward", "speed": 1, "time": 5747 }
+      ]
+    },
+    {
+      "cylinderId": "Verin3",
+      "commands": [
+        { "action": "forward", "speed": 1, "time": 22988},
+        { "action": "backward", "speed": 1, "time": 22988 },
+        { "action": "forward", "speed": 1, "time": 5747 }
+      ]
+    }
+  ]
+}
