@@ -143,7 +143,7 @@ export const runProfileWithId = async (profileId: string, res: Response) => {
 					})
 				}
 
-				res.status(200).send(`Profil ${profile.label} running !`)
+				res.status(200).json({ message: `Profil ${profile.label} running !` })
 			}
 		)
 	} catch (error) {
