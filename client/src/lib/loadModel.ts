@@ -1,5 +1,5 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
-import { Object3D } from "three"
+import { Object3D, Vector3 } from "three"
 
 export function loadModel(scene: any, glbPath: any, options = { receiveShadow: true, castShadow: true }) {
 	const { receiveShadow, castShadow } = options
@@ -17,12 +17,11 @@ export function loadModel(scene: any, glbPath: any, options = { receiveShadow: t
 						child.receiveShadow = receiveShadow
 					}
 				})
-				object.scale.set(100, 100, 100)
-				object.rotation.set(15, 20, 0)
+				object.scale.set(500, 500, 500)
+				object.rotation.set(0, 0, 0)
+				object.up = new Vector3(0, 0, 0)
+				object.position.set(0, -0.25 * 500, -0.25 * 500)
 				object.name = "Planche"
-				object.position.y = 0
-				object.position.x = 0
-				object.position.z = 0
 				object.receiveShadow = receiveShadow
 				object.castShadow = castShadow
 

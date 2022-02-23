@@ -45,3 +45,24 @@
 	align-items: center;
 	justify-content: space-between;
 }
+.model-container {
+	height: 100%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.no-profile {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 3vw;
+	font-size: 2vw;
+}
+
+.no-profile img {
+	width: 25vw;
+}

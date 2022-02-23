@@ -13,6 +13,7 @@
 	box-shadow: 0 0 1.5vw rgba(0, 0, 0, 0.15);
 
 	background-color: var(--box-background);
+	z-index: 5;
 }
 
 .playing-status {
@@ -40,9 +41,9 @@
 
 @media screen and (max-width: 1200px) {
 	.status-bar {
-		padding: 0;
-		border-bottom-right-radius: 25px;
-		border-bottom-left-radius: 25px;
+		padding: 0.5vw 3vw;
+		border-bottom-right-radius: 3vw;
+		border-bottom-left-radius: 3vw;
 	}
 }
 

@@ -7,6 +7,9 @@ import { useRunningProfile } from "../contexts/runningProvider"
 import ProgressBar from "../components/ProgressBar"
 import Button from "../components/Button"
 import Box from "../components/Box"
+import ModelViewer from "../components/ModelViewer"
+
+import logo from "../assets/logo.gif"
 
 export default function RunningPage() {
 	const { runningProfile } = useRunningProfile()
@@ -43,13 +46,20 @@ export default function RunningPage() {
 								</div>
 							</Box>
 						</div>
-						<Box size="fill" />
+						<Box size="fill">
+							<div className={styles["model-container"]}>
+								<ModelViewer />
+							</div>
+						</Box>
 					</section>
 				</>
 			) : (
-				<>
+				<div className={styles["no-profile"]}>
 					<h1>Aucun profil en cours</h1>
-				</>
+					<a href="https://www.youtube.com/watch?v=x0jPbnuZ3Rc">
+						<img alt="404" src={logo} />
+					</a>
+				</div>
 			)}
 		</>
 	)

@@ -8,19 +8,16 @@ import Model from "../../assets/planche_model.gltf"
 
 // Lib
 import { loadModel } from "../../lib/loadModel"
-import { Vector3 } from "three"
 
-function easeOutCirc(x: number) {
-	return Math.sqrt(1 - Math.pow(x - 1, 4))
-}
-
-export default function ModelViewer({ enableRotate = false }: { enableRotate?: boolean }) {
+export default function ModelViewer({ enableRotate = false, debug = false }: { enableRotate?: boolean; debug?: boolean }) {
 	const refContainer = useRef<HTMLDivElement>(null)
 	const [loading, setLoading] = useState<boolean>(true)
 	const [renderer, setRenderer] = useState<THREE.WebGLRenderer>()
 	const [scene] = useState(new THREE.Scene())
 	const [model, setModel] = useState<THREE.Object3D<Event>>()
 	const [slidersValue, setSlidersValue] = useState<number[]>([0, 0, 0])
+
+	const target = new THREE.Vector3(0.5, -1, 3)
 
 	const handleWindowResize = useCallback(() => {
 		const { current: container } = refContainer
@@ -41,7 +38,8 @@ export default function ModelViewer({ enableRotate = false }: { enableRotate?: b
 			const scW = container.clientWidth
 			const scH = container.clientHeight
 
-			console.log("start scW :>> ", scW)
+			console.log("scW :>> ", scW)
+			console.log("scH :>> ", scH)
 
 			const renderer = new THREE.WebGLRenderer({
 				antialias: true,
@@ -53,21 +51,23 @@ export default function ModelViewer({ enableRotate = false }: { enableRotate?: b
 			container.appendChild(renderer.domElement)
 			setRenderer(renderer)
 
-			const scale = scH * 0.4
-			const camera = new THREE.OrthographicCamera(-scale, scale, scale, -scale, -250, 200)
+			const scale = scH * 1.25
+			const camera = new THREE.OrthographicCamera(-scale, scale, scale, -scale, -800, 300)
 			camera.position.set(0, 0, 0)
+			camera.lookAt(target)
 
 			const light = new THREE.PointLight()
-			light.position.set(-75, 200.4, 1.0)
-			// light.rotation.set(0, -30, 0)
+			light.position.set(-75, 555.4, -270.0)
+			light.rotation.set(0, -30, 0)
 			scene.add(light)
 
-			const ambientLight = new THREE.AmbientLight(0xffffff, 1)
+			const ambientLight = new THREE.AmbientLight(0xcc4433, 1)
 			// ambientLight.position.set(0.8, 1.4, 1.0)
 			scene.add(ambientLight)
 
 			const controls = new OrbitControls(camera, renderer.domElement)
 			controls.autoRotate = false
+			controls.target = target
 			controls.enableZoom = false
 			controls.enablePan = false
 			controls.enableRotate = enableRotate
@@ -80,28 +80,15 @@ export default function ModelViewer({ enableRotate = false }: { enableRotate?: b
 				console.log("LOADED")
 				console.log(res)
 				setModel(res)
-				// setTarget(res.position)
+				camera.lookAt(res.position)
 				setLoading(false)
 			})
 
 			let req: any = null
-			let frame = 0
 			const animate = () => {
 				req = requestAnimationFrame(animate)
-
-				frame = frame <= 100 ? frame + 1 : frame
-
-				if (frame <= 100) {
-					// const p = new Vector3(0, 0, 0)
-					// const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 2
-					// camera.position.y = 10
-					// camera.position.x = p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
-					// camera.position.z = p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
-				} else {
-					controls.update()
-				}
-
 				renderer.render(scene, camera)
+				controls.update()
 			}
 
 			return () => {
@@ -124,54 +111,58 @@ export default function ModelViewer({ enableRotate = false }: { enableRotate?: b
 			<div className={styles["model-container"]} ref={refContainer}>
 				{loading && <h1 className={styles["loading-container"]}>LOADING MODEL</h1>}
 			</div>
-			<div>
-				<input
-					type="range"
-					value={slidersValue[0]}
-					min={0}
-					max={99}
-					onChange={(event) => {
-						// @ts-ignore
-						model.morphTargetInfluences[0] = Number(event.target.value) * 0.01
-						const newSliderVal = [...slidersValue]
-						newSliderVal[0] = Number(event.target.value)
-						setSlidersValue(newSliderVal)
-					}}
-				/>
-				{slidersValue[0]}
-			</div>
-			<div>
-				<input
-					type="range"
-					value={slidersValue[1]}
-					min={0}
-					max={99}
-					onChange={(event) => {
-						// @ts-ignore
-						model.morphTargetInfluences[1] = Number(event.target.value) * 0.01
-						const newSliderVal = [...slidersValue]
-						newSliderVal[1] = Number(event.target.value)
-						setSlidersValue(newSliderVal)
-					}}
-				/>
-				{slidersValue[1]}
-			</div>
-			<div>
-				<input
-					type="range"
-					value={slidersValue[2]}
-					min={0}
-					max={99}
-					onChange={(event) => {
-						// @ts-ignore
-						model.morphTargetInfluences[2] = Number(event.target.value) * 0.01
-						const newSliderVal = [...slidersValue]
-						newSliderVal[2] = Number(event.target.value)
-						setSlidersValue(newSliderVal)
-					}}
-				/>
-				{slidersValue[2]}
-			</div>
+			{debug && (
+				<div>
+					<div>
+						<input
+							type="range"
+							value={slidersValue[0]}
+							min={0}
+							max={99}
+							onChange={(event) => {
+								// @ts-ignore
+								model.morphTargetInfluences[0] = Number(event.target.value) * 0.01
+								const newSliderVal = [...slidersValue]
+								newSliderVal[0] = Number(event.target.value)
+								setSlidersValue(newSliderVal)
+							}}
+						/>
+						{slidersValue[0]}
+					</div>
+					<div>
+						<input
+							type="range"
+							value={slidersValue[1]}
+							min={0}
+							max={99}
+							onChange={(event) => {
+								// @ts-ignore
+								model.morphTargetInfluences[1] = Number(event.target.value) * 0.01
+								const newSliderVal = [...slidersValue]
+								newSliderVal[1] = Number(event.target.value)
+								setSlidersValue(newSliderVal)
+							}}
+						/>
+						{slidersValue[1]}
+					</div>
+					<div>
+						<input
+							type="range"
+							value={slidersValue[2]}
+							min={0}
+							max={99}
+							onChange={(event) => {
+								// @ts-ignore
+								model.morphTargetInfluences[2] = Number(event.target.value) * 0.01
+								const newSliderVal = [...slidersValue]
+								newSliderVal[2] = Number(event.target.value)
+								setSlidersValue(newSliderVal)
+							}}
+						/>
+						{slidersValue[2]}
+					</div>
+				</div>
+			)}
 		</>
 	)
 }

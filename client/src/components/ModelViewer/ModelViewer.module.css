@@ -1,13 +1,13 @@
 .model-container {
+	max-height: 35vw;
+	min-height: 35vw;
 	height: 35vw;
-	width: 25vw;
+	min-width: 35vw;
+	max-width: 35vw;
+	width: 35vw;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
-	border: 6px solid red;
-
-	z-index: 10;
 }
 
 .model-container * {
