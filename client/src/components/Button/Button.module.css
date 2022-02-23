@@ -8,8 +8,6 @@
 
 	min-width: fit-content;
 
-	box-shadow: 0 0 1vw #c7c7c7;
-
 	border: none;
 	border-radius: var(--button-border-radius);
 
@@ -22,8 +20,10 @@
 .button:hover:enabled {
 	cursor: pointer;
 	box-shadow: 0 0 2vw #c8c9cc00;
+
+	box-shadow: 0 0 1vw rgb(var(--button-background));
 }
 
 .button:disabled {
-	background-color: rgba(var(--button-background), 0.5);
+	background-color: rgba(var(--button-background), 0.3);
 }

@@ -12,11 +12,13 @@
 }
 
 :root {
-	--color-primary: #8453fc;
-	--color-secondary: #d3a0f8;
-	--color-background: #fefefe;
+	--color-primary: rgb(132, 83, 252);
+	--color-secondary: rgb(211, 160, 248);
+	--color-background: #f7f7f7;
 
-	--box-background: #f1f2f6;
+	--font-color: #202020;
+
+	--box-background: #e2e2e2;
 	--box-border-radius: 3vw;
 
 	--button-border-radius: 3vw;
@@ -28,9 +30,16 @@
 }
 
 html.dark {
-	--color-primary: #8453fc;
-	--color-secondary: #d3a0f8;
-	--color-background: #181818;
+	--color-primary: #222222;
+	--color-secondary: rgb(170, 109, 214);
+	--color-background: #363636;
+
+	--font-color: #fefefe;
+
+	--box-background: #222222;
+
+	--color-rgb-primary: 94, 46, 216;
+	--color-rgb-secondary: 170, 109, 214;
 }
 
 html.theming,
@@ -52,6 +61,8 @@ body {
 
 	font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
 		sans-serif;
+
+	color: var(--font-color);
 
 	background-color: var(--color-background);
 }

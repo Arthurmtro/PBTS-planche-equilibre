@@ -43,7 +43,7 @@ export default function RunningPage() {
 								</div>
 							</Box>
 						</div>
-						<Box size="fill">3D view</Box>
+						<Box size="fill" />
 					</section>
 				</>
 			) : (

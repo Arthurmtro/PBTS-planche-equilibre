@@ -18,8 +18,6 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
 	useEffect(() => {
 		const theme = localStorage.getItem("planche-equilibre-theme")
 
-		//document.documentElement.classList.contains("dark")
-
 		if (value.darkMode !== Boolean(theme)) {
 			toggleTheme()
 			setDarkMode(Boolean(localStorage.getItem("planche-equilibre-theme")))

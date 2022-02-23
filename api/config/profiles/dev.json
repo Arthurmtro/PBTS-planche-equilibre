@@ -1,0 +1,19 @@
+{
+	"label": "Profile 1",
+	"category": "Sport",
+	"duration": 80000,
+	"actions": [
+		{
+			"cylinderId": "Verin1",
+			"commands": [{ "action": "stop", "time": 80000 }]
+		},
+		{
+			"cylinderId": "Verin2",
+			"commands": [{ "action": "stop", "time": 80000 }]
+		},
+		{
+			"cylinderId": "Verin3",
+			"commands": [{ "action": "stop", "time": 80000 }]
+		}
+	]
+}

@@ -12,6 +12,11 @@
 
 .header-titles h1 {
 	margin-right: 2vw;
+	font-size: 2vw;
+}
+
+.header-titles h5 {
+	font-size: 1.5vw;
 }
 
 .running-infos {
@@ -26,6 +31,10 @@
 	flex-direction: column;
 	gap: 1.5vw;
 	width: 100%;
+}
+
+.infos-contents h4 {
+	font-size: 1.5vw;
 }
 
 .info {
