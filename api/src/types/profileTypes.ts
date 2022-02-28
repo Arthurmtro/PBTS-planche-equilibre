@@ -1,14 +1,16 @@
 export type profileType = {
-	label: string
-	cateory: string
-	duration: number
 	actions: actionType[]
+	fileName: string
+	duration: number
+	cateory: string
+	label: string
 }
 
 export type actionType = {
-	cylinderId: string
 	commands: commandType[]
+	cylinderId: string
 }
+
 export type commandType = {
 	action: "forward" | "backward" | "stop"
 	speed: number

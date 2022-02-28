@@ -1,8 +1,8 @@
 import { Router } from "express"
 import os from "os"
 
-// Controllers
-import * as functions from "./controllers/api.controller"
+// Services
+import { ApiController } from "./services/Controller"
 
 const router = Router()
 
@@ -11,23 +11,23 @@ router.get("/hostname/", (req, res) => {
 })
 
 router.get("/fetch-status", async (req, res) => {
-	return await functions.fetchStatus(res)
+	return await ApiController.getStatus(res)
 })
 
 router.get("/fetch-cylinders-infos", async (req, res) => {
-	return await functions.fetchCylindersInfos(res)
+	return await ApiController.getCylindersInfos(res)
 })
 
 router.get("/fetch-profiles", async (req, res) => {
-	return await functions.fetchProfiles(res)
+	return await ApiController.getProfiles(res)
 })
 
 router.get("/run-profile", (req, res) => {
-	return functions.runProfileWithId(String(req.query.profileId), res)
+	return ApiController.runProfileWithId(String(req.query.profileId), res)
 })
 
 router.get("/init", (req, res) => {
-	return functions.init(res)
+	return ApiController.init(res)
 })
 
 export default router

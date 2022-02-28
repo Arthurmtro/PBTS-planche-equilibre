@@ -8,6 +8,7 @@ import os from "os"
 // Types
 import { cylinderType } from "../types/cylinderType"
 import { actionType } from "../types/profileTypes"
+import { delayFunction } from "../libs/delayFunction"
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cylindersData = require(path.join(__dirname, "../../config/cylinders.json"))
@@ -30,8 +31,6 @@ const options = {
 	frequency: 1000,
 	debug: false,
 }
-
-const delay = (value: number) => new Promise((res) => setTimeout(res, value))
 
 const pwm: Pca9685Driver =
 	i2cBus &&
@@ -127,7 +126,7 @@ export const runProfileWithId = async (profileId: string, res: Response) => {
 							pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
 						}
 
-						await delay(command.time).then(() => command)
+						await delayFunction(command.time).then(() => command)
 					}
 					return
 				}
@@ -164,7 +163,7 @@ export const init = async (res: Response | undefined = undefined) => {
 			pwm.channelOff(cylindersData[index].forwardId)
 			pwm.setDutyCycle(cylindersData[index].backwardId, 1)
 		}
-		delay(23000)
+		delayFunction(23000)
 		if (res) {
 			res.status(200).send("Initialised !")
 		}
