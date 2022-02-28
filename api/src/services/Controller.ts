@@ -25,9 +25,9 @@ class Controller {
 	private isActive: boolean
 
 	constructor() {
-		this.cylindersData = []
 		this.isActive = false
-		this.profiles = []
+		this.profiles = fetchAllProfiles()
+		this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
 		this.pwm =
 			i2cBus &&
 			new Pca9685Driver(
@@ -41,9 +41,7 @@ class Controller {
 					if (error) {
 						throw new Error(`Error initializing, ${error}`)
 					}
-					this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
 					this.init()
-					this.profiles = fetchAllProfiles()
 				}
 			)
 	}
