@@ -28,23 +28,15 @@ const pwm = new Pca9685Driver(options, function (err) {
   ////////////////////////////////////fonction////////////////////////////////////////////
   // le circuit electrique si on fais tourner plusier pro en meme temps il coup instantanément 1 pour faire marcher les autre
 
-  pwm.allChannelsOff();
-
   // il fais avancer et reculer mais on choisie la vitesse sa vas de 0.1 a 1 (regler le cicle de service )
   pwm.setDutyCycle(5, 1); // gérer 1 verin 5 desendre / 4 monter
   pwm.setDutyCycle(3, 1); // gérer l autre 3 desendre / 2 monter
   pwm.setDutyCycle(7, 1); // gérer l autre 7 desendre / 6 monter
   pwm.setDutyCycle(15, 1); // teste osciloscope
   //pwm.allChannelsOff(); tout eteindre
-  /* pwm.setPulseRange(1, 50, 255, function() {
-         if (err) {
-             console.error("Error setting pulse range.");
-         } else {
-             console.log("Pulse range set.");
-            }
- */
 
-  //pwm.setPulseLength(0, 300);// pour le serveau moteur sa marche (regler sicle d inpultion)
+  pwm.setPulseLength(0, 300); // pour le serveau moteur sa marche (regler sicle d inpultion)
+
   // a 100% le chanel il fais avancer et reculer le verrin
   //pwm.channelOff(5);
   //pwm.channelOn(4);
