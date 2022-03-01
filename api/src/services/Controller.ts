@@ -107,8 +107,11 @@ class Controller {
 			// const runProfiles = await executeProfile(this.isActive, this.pwm, this.)
 
 			for (const action of correspondingProfile.actions) {
+				if (!this.isActive) return
+
 				const cylinder = this.cylindersData.find(({ id }) => id === action.cylinderId)
-				await executeProfile(this.isActive, this.pwm, action, cylinder)
+
+				executeProfile(this.isActive, this.pwm, action, cylinder)
 
 				console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
