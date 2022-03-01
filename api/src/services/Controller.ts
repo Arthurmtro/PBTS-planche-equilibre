@@ -1,3 +1,4 @@
+import { mpu9250 } from "./../libs/mpu9250/index"
 import Pca9685Driver from "pca9685"
 import { Response } from "express"
 import { join } from "path"
@@ -16,6 +17,42 @@ const i2cBus = os.arch() === "arm" || (os.arch() === "arm64" && require("i2c-bus
 if (!(os.arch() === "arm" || os.arch() === "arm64")) {
 	console.warn("Not using I2C, You are not on raspberrypi", os.arch())
 }
+
+//////////////////////
+
+const MAG_CALIBRATION = {
+	min: { x: -106.171875, y: -56.8125, z: -14.828125 },
+	max: { x: 71.9609375, y: 117.17578125, z: 164.25 },
+	offset: { x: -17.10546875, y: 30.181640625, z: 74.7109375 },
+	scale: {
+		x: 1.491020130696022,
+		y: 1.5265373476123123,
+		z: 1.483149376145188,
+	},
+}
+
+// These values were generated using calibrate_gyro.js - you will want to create your own.
+// NOTE: These are temperature dependent.
+const GYRO_OFFSET = {
+	x: -1.068045801,
+	y: -0.156656488,
+	z: 1.3846259541,
+}
+
+// These values were generated using calibrate_accel.js - you will want to create your own.
+const ACCEL_CALIBRATION = {
+	offset: {
+		x: 0.00943176,
+		y: 0.00170817,
+		z: 0.05296142,
+	},
+	scale: {
+		x: [-0.993164, 1.0102189],
+		y: [-0.9981974, 1.0055884],
+		z: [-0.9598844, 1.0665967],
+	},
+}
+//////////////////////
 
 class Controller {
 	private cylindersData: cylinderType[]
@@ -43,6 +80,40 @@ class Controller {
 					this.init()
 				}
 			)
+
+		const mpu = new mpu9250({
+			// i2c path (default is '/dev/i2c-1')
+			device: "/dev/i2c-1",
+
+			// Enable/Disable debug mode (default false)
+			DEBUG: true,
+
+			// Set the Gyroscope sensitivity (default 0), where:
+			//      0 => 250 degrees / second
+			//      1 => 500 degrees / second
+			//      2 => 1000 degrees / second
+			//      3 => 2000 degrees / second
+			GYRO_FS: 0,
+
+			// Set the Accelerometer sensitivity (default 2), where:
+			//      0 => +/- 2 g
+			//      1 => +/- 4 g
+			//      2 => +/- 8 g
+			//      3 => +/- 16 g
+			ACCEL_FS: 0,
+
+			scaleValues: true,
+
+			UpMagneto: false,
+
+			magCalibration: MAG_CALIBRATION,
+
+			gyroBiasOffset: GYRO_OFFSET,
+
+			accelCalibration: ACCEL_CALIBRATION,
+		})
+
+		console.log("mpu => ", mpu)
 	}
 
 	public init(res?: Response) {

@@ -18,11 +18,11 @@ export default function Layout({ children }: ParamsType) {
 	const { runningProfile, setRunningProfile, timeSpend, setTimeSpend } = useRunningProfile()
 
 	useEffect(() => {
-		if (!runningProfile) return
+		if (!runningProfile) return clearInterval(interval)
 
 		interval = setInterval(() => {
-			setTimeSpend((prev) => prev + 100)
-		}, 100)
+			setTimeSpend((prev) => prev + 10)
+		}, 10)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [runningProfile])
 

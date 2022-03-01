@@ -12,7 +12,7 @@ export default function Box() {
 				<>
 					<h4>timer: </h4>
 					<p>
-						{timeSpend / 1000} / {runningProfile.duration / 1000} s
+						{Math.floor(timeSpend / 1000)} / {Math.floor(runningProfile.duration / 1000)} s
 					</p>
 					<progress id="file" max={runningProfile.duration} value={timeSpend} className={styles.progress} />
 				</>
