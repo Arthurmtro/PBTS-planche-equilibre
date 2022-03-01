@@ -114,6 +114,8 @@ class Controller {
 				const cylinder = this.cylindersData.find(({ id }) => id === action.cylinderId)
 
 				executeProfile(this.isActive, this.pwm, action, cylinder).then(() => {
+					this.pwm.allChannelsOff()
+
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
 					this.init()
