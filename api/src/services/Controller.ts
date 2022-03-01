@@ -110,18 +110,18 @@ class Controller {
 
 			res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
 
-			const executeProfile = async (pwm: Pca9685Driver, action: actionType, cylinder?: cylinderType) => {
+			const executeProfile = async (action: actionType, cylinder?: cylinderType) => {
 				if (!this.isActive || !cylinder) return
 
 				for (const command of action.commands) {
 					if (!this.isActive) throw "Active is not true"
 					console.log("Execution de la séquence ", command)
-					pwm.channelOff(cylinder.forwardId)
-					pwm.channelOff(cylinder.backwardId)
+					this.pwm.channelOff(cylinder.forwardId)
+					this.pwm.channelOff(cylinder.backwardId)
 
 					if (command.action !== "stop") {
-						pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
-						pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
+						this.pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
+						this.pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
 					}
 
 					await delayFunction(command.time).then(() => command)
@@ -134,7 +134,7 @@ class Controller {
 
 				const cylinder = this.cylindersData.find(({ id }) => id === action.cylinderId)
 
-				executeProfile(this.pwm, action, cylinder).then(() => {
+				executeProfile(action, cylinder).then(() => {
 					this.pwm.allChannelsOff()
 
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
