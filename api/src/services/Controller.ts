@@ -111,11 +111,11 @@ class Controller {
 
 				const cylinder = this.cylindersData.find(({ id }) => id === action.cylinderId)
 
-				executeProfile(this.isActive, this.pwm, action, cylinder)
+				executeProfile(this.isActive, this.pwm, action, cylinder).then(() => {
+					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
-				console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
-
-				this.init()
+					this.init()
+				})
 			}
 
 			res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
