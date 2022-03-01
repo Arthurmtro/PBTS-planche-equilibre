@@ -11,7 +11,7 @@ export const executeProfile = async (isActive: boolean, pwm: Pca9685Driver, acti
 	if (!isActive || !cylinder) return
 
 	for (const command of action.commands) {
-		if (!isActive) return
+		if (!isActive) throw "Active is not true"
 		console.log("Execution de la séquence ", command)
 		pwm.channelOff(cylinder.forwardId)
 		pwm.channelOff(cylinder.backwardId)

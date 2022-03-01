@@ -47,6 +47,30 @@ const sendError = (error: any, res: Response) => {
 	return res && res.status(666).json({ error: error.message ?? "Unknow" })
 }
 
+export const init = async (res: Response | undefined = undefined) => {
+	try {
+		if (!pwm) throw new Error("PWM is not initialised !")
+
+		isActive = false
+
+		console.log("Execution de la séquence")
+		for (let index = 0; index < cylindersData.length; index++) {
+			console.log("Cylinder " + cylindersData[index].id)
+			pwm.channelOff(cylindersData[index].backwardId)
+			pwm.channelOff(cylindersData[index].forwardId)
+			pwm.setDutyCycle(cylindersData[index].backwardId, 1)
+		}
+		delayFunction(23000)
+		if (res) {
+			res.status(200).send("Initialised !")
+		}
+	} catch (error) {
+		if (res) {
+			return sendError(error, res)
+		}
+	}
+}
+
 export const fetchStatus = async (res: Response) => {
 	try {
 		if (!pwm) throw new Error("PWM is not initialised !")
@@ -147,29 +171,5 @@ export const runProfileWithId = async (profileId: string, res: Response) => {
 		)
 	} catch (error) {
 		return sendError(error, res)
-	}
-}
-
-export const init = async (res: Response | undefined = undefined) => {
-	try {
-		if (!pwm) throw new Error("PWM is not initialised !")
-
-		isActive = false
-
-		console.log("Execution de la séquence")
-		for (let index = 0; index < cylindersData.length; index++) {
-			console.log("Cylinder " + cylindersData[index].id)
-			pwm.channelOff(cylindersData[index].backwardId)
-			pwm.channelOff(cylindersData[index].forwardId)
-			pwm.setDutyCycle(cylindersData[index].backwardId, 1)
-		}
-		delayFunction(23000)
-		if (res) {
-			res.status(200).send("Initialised !")
-		}
-	} catch (error) {
-		if (res) {
-			return sendError(error, res)
-		}
 	}
 }

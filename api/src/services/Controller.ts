@@ -108,8 +108,10 @@ class Controller {
 
 			// const runProfiles = await executeProfile(this.isActive, this.pwm, this.)
 
+			res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
+
 			for (const action of correspondingProfile.actions) {
-				if (!this.isActive) return
+				if (!this.isActive) throw "Active is not true"
 
 				const cylinder = this.cylindersData.find(({ id }) => id === action.cylinderId)
 
@@ -121,8 +123,6 @@ class Controller {
 					this.init()
 				})
 			}
-
-			res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
 		} catch (error) {
 			console.log("error", error)
 		}
