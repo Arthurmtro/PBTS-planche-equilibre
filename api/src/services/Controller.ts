@@ -50,6 +50,8 @@ class Controller {
 		try {
 			if (!this.pwm) throw "PWM is not initialised !"
 
+			this.isActive = false
+
 			console.log("Execution de la sequence")
 
 			for (let index = 0; index < this.cylindersData.length; index++) {
