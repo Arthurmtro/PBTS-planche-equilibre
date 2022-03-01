@@ -12,7 +12,7 @@ import { cylinderType } from "../types/cylinderType"
 import { delayFunction } from "../libs/delayFunction"
 import { fetchAllProfiles } from "../libs/fetchAllProfiles"
 
-const i2cBus = os.arch() === "arm" || os.arch() === "arm64" ? require("i2c-bus") : null
+const i2cBus = os.arch() === "arm" || (os.arch() === "arm64" && require("i2c-bus"))
 
 if (!(os.arch() === "arm" || os.arch() === "arm64")) {
 	console.warn("Not using I2C, You are not on raspberrypi", os.arch())
