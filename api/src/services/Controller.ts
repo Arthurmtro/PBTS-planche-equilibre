@@ -1,4 +1,3 @@
-import { executeProfile } from "./../libs/executeProfile"
 import Pca9685Driver from "pca9685"
 import { Response } from "express"
 import { join } from "path"

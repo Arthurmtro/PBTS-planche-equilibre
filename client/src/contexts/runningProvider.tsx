@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo, useEffect, ReactNode } from "react"
+import { createContext, useContext, useState, useMemo, useEffect, ReactNode, SetStateAction } from "react"
 
 // Types
 import { IProfile } from "../types/Infos"
@@ -7,7 +7,7 @@ type cylinderInfosType = {
 	runningProfile: IProfile | null
 	setRunningProfile: (arg1: IProfile | null) => void
 	timeSpend: number
-	setTimeSpend: React.Dispatch<React.SetStateAction<number>>
+	setTimeSpend: React.Dispatch<SetStateAction<number>>
 }
 
 const RunningProfile = createContext<cylinderInfosType>(undefined!)
