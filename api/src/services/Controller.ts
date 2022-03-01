@@ -114,7 +114,7 @@ class Controller {
 				if (!this.isActive || !cylinder) return
 
 				for (const command of action.commands) {
-					if (!this.isActive) throw "Active is not true"
+					if (!this.isActive) return
 					console.log("Execution de la séquence ", command)
 					this.pwm.channelOff(cylinder.forwardId)
 					this.pwm.channelOff(cylinder.backwardId)
