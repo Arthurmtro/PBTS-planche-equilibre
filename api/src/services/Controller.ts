@@ -5,7 +5,7 @@ import { join } from "path"
 import os from "os"
 
 // Types
-import { profileType } from "./../types/profileTypes"
+import { actionType, profileType } from "./../types/profileTypes"
 import { cylinderType } from "../types/cylinderType"
 
 // Libs
@@ -110,12 +110,31 @@ class Controller {
 
 			res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
 
+			const executeProfile = async (pwm: Pca9685Driver, action: actionType, cylinder?: cylinderType) => {
+				if (!this.isActive || !cylinder) return
+
+				for (const command of action.commands) {
+					if (!this.isActive) throw "Active is not true"
+					console.log("Execution de la séquence ", command)
+					pwm.channelOff(cylinder.forwardId)
+					pwm.channelOff(cylinder.backwardId)
+
+					if (command.action !== "stop") {
+						pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
+						pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
+					}
+
+					await delayFunction(command.time).then(() => command)
+				}
+				return
+			}
+
 			for (const action of correspondingProfile.actions) {
 				if (!this.isActive) throw "Active is not true"
 
 				const cylinder = this.cylindersData.find(({ id }) => id === action.cylinderId)
 
-				executeProfile(this.isActive, this.pwm, action, cylinder).then(() => {
+				executeProfile(this.pwm, action, cylinder).then(() => {
 					this.pwm.allChannelsOff()
 
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
