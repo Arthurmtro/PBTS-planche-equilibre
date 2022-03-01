@@ -84,7 +84,7 @@ const pwm = new Pca9685Driver(options, function (err) {
   /*********************/
   /** Module required **/
   /*********************/
-  var MOD_I2C = require("@abandonware/i2c");
+  var MOD_I2C = require("underscore");
   var extend = require("extend");
   var sleep = require("sleep");
 
