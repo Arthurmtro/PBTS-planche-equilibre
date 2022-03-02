@@ -116,7 +116,7 @@ class Controller {
 			accelCalibration: ACCEL_CALIBRATION,
 		})
 
-		console.log("mpu => ", this.mpu)
+		// console.log("mpu => ", this.mpu)
 	}
 
 	public init(res?: Response) {
@@ -255,6 +255,6 @@ if (ApiController.mpu.initialize()) {
 		stats.add(ACCEL_NAME, m9[0], m9[1], m9[2])
 		stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
 
-		process.stdout.write(p(t) + str + p(ApiController.mpu.getTemperatureCelsiusDigital()) + p(calcHeading(m9[6], m9[7])) + "  \r")
+		console.log(p(t) + str + p(ApiController.mpu.getTemperatureCelsiusDigital()) + p(calcHeading(m9[6], m9[7])) + "  \r")
 	}, 5)
 }
