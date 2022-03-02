@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
 	})
 })
 
-const getApiAndEmit = (socket:  Socket<DefaultEventsMap) => {
+const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
 	const response = new Date()
 	// Emitting a new message. Will be consumed by the client
 	socket.emit("FromAPI", response)
