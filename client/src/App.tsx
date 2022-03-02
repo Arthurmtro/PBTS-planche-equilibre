@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "react-query"
 import { Routes, Route } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
-import socketIOClient from "socket.io-client"
 import { useEffect, useState } from "react"
+import { io } from "socket.io-client"
 
 import "react-toastify/dist/ReactToastify.css"
 
@@ -30,7 +30,13 @@ export default function App() {
 
 	useEffect(() => {
 		console.log("api_url :>> ", api_url)
-		const socket = socketIOClient(api_url)
+		const socket = io(api_url)
+
+		socket.on("connect", () => console.log(socket.id))
+		socket.on("connect_error", () => {
+			setTimeout(() => socket.connect(), 5000)
+		})
+
 		socket.on("FromAPI", (data) => {
 			setResponse(data)
 		})

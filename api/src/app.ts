@@ -24,7 +24,11 @@ app.use("/", routes)
 
 const server = createServer(app)
 
-const io = new Server(server)
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:80",
+	},
+})
 
 app.use((req, res, next) => {
 	next(createError(404))
