@@ -14,10 +14,6 @@ import routes from "./routes"
 
 const app = express()
 
-const server = createServer(app)
-
-const io = new Server(server)
-
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
@@ -25,6 +21,10 @@ app.use(logger("dev"))
 app.use(cors())
 
 app.use("/", routes)
+
+const server = createServer(app)
+
+const io = new Server(server)
 
 app.use((req, res, next) => {
 	next(createError(404))

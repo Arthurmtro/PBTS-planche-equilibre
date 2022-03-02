@@ -29,6 +29,7 @@ export default function App() {
 	const [response, setResponse] = useState("")
 
 	useEffect(() => {
+		console.log("api_url :>> ", api_url)
 		const socket = socketIOClient(api_url)
 		socket.on("FromAPI", (data) => {
 			setResponse(data)
