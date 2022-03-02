@@ -116,7 +116,7 @@ class Controller {
 			accelCalibration: ACCEL_CALIBRATION,
 		})
 
-		console.log("mpu => ", mpu)
+		console.log("mpu => ", this.mpu)
 	}
 
 	public init(res?: Response) {
