@@ -118,6 +118,14 @@ class Controller {
 		console.log("mpu => ", mpu)
 
 		if (mpu.initialize()) {
+			const p = (arg0: any) => {
+				throw new Error("Function not implemented.")
+			}
+
+			const calcHeading = (arg0: any, arg1: any): any => {
+				throw new Error("Function not implemented.")
+			}
+
 			const ACCEL_NAME = "Accel (g)"
 			const GYRO_NAME = "Gyro (°/sec)"
 			const MAG_NAME = "Mag (uT)"
@@ -264,10 +272,3 @@ class Controller {
 }
 
 export const ApiController = new Controller()
-function p(arg0: any) {
-	throw new Error("Function not implemented.")
-}
-
-function calcHeading(arg0: any, arg1: any): any {
-	throw new Error("Function not implemented.")
-}
