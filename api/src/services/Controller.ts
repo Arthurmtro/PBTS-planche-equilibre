@@ -233,11 +233,11 @@ if (ApiController.mpu.initialize()) {
 	console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
 
 	setInterval(function () {
-		const start = new Date().getTime()
+		// const start = new Date().getTime()
 		// Only get the magnetometer values every 100Hz
 		const m9: any = ApiController.mpu.getMotion9()
-		const end = new Date().getTime()
-		const t = (end - start) / 1000
+		// const end = new Date().getTime()
+		// const t = (end - start) / 1000
 
 		// Make the numbers pretty
 		let str = ""
