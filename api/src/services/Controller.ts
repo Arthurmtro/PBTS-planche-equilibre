@@ -242,12 +242,12 @@ if (ApiController.mpu.initialize()) {
 		// Make the numbers pretty
 		let str = ""
 		for (let i = 0; i < m9.length; i++) {
-			str += `${i} => ${m9[i]}  `
+			str += m9[i] + "\n"
 		}
 		stats.add(ACCEL_NAME, m9[0], m9[1], m9[2])
 		stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
 
 		// console.log(p(t) + str + ApiController.mpu.getTemperatureCelsiusDigital() + calcHeading(m9[6], m9[7]) + "  \r")
-		process.stdout.write(t + str + "\r")
+		process.stdout.write(str + "\r")
 	}, 5)
 }
