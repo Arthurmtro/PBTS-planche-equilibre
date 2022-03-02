@@ -293,7 +293,7 @@ export class mpu9250 {
 	 * @param {number} temp
 	 * @return {number}
 	 */
-	public getTemperatureCelsiusDigital(temp?: number): number {
+	public getTemperatureCelsiusDigital(temp: number): number {
 		if (temp) {
 			return temp / 333.87 + 21.0
 		}
@@ -401,6 +401,7 @@ export class mpu9250 {
 			const xAccel = buffer.readInt16BE(0) * this.accelScalarInv
 			const yAccel = buffer.readInt16BE(2) * this.accelScalarInv
 			const zAccel = buffer.readInt16BE(4) * this.accelScalarInv
+
 			return [
 				mpu9250.scaleAccel(xAccel, aCal.offset.x, aCal.scale.x),
 				mpu9250.scaleAccel(yAccel, aCal.offset.y, aCal.scale.y),
@@ -456,13 +457,13 @@ export class mpu9250 {
 			if (!mpudata) {
 				return false
 			}
-			// let magdata = []
-			// if (this.ak8963?.isEnabled && this.ak8963.isReady) {
-			// 	magdata = this.ak8963.getMagAttitude() || [0, 0, 0]
-			// } else {
-			// 	magdata = [0, 0, 0]
-			// }
-			// return mpudata.concat(magdata)
+			let magdata = []
+			if (this.ak8963?.isEnabled && this.ak8963.isReady) {
+				magdata = this.ak8963.getMagAttitude() || [0, 0, 0]
+			} else {
+				magdata = [0, 0, 0]
+			}
+			return mpudata.concat(magdata)
 		}
 		return false
 	}
