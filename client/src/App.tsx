@@ -30,6 +30,7 @@ export default function App() {
 
 	useEffect(() => {
 		console.log("api_url :>> ", api_url)
+		// const socket = socketIOClient(api_url)
 		const socket = io(api_url)
 
 		socket.on("connect", () => console.log(socket.id))
