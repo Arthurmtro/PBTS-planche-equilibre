@@ -250,7 +250,7 @@ if (ApiController.mpu.initialize()) {
 		// Make the numbers pretty
 		let str = ""
 		for (let i = 0; i < m9.length; i++) {
-			str += m9[i]
+			str += `${i} => ${m9[i]} \n`
 		}
 		stats.add(ACCEL_NAME, m9[0], m9[1], m9[2])
 		stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
