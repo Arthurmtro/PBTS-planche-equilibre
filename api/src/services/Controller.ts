@@ -239,23 +239,11 @@ if (ApiController.mpu.initialize()) {
 	const stats = new Stats([ACCEL_NAME, GYRO_NAME, MAG_NAME, HEADING_NAME], 1000)
 
 	console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
-	let cnt = 0
-	let lastMag = [0, 0, 0]
 
 	setInterval(function () {
 		const start = new Date().getTime()
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		let m9: any
 		// Only get the magnetometer values every 100Hz
-		const getMag = cnt++ % 2
-		if (getMag) {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			m9 = ApiController.mpu.getMotion6().concat(lastMag)
-		} else {
-			m9 = ApiController.mpu.getMotion9()
-			lastMag = [m9[6], m9[7], m9[8]]
-		}
+		const m9: any = ApiController.mpu.getMotion9()
 		const end = new Date().getTime()
 		const t = (end - start) / 1000
 
@@ -266,10 +254,6 @@ if (ApiController.mpu.initialize()) {
 		}
 		stats.add(ACCEL_NAME, m9[0], m9[1], m9[2])
 		stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
-		if (getMag) {
-			stats.add(MAG_NAME, m9[6], m9[7], m9[8])
-			stats.addValue(HEADING_NAME, calcHeading(m9[6], m9[7]))
-		}
 
 		process.stdout.write(p(t) + str + p(ApiController.mpu.getTemperatureCelsiusDigital()) + p(calcHeading(m9[6], m9[7])) + "  \r")
 	}, 5)
