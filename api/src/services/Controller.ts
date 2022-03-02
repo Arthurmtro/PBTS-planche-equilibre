@@ -224,18 +224,10 @@ class Controller {
 export const ApiController = new Controller()
 
 if (ApiController.mpu.initialize()) {
-	const p = (arg0: any) => {
-		throw new Error("Function not implemented.")
-	}
-
-	const calcHeading = (arg0: any, arg1: any): any => {
-		throw new Error("Function not implemented.")
-	}
-
-	const ACCEL_NAME = "Accel (g)"
-	const GYRO_NAME = "Gyro (°/sec)"
-	const MAG_NAME = "Mag (uT)"
 	const HEADING_NAME = "Heading (°)"
+	const GYRO_NAME = "Gyro (°/sec)"
+	const ACCEL_NAME = "Accel (g)"
+	const MAG_NAME = "Mag (uT)"
 	const stats = new Stats([ACCEL_NAME, GYRO_NAME, MAG_NAME, HEADING_NAME], 1000)
 
 	console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
@@ -250,7 +242,7 @@ if (ApiController.mpu.initialize()) {
 		// Make the numbers pretty
 		let str = ""
 		for (let i = 0; i < m9.length; i++) {
-			str += `${i} => ${m9[i]} \n`
+			str += `${i} => ${m9[i]}  `
 		}
 		stats.add(ACCEL_NAME, m9[0], m9[1], m9[2])
 		stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
