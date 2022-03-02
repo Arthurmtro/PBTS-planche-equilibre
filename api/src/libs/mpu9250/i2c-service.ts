@@ -7,6 +7,7 @@ const i2c = os.arch() === "arm" || (os.arch() === "arm64" && require("i2c"))
 /**
  * Read/Write service for I2CBus
  */
+
 export class I2cService extends i2c {
 	constructor(address: number, options: { device: string; debug?: boolean }) {
 		super(address, options)

@@ -293,7 +293,7 @@ export class mpu9250 {
 	 * @param {number} temp
 	 * @return {number}
 	 */
-	public getTemperatureCelsiusDigital(temp: number): number {
+	public getTemperatureCelsiusDigital(temp?: number): number {
 		if (temp) {
 			return temp / 333.87 + 21.0
 		}
