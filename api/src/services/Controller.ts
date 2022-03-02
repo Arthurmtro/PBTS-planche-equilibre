@@ -256,6 +256,6 @@ if (ApiController.mpu.initialize()) {
 		stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
 
 		// console.log(p(t) + str + ApiController.mpu.getTemperatureCelsiusDigital() + calcHeading(m9[6], m9[7]) + "  \r")
-		process.stdout.write(t + str + ApiController.mpu.getTemperatureCelsiusDigital() + "  \r")
+		process.stdout.write(t + str + "\r")
 	}, 5)
 }
