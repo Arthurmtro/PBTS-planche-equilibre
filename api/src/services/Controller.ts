@@ -61,6 +61,7 @@ class Controller {
 	private profiles: profileType[]
 	private pwm: Pca9685Driver
 	private isActive: boolean
+	public mpu: mpu9250
 
 	constructor() {
 		this.isActive = false
@@ -83,7 +84,7 @@ class Controller {
 				}
 			)
 
-		const mpu = new mpu9250({
+		this.mpu = new mpu9250({
 			// i2c path (default is '/dev/i2c-1')
 			device: "/dev/i2c-1",
 
@@ -116,57 +117,6 @@ class Controller {
 		})
 
 		console.log("mpu => ", mpu)
-
-		if (mpu.initialize()) {
-			const p = (arg0: any) => {
-				throw new Error("Function not implemented.")
-			}
-
-			const calcHeading = (arg0: any, arg1: any): any => {
-				throw new Error("Function not implemented.")
-			}
-
-			const ACCEL_NAME = "Accel (g)"
-			const GYRO_NAME = "Gyro (°/sec)"
-			const MAG_NAME = "Mag (uT)"
-			const HEADING_NAME = "Heading (°)"
-			const stats = new Stats([ACCEL_NAME, GYRO_NAME, MAG_NAME, HEADING_NAME], 1000)
-
-			console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
-			let cnt = 0
-			let lastMag = [0, 0, 0]
-			setInterval(function () {
-				const start = new Date().getTime()
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				let m9: any
-				// Only get the magnetometer values every 100Hz
-				const getMag = cnt++ % 2
-				if (getMag) {
-					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-					// @ts-ignore
-					m9 = mpu.getMotion6().concat(lastMag)
-				} else {
-					m9 = mpu.getMotion9()
-					lastMag = [m9[6], m9[7], m9[8]]
-				}
-				const end = new Date().getTime()
-				const t = (end - start) / 1000
-
-				// Make the numbers pretty
-				let str = ""
-				for (let i = 0; i < m9.length; i++) {
-					str += p(m9[i])
-				}
-				stats.add(ACCEL_NAME, m9[0], m9[1], m9[2])
-				stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
-				if (getMag) {
-					stats.add(MAG_NAME, m9[6], m9[7], m9[8])
-					stats.addValue(HEADING_NAME, calcHeading(m9[6], m9[7]))
-				}
-
-				process.stdout.write(p(t) + str + p(mpu.getTemperatureCelsiusDigital()) + p(calcHeading(m9[6], m9[7])) + "  \r")
-			}, 5)
-		}
 	}
 
 	public init(res?: Response) {
@@ -272,3 +222,55 @@ class Controller {
 }
 
 export const ApiController = new Controller()
+
+if (ApiController.mpu.initialize()) {
+	const p = (arg0: any) => {
+		throw new Error("Function not implemented.")
+	}
+
+	const calcHeading = (arg0: any, arg1: any): any => {
+		throw new Error("Function not implemented.")
+	}
+
+	const ACCEL_NAME = "Accel (g)"
+	const GYRO_NAME = "Gyro (°/sec)"
+	const MAG_NAME = "Mag (uT)"
+	const HEADING_NAME = "Heading (°)"
+	const stats = new Stats([ACCEL_NAME, GYRO_NAME, MAG_NAME, HEADING_NAME], 1000)
+
+	console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
+	let cnt = 0
+	let lastMag = [0, 0, 0]
+
+	setInterval(function () {
+		const start = new Date().getTime()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let m9: any
+		// Only get the magnetometer values every 100Hz
+		const getMag = cnt++ % 2
+		if (getMag) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			m9 = ApiController.mpu.getMotion6().concat(lastMag)
+		} else {
+			m9 = ApiController.mpu.getMotion9()
+			lastMag = [m9[6], m9[7], m9[8]]
+		}
+		const end = new Date().getTime()
+		const t = (end - start) / 1000
+
+		// Make the numbers pretty
+		let str = ""
+		for (let i = 0; i < m9.length; i++) {
+			str += p(m9[i])
+		}
+		stats.add(ACCEL_NAME, m9[0], m9[1], m9[2])
+		stats.add(GYRO_NAME, m9[3], m9[4], m9[5])
+		if (getMag) {
+			stats.add(MAG_NAME, m9[6], m9[7], m9[8])
+			stats.addValue(HEADING_NAME, calcHeading(m9[6], m9[7]))
+		}
+
+		process.stdout.write(p(t) + str + p(ApiController.mpu.getTemperatureCelsiusDigital()) + p(calcHeading(m9[6], m9[7])) + "  \r")
+	}, 5)
+}
