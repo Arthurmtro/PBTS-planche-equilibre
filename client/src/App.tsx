@@ -1,7 +1,13 @@
 import { QueryClient, QueryClientProvider } from "react-query"
 import { Routes, Route } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
+import socketIOClient from "socket.io-client"
+import { useEffect, useState } from "react"
+
 import "react-toastify/dist/ReactToastify.css"
+
+// Config
+import { api_url } from "./config"
 
 // Contexts
 import CylindersDataProvider from "./contexts/cylindersProdiver"
@@ -20,6 +26,15 @@ import ConfigurationPage from "./pages/Configuration"
 const queryClient = new QueryClient()
 
 export default function App() {
+	const [response, setResponse] = useState("")
+
+	useEffect(() => {
+		const socket = socketIOClient(api_url)
+		socket.on("FromAPI", (data) => {
+			setResponse(data)
+		})
+	}, [])
+
 	return (
 		<ThemeProvider>
 			<QueryClientProvider client={queryClient}>
@@ -39,6 +54,9 @@ export default function App() {
 								theme="colored"
 							/>
 							<Layout>
+								<p>
+									It's <time dateTime={response}>{response}</time>
+								</p>
 								<Routes>
 									<Route path="/" element={<HomePage />} />
 									<Route path="/configuration" element={<ConfigurationPage />} />

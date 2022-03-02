@@ -10,19 +10,20 @@
 		"watch": "tsc -p tsconfig.json -w"
 	},
 	"dependencies": {
+		"coffee-script": "^1.12.7",
 		"cookie-parser": "~1.4.4",
 		"cors": "^2.8.5",
 		"debug": "~2.6.9",
 		"express": "^4.17.3",
+		"extend": "3.0.2",
+		"geomagnetism": "0.0.2",
 		"http-errors": "~1.6.3",
+		"i2c": "^0.2.5",
 		"i2c-bus": "^5.2.2",
 		"jade": "~1.11.0",
 		"morgan": "~1.9.1",
-		"i2c": "^0.2.5",
-		"coffee-script": "^1.12.7",
-		"extend": "3.0.2",
-		"geomagnetism": "0.0.2",
-		"pca9685": "^5.0.0"
+		"pca9685": "^5.0.0",
+		"socket.io": "^4.4.1"
 	},
 	"devDependencies": {
 		"@types/cookie-parser": "^1.4.2",
