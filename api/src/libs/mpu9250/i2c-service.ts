@@ -11,7 +11,7 @@ export class I2cService extends i2c {
 	}
 
 	public writeBytes(adrs: number, buffer: number[] | Buffer | any, callback?: (...args: any) => void): void {
-		callback = callback instanceof Function ? callback : () => console.log("No callback")
+		callback = callback instanceof Function ? callback : () => 0
 		super.writeBytes(adrs, buffer, callback)
 	}
 
@@ -28,7 +28,7 @@ export class I2cService extends i2c {
 	}
 
 	public readBytes(adrs: number, length: number, callback?: (...args: any) => void): any {
-		callback = callback instanceof Function ? callback : () => console.log("No callback")
+		callback = callback instanceof Function ? callback : () => 0
 		return super.readBytes(adrs, length, callback)
 	}
 
@@ -49,7 +49,7 @@ export class I2cService extends i2c {
 	}
 
 	public readByte(adrs: number, callback?: (...args: any) => void): number {
-		callback = callback instanceof Function ? callback : () => console.log("No callback")
+		callback = callback instanceof Function ? callback : () => 0
 		const buf = this.readBytes(adrs, 1, callback)
 		if (!buf) return 0
 		return buf[0]
@@ -68,7 +68,7 @@ export class I2cService extends i2c {
 	}
 
 	public readBit(adrs: number, bit: number, callback?: (...args: any) => void): number {
-		callback = callback instanceof Function ? callback : () => console.log("No callback")
+		callback = callback instanceof Function ? callback : () => 0
 		const buf = this.readByte(adrs, callback)
 		return (buf >> bit) & 1
 	}
@@ -86,7 +86,7 @@ export class I2cService extends i2c {
 	}
 
 	public writeBits(adrs: number, bit: number, length: number, value: number, callback?: (...args: any) => void): void {
-		callback = callback instanceof Function ? callback : () => console.log("No callback")
+		callback = callback instanceof Function ? callback : () => 0
 		const oldValue = this.readByte(adrs, () => {
 			/** no action */
 		})
@@ -109,7 +109,7 @@ export class I2cService extends i2c {
 	}
 
 	public writeBit(adrs: number, bit: number, value: number, callback?: (...args: any) => void): void {
-		callback = callback = callback instanceof Function ? callback : () => console.log("No callback")
+		callback = callback = callback instanceof Function ? callback : () => 0
 		this.writeBits(adrs, bit, 1, value, callback)
 	}
 

@@ -234,23 +234,19 @@ export const getMpuInfos = () => {
 		console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
 
 		// setInterval(function () {
-		const start = new Date().getTime()
 		const m6: any = ApiController.mpu.getMotion6()
-
-		const end = new Date().getTime()
-		const t = (end - start) / 1000
 
 		// Make the numbers pretty
 		let str = ""
 		for (let i = 0; i < m6.length; i++) {
 			str += m6[i]
 		}
-		stats.add(ACCEL_NAME, m6[0], m6[1], m6[2])
-		stats.add(GYRO_NAME, m6[3], m6[4], m6[5])
+		// stats.add(ACCEL_NAME, m6[0], m6[1], m6[2])
+		stats.add(GYRO_NAME, Math.floor(m6[3]), Math.floor(m6[4]), Math.floor(m6[5]))
 
 		// eslint-disable-next-line no-undef
 		// process.stdout.write(t + str + "  \r")
-		return t + str + "  \r"
+		return str + "  \r"
 		// }, 5)
 	}
 }
