@@ -1,15 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "module": "commonjs",
-    "allowJs": true,
-    "outDir": "dist",
-    "sourceMap": true,
-    "rootDir": "src",
-    "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+	"compilerOptions": {
+		"resolveJsonModule": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"lib": ["es6", "dom"],
+		"module": "commonjs",
+		"rootDir": "./src",
+		"target": "es2016",
+		"outDir": "./dist",
+		"sourceMap": true,
+		"strict": true
+	},
+	"exclude": ["node_modules"]
 }

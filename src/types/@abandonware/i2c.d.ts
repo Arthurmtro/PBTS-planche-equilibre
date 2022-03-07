@@ -1,1 +1,1 @@
-declare module 'i2c';
+declare module "i2c"

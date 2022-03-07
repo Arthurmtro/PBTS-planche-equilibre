@@ -27,7 +27,7 @@
 //***********************************************************************************//
 ///////////////////////////////////////////////////////////////////////////////////////
 
-'use strict';
+"use strict"
 
 /**
  * Calibarate the magnometer.
@@ -45,99 +45,98 @@
  */
 
 // Instantiate and initialize.
-var mpu9250 = require('./../index');
+var mpu9250 = require("./../index")
 
 var mpu = new mpu9250({
-    device: '/dev/i2c-2',
-    scaleValues: true,
-    UpMagneto: true
-});
+	device: "/dev/i2c-2",
+	scaleValues: true,
+	UpMagneto: true,
+})
 
 var min = {
-    x: Infinity,
-    y: Infinity,
-    z: Infinity
-};
+	x: Infinity,
+	y: Infinity,
+	z: Infinity,
+}
 var max = {
-    x: -Infinity,
-    y: -Infinity,
-    z: -Infinity
-};
-var count = 0;
-var MAX_NUM = 1000;
+	x: -Infinity,
+	y: -Infinity,
+	z: -Infinity,
+}
+var count = 0
+var MAX_NUM = 1000
 
-console.log('Rotate the magnometer around all 3 axes, until the min and max values don\'t change anymore.');
+console.log("Rotate the magnometer around all 3 axes, until the min and max values don't change anymore.")
 
 if (mpu.initialize()) {
+	console.log("    x        y        z      min x    min y    min z    max x    max y    max z")
 
-    console.log('    x        y        z      min x    min y    min z    max x    max y    max z');
+	setInterval(function () {
+		if (count++ > MAX_NUM) {
+			wrapUp()
+		}
+		var magdata = mpu.ak8963.getMagAttitude()
+		min.x = Math.min(min.x, magdata[0])
+		min.y = Math.min(min.y, magdata[1])
+		min.z = Math.min(min.z, magdata[2])
 
-    setInterval(function () {
-        if (count++ > MAX_NUM) {
-            wrapUp();
-        }
-        var magdata = mpu.ak8963.getMagAttitude();
-        min.x = Math.min(min.x, magdata[0]);
-        min.y = Math.min(min.y, magdata[1]);
-        min.z = Math.min(min.z, magdata[2]);
+		max.x = Math.max(max.x, magdata[0])
+		max.y = Math.max(max.y, magdata[1])
+		max.z = Math.max(max.z, magdata[2])
 
-        max.x = Math.max(max.x, magdata[0]);
-        max.y = Math.max(max.y, magdata[1]);
-        max.z = Math.max(max.z, magdata[2]);
-
-        process.stdout.write(p(magdata[0]) + p(magdata[1]) + p(magdata[2]) + p(min.x) + p(min.y) + p(min.z) + p(max.x) + p(max.y) + p(max.z) + '\r');
-    }, 50);
+		process.stdout.write(p(magdata[0]) + p(magdata[1]) + p(magdata[2]) + p(min.x) + p(min.y) + p(min.z) + p(max.x) + p(max.y) + p(max.z) + "\r")
+	}, 50)
 }
 
 function p(num) {
-    var str = num.toFixed(3);
-    while (str.length <= 7) {
-        str = ' ' + str;
-    }
-    return str + ' ';
+	var str = num.toFixed(3)
+	while (str.length <= 7) {
+		str = " " + str
+	}
+	return str + " "
 }
 
-var offset = {};
-var scale = {};
+var offset = {}
+var scale = {}
 function calcCalibration() {
-    offset = {
-        x: (min.x + max.x) / 2,
-        y: (min.y + max.y) / 2,
-        z: (min.z + max.z) / 2
-    };
-    var vmax = {
-        x: max.x - ((min.x + max.x) / 2),
-        y: max.y - ((min.y + max.y) / 2),
-        z: max.z - ((min.z + max.z) / 2)
-    };
-    var vmin = {
-        x: min.x - ((min.x + min.x) / 2),
-        y: min.y - ((min.y + min.y) / 2),
-        z: min.z - ((min.z + min.z) / 2)
-    };
-    var avg = {
-        x: (vmax.x - vmin.x) / 2,
-        y: (vmax.y - vmin.y) / 2,
-        z: (vmax.z - vmin.z) / 2
-    };
-    var avg_radius = (avg.x + avg.y + avg.z) / 2;
-    scale = {
-        x: avg_radius / avg.x,
-        y: avg_radius / avg.y,
-        z: avg_radius / avg.z
-    };
+	offset = {
+		x: (min.x + max.x) / 2,
+		y: (min.y + max.y) / 2,
+		z: (min.z + max.z) / 2,
+	}
+	var vmax = {
+		x: max.x - (min.x + max.x) / 2,
+		y: max.y - (min.y + max.y) / 2,
+		z: max.z - (min.z + max.z) / 2,
+	}
+	var vmin = {
+		x: min.x - (min.x + min.x) / 2,
+		y: min.y - (min.y + min.y) / 2,
+		z: min.z - (min.z + min.z) / 2,
+	}
+	var avg = {
+		x: (vmax.x - vmin.x) / 2,
+		y: (vmax.y - vmin.y) / 2,
+		z: (vmax.z - vmin.z) / 2,
+	}
+	var avg_radius = (avg.x + avg.y + avg.z) / 2
+	scale = {
+		x: avg_radius / avg.x,
+		y: avg_radius / avg.y,
+		z: avg_radius / avg.z,
+	}
 }
 
 function wrapUp() {
-    console.log('\n');
-    calcCalibration();
-    console.log({
-        min: min,
-        max: max,
-        offset: offset,
-        scale: scale
-    });
+	console.log("\n")
+	calcCalibration()
+	console.log({
+		min: min,
+		max: max,
+		offset: offset,
+		scale: scale,
+	})
 
-    var exit = process.exit;
-    exit(0);
+	var exit = process.exit
+	exit(0)
 }

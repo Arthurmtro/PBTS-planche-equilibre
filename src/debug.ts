@@ -11,15 +11,14 @@
 // };
 
 export class Debug {
+	constructor(readonly isEnabled: boolean = false) {}
 
-  constructor(readonly isEnabled : boolean = false) { }
-
-  public log(type : 'error' | 'warning' | 'info', str : string | number) : void {
-    if (this.isEnabled) {
-    const date = new Date();
-    const strdate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    const strhour = `${date.getHours()}:${date.getMinutes()}`;
-    console.log(`[${type.toUpperCase() || 'info'}][${strhour}-${strdate}]: ${str}`);
-    }
-  }
+	public log(type: "error" | "warning" | "info", str: string | number): void {
+		if (this.isEnabled) {
+			const date = new Date()
+			const strdate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+			const strhour = `${date.getHours()}:${date.getMinutes()}`
+			console.log(`[${type.toUpperCase() || "info"}][${strhour}-${strdate}]: ${str}`)
+		}
+	}
 }

@@ -27,9 +27,9 @@
 //***********************************************************************************//
 ///////////////////////////////////////////////////////////////////////////////////////
 
-'use strict';
+"use strict"
 
-var NUM_READS = 500;
+var NUM_READS = 500
 
 /**
  * Calibrate the gyro.  The device needs to remain still during calibration.  The calibration will
@@ -41,40 +41,38 @@ var NUM_READS = 500;
  */
 
 // Instantiate and initialize.
-var mpu9250 = require('./../index');
-var sleep = require('sleep');
+var mpu9250 = require("./../index")
+var sleep = require("sleep")
 
 var mpu = new mpu9250({
-    device: '/dev/i2c-2',
-    scaleValues: true,
-    UpMagneto: false
-});
+	device: "/dev/i2c-2",
+	scaleValues: true,
+	UpMagneto: false,
+})
 
 function gyroBiasCalibrationSync() {
-
 	var avg = {
 		x: 0,
 		y: 0,
-		z: 0
-	};
-
-	for (var i = 0; i < NUM_READS; i++) {
-		var gyroValues = mpu.getGyro();
-		avg.x += gyroValues[0];
-		avg.y += gyroValues[1];
-		avg.z += gyroValues[2];
-		sleep.usleep(5000);
+		z: 0,
 	}
 
-	avg.x /= -NUM_READS;
-	avg.y /= -NUM_READS;
-	avg.z /= -NUM_READS;
+	for (var i = 0; i < NUM_READS; i++) {
+		var gyroValues = mpu.getGyro()
+		avg.x += gyroValues[0]
+		avg.y += gyroValues[1]
+		avg.z += gyroValues[2]
+		sleep.usleep(5000)
+	}
 
-	return avg;
+	avg.x /= -NUM_READS
+	avg.y /= -NUM_READS
+	avg.z /= -NUM_READS
+
+	return avg
 }
 
-
 if (mpu.initialize()) {
-    console.log('Calibrating.');
-    console.log('GYRO_OFFSET =', gyroBiasCalibrationSync());
+	console.log("Calibrating.")
+	console.log("GYRO_OFFSET =", gyroBiasCalibrationSync())
 }

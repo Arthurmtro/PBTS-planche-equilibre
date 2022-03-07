@@ -1,89 +1,96 @@
 # mpu9250
+
 A node.js library for communicating with the MPU9250.
 Based initially on the mpu6050 library (https://github.com/jstapels/mpu6050) by Jason Stapels.
 
-___
+---
 
 ## Dependencies
-|   Lib.  | Version |
-| ------- | ------- |
-|  @abandonware/i2c |   0.2.4-0 |
-|  extend |   3.0.2 |
-|   sleep |   3.0.0 |
-|   geomagnetism |   0.0.2 |
 
-___
+| Lib.             | Version |
+| ---------------- | ------- |
+| @abandonware/i2c | 0.2.4-0 |
+| extend           | 3.0.2   |
+| sleep            | 3.0.0   |
+| geomagnetism     | 0.0.2   |
+
+---
 
 ## Install
+
 ```
 npm install mpu9250
 ```
 
 ## How to use it
+
 ```javascript
-var mpu9250 = require('mpu9250');
+var mpu9250 = require("mpu9250")
 // Instantiate and initialize.
-var mpu = new mpu9250();
+var mpu = new mpu9250()
 if (mpu.initialize()) {
-  console.log(mpu.getMotion9());
+	console.log(mpu.getMotion9())
 }
 ```
 
 ## Parameters
+
 ```javascript
 // default value
 var mpu = new mpu9250({
-    // i2c path (default is '/dev/i2c-1')
-    device: '/dev/i2c-1',
+	// i2c path (default is '/dev/i2c-1')
+	device: "/dev/i2c-1",
 
-    // mpu9250 address (default is 0x68)
-    address: 0x68,
+	// mpu9250 address (default is 0x68)
+	address: 0x68,
 
-    // Enable/Disable magnetometer data (default false)
-    UpMagneto: true,
+	// Enable/Disable magnetometer data (default false)
+	UpMagneto: true,
 
-    // If true, all values returned will be scaled to actual units (default false).
-    // If false, the raw values from the device will be returned.
-    scaleValues: false,
+	// If true, all values returned will be scaled to actual units (default false).
+	// If false, the raw values from the device will be returned.
+	scaleValues: false,
 
-    // Enable/Disable debug mode (default false)
-    DEBUG: false,
+	// Enable/Disable debug mode (default false)
+	DEBUG: false,
 
-    // ak8963 (magnetometer / compass) address (default is 0x0C)
-    ak_address: 0x0C,
+	// ak8963 (magnetometer / compass) address (default is 0x0C)
+	ak_address: 0x0c,
 
-    // Set the Gyroscope sensitivity (default 0), where:
-    //      0 => 250 degrees / second
-    //      1 => 500 degrees / second
-    //      2 => 1000 degrees / second
-    //      3 => 2000 degrees / second
-    GYRO_FS: 0,
+	// Set the Gyroscope sensitivity (default 0), where:
+	//      0 => 250 degrees / second
+	//      1 => 500 degrees / second
+	//      2 => 1000 degrees / second
+	//      3 => 2000 degrees / second
+	GYRO_FS: 0,
 
-    // Set the Accelerometer sensitivity (default 2), where:
-    //      0 => +/- 2 g
-    //      1 => +/- 4 g
-    //      2 => +/- 8 g
-    //      3 => +/- 16 g
-    ACCEL_FS: 2,
-    
-    // Set DLPF Value
-    DLPF_CFG: mpu9250.MPU9250.DLPF_CFG_3600HZ,
-    // Set Accel DLPF Value
-    A_DLPF_CFG: mpu9250.MPU9250.A_DLPF_CFG_460HZ,
-    // Set ratio (between MPU9250.SAMPLERATE_MIN and MPU9250.SAMPLERATE_MAX)
-    SAMPLE_RATE: 8000,
-});
+	// Set the Accelerometer sensitivity (default 2), where:
+	//      0 => +/- 2 g
+	//      1 => +/- 4 g
+	//      2 => +/- 8 g
+	//      3 => +/- 16 g
+	ACCEL_FS: 2,
+
+	// Set DLPF Value
+	DLPF_CFG: mpu9250.MPU9250.DLPF_CFG_3600HZ,
+	// Set Accel DLPF Value
+	A_DLPF_CFG: mpu9250.MPU9250.A_DLPF_CFG_460HZ,
+	// Set ratio (between MPU9250.SAMPLERATE_MIN and MPU9250.SAMPLERATE_MAX)
+	SAMPLE_RATE: 8000,
+})
 ```
 
 ## Calibration
 
-All three sensors can be calibrated and the calibrated values provided as options.  See (in `examples` folder) the `example.js` file for how
-to apply the calibrated values.  Run the `calibrate_accel.js`, `calibrate_mag.js` and `calibrate_gyro.js` to calibrate
-the relevant sensors.  The output will display some JSON text, copy and paste this into your code. See the relevant
-JavaScript source file for the documentation on the calibration. 
+All three sensors can be calibrated and the calibrated values provided as options. See (in `examples` folder) the `example.js` file for how
+to apply the calibrated values. Run the `calibrate_accel.js`, `calibrate_mag.js` and `calibrate_gyro.js` to calibrate
+the relevant sensors. The output will display some JSON text, copy and paste this into your code. See the relevant
+JavaScript source file for the documentation on the calibration.
 
 ## Integration of Calman Filter
+
 ###Example :
+
 ```javascript
 
 #!/usr/local/bin/node
