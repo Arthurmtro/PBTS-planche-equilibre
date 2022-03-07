@@ -223,26 +223,22 @@ class Controller {
 
 export const ApiController = new Controller()
 
+// setInterval(function () {
 export const getMpuInfos = () => {
 	if ((os.arch() === "arm" || os.arch() === "arm64") && ApiController.mpu.initialize()) {
-		const HEADING_NAME = "Heading (°)"
 		const GYRO_NAME = "Gyro (°/sec)"
-		const ACCEL_NAME = "Accel (g)"
-		const MAG_NAME = "Mag (uT)"
-		const stats = new Stats([ACCEL_NAME, GYRO_NAME, MAG_NAME, HEADING_NAME], 1000)
+		const stats = new Stats([GYRO_NAME], 1000)
 
-		console.log("\nGyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
-
-		// setInterval(function () {
+		console.log("\nGyro.x   Gyro.y   Gyro.z")
 		const m6: any = ApiController.mpu.getMotion6()
 
 		// Make the numbers pretty
 		let str = ""
 		for (let i = 0; i < m6.length; i++) {
-			str += m6[i]
+			str += Math.floor(m6[i])
 		}
 		// stats.add(ACCEL_NAME, m6[0], m6[1], m6[2])
-		stats.add(GYRO_NAME, Math.floor(m6[3]), Math.floor(m6[4]), Math.floor(m6[5]))
+		stats.add(GYRO_NAME, m6[3], m6[4], m6[5])
 
 		// eslint-disable-next-line no-undef
 		// process.stdout.write(t + str + "  \r")
