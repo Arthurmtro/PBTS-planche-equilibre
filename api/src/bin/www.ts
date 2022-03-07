@@ -1,5 +1,8 @@
+import { getMpuInfos } from "./../services/Controller"
 /* eslint-disable indent */
-import http from "http"
+import { DefaultEventsMap } from "socket.io/dist/typed-events"
+import { Server, Socket } from "socket.io"
+import { createServer } from "http"
 
 import app from "../app"
 
@@ -7,7 +10,7 @@ const port = 8080
 
 app.set("port", port)
 
-const server = http.createServer(app)
+const server = createServer(app)
 
 server.listen(port, () => {
 	console.log(`SERVER RUNNING ON ${port}`)
@@ -38,4 +41,29 @@ function onListening() {
 	const addr = server.address()
 	const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr?.port
 	console.log("Listening on " + bind)
+}
+
+const io = new Server(server)
+
+let interval: NodeJS.Timer
+
+io.on("connection", (socket) => {
+	console.error("New client connected")
+
+	if (interval) {
+		clearInterval(interval)
+	}
+	interval = setInterval(() => getApiAndEmit(socket), 1000)
+	socket.on("disconnect", () => {
+		console.log("Client disconnected")
+		clearInterval(interval)
+	})
+})
+
+const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
+	const response = new Date()
+
+	// Emitting a new message. Will be consumed by the client
+	socket.emit("FromAPI", response)
+	socket.emit("mpuInfos", getMpuInfos())
 }
