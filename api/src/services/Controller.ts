@@ -223,26 +223,27 @@ class Controller {
 
 export const ApiController = new Controller()
 
-// setInterval(function () {
+if (os.arch() === "arm" || os.arch() === "arm64") ApiController.mpu.initialize()
+
 export const getMpuInfos = () => {
-	if ((os.arch() === "arm" || os.arch() === "arm64") && ApiController.mpu.initialize()) {
-		const GYRO_NAME = "Gyro (°/sec)"
-		const stats = new Stats([GYRO_NAME], 1000)
+	if (!(os.arch() === "arm" || os.arch() === "arm64")) return
 
-		console.log("\nGyro.x   Gyro.y   Gyro.z")
-		const m6: any = ApiController.mpu.getMotion6()
+	const GYRO_NAME = "Gyro (°/sec)"
+	const stats = new Stats([GYRO_NAME], 1000)
 
-		// Make the numbers pretty
-		let str = ""
-		for (let i = 0; i < m6.length; i++) {
-			str += Math.floor(m6[i])
-		}
-		// stats.add(ACCEL_NAME, m6[0], m6[1], m6[2])
-		stats.add(GYRO_NAME, m6[3], m6[4], m6[5])
+	console.log("\nGyro.x   Gyro.y   Gyro.z")
+	const m6: any = ApiController.mpu.getMotion6()
 
-		// eslint-disable-next-line no-undef
-		// process.stdout.write(t + str + "  \r")
-		return str + "  \r"
-		// }, 5)
+	// Make the numbers pretty
+	let str = ""
+	for (let i = 0; i < m6.length; i++) {
+		str += Math.floor(m6[i])
 	}
+	// stats.add(ACCEL_NAME, m6[0], m6[1], m6[2])
+	stats.add(GYRO_NAME, m6[3], m6[4], m6[5])
+
+	// eslint-disable-next-line no-undef
+	// process.stdout.write(t + str + "  \r")
+	return str + "  \r"
+	// }, 5)
 }
