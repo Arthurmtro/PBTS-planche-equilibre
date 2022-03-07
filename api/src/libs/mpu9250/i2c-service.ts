@@ -5,8 +5,6 @@ import os from "os"
 
 const i2c = os.arch() === "arm" || os.arch() === "arm64" ? require("i2c") : require("./facticeI2c").i2c
 
-console.log("i2c", i2c)
-
 export class I2cService extends i2c {
 	constructor(address: number, options: { device: string; debug?: boolean }) {
 		super(address, options)
