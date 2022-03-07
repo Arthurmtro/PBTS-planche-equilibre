@@ -231,7 +231,7 @@ export const getMpuInfos = () => {
 		const MAG_NAME = "Mag (uT)"
 		const stats = new Stats([ACCEL_NAME, GYRO_NAME, MAG_NAME, HEADING_NAME], 1000)
 
-		console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
+		console.log("\nGyro.x   Gyro.y   Gyro.z   Mag.x   Mag.y   Mag.z    Temp(°C) heading(°)")
 
 		// setInterval(function () {
 		const m6: any = ApiController.mpu.getMotion6()
