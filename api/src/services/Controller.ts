@@ -238,7 +238,7 @@ export const getMpuInfos = () => {
 
 	// Make the numbers pretty
 	let str = ""
-	for (let i = 3; i < 4; i++) {
+	for (let i = 3; i < 5; i++) {
 		str += " " + Math.floor(m6[i]) + " "
 	}
 
