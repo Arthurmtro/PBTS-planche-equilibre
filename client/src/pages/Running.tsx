@@ -68,7 +68,7 @@ export default function RunningPage() {
 								<div className={styles.info}>
 									<span />
 									<h4>
-										Donnée temps `réel` : GyroX : {mpuInfos?.gyroX} GyroT: {mpuInfos?.gyroY}{" "}
+										Donnée temps : GyroX : {mpuInfos?.gyroX} GyroT: {mpuInfos?.gyroY}{" "}
 									</h4>
 									<span />
 								</div>
