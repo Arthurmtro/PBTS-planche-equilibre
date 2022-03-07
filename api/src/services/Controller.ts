@@ -238,9 +238,10 @@ export const getMpuInfos = () => {
 
 	// Make the numbers pretty
 	let str = ""
-	for (let i = 0; i < m6.length; i++) {
+	for (let i = 3; i < 4; i++) {
 		str += " " + Math.floor(m6[i]) + " "
 	}
+
 	stats.add(GYRO_NAME, m6[3], m6[4], 0)
 
 	// eslint-disable-next-line no-undef
