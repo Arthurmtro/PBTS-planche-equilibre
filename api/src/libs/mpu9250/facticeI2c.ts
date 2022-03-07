@@ -1,49 +1,30 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-mixed-spaces-and-tabs */
-import os from "os"
 
-const i2c = os.arch() === "arm" || os.arch() === "arm64" ? require("i2c") : require("./facticeI2c").i2c
+export class i2c {
+	address: number
+	options: { device: string; debug?: boolean }
 
-console.log("i2c", i2c)
-
-export class I2cService extends i2c {
 	constructor(address: number, options: { device: string; debug?: boolean }) {
-		super(address, options)
+		this.address = address
+		this.options = options
 	}
 
-	public writeBytes(adrs: number, buffer: number[] | Buffer | any, callback?: (...args: any) => void): void {
-		callback = callback instanceof Function ? callback : () => console.log("No callback")
-		super.writeBytes(adrs, buffer, callback)
+	public writeBytes(_adrs: number, _buffer: number[] | Buffer | any, _callback?: (...args: any) => void): void {
+		console.log("writeBytes")
 	}
 
-	public writeBytesAsync(adrs: number, buffer: number[] | Buffer | any): Promise<void> {
-		return new Promise((resolve, reject) => {
-			this.writeBytes(adrs, buffer, (err) => {
-				if (err) {
-					reject(err)
-				} else {
-					resolve()
-				}
-			})
-		})
+	public writeBytesAsync(_adrs: number, _buffer: number[] | Buffer | any) {
+		console.log("writeBytesAsync")
 	}
 
-	public readBytes(adrs: number, length: number, callback?: (...args: any) => void): any {
-		callback = callback instanceof Function ? callback : () => console.log("No callback")
-		return super.readBytes(adrs, length, callback)
+	public readBytes(_adrs: number, _length: number, _callback?: (...args: any) => void) {
+		console.log("readBytes")
 	}
 
-	public readBytesAsync(adrs: number, length: number): Promise<Buffer> {
-		return new Promise((resolve, reject) => {
-			const buffer = this.readBytes(adrs, length, (err) => {
-				if (err) {
-					reject(err)
-				} else {
-					resolve(buffer)
-				}
-			})
-		})
+	public readBytesAsync(_adrs: number, _length: number) {
+		console.log("readBytesAsync")
 	}
 
 	public bitMask(bit: number, length: number): number {
@@ -52,8 +33,7 @@ export class I2cService extends i2c {
 
 	public readByte(adrs: number, callback?: (...args: any) => void): number {
 		callback = callback instanceof Function ? callback : () => console.log("No callback")
-		const buf = this.readBytes(adrs, 1, callback)
-		if (!buf) return 0
+		const buf: any = this.readBytes(adrs, 1, callback)
 		return buf[0]
 	}
 

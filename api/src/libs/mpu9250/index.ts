@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MPU9250Map, AK8963Map } from "./maps"
+import { MPU9250Map } from "./maps"
 import { IConfig } from "./iconfig"
 import extend from "extend"
 import { Debug } from "./debug"
 import { I2cService } from "./i2c-service"
-import { ak8963 } from "./ak8963"
 import { msleep } from "./sleep"
 
 export class mpu9250 {
-	/** Default gyro offset values */
 	private static readonly _DEFAULT_GYRO_OFFSET = { x: 0, y: 0, z: 0 }
 
-	/** Default accel calibration values */
 	private static readonly _DEFAULT_ACCEL_CALIBRATION = {
 		offset: { x: 0, y: 0, z: 0 },
 		scale: {
@@ -40,32 +37,21 @@ export class mpu9250 {
 
 	private static readonly _FS_ACCEL_RANGE = [MPU9250Map.ACCEL_FS_2, MPU9250Map.ACCEL_FS_4, MPU9250Map.ACCEL_FS_8, MPU9250Map.ACCEL_FS_16]
 
-	/** Default magnetometer calibration values */
-	private static readonly _DEFAULT_CALIBRATION = {
-		offset: { x: 0, y: 0, z: 0 },
-		scale: { x: 1, y: 1, z: 1 },
-	}
-
 	public static readonly MPU9250 = MPU9250Map
-	public static readonly AK8963 = AK8963Map
 
 	public accelScalarInv = 0
 	public gyroScalarInv = 0
 	public readonly i2c: I2cService
 	public readonly debug: Debug
-	public ak8963: ak8963
 
 	private readonly _config: IConfig
 
 	constructor(config: IConfig) {
-		/** Default configuration */
 		const _default = {
 			device: "/dev/i2c-1",
 			address: MPU9250Map.I2C_ADDRESS_AD0_LOW,
-			UpMagneto: false,
 			DEBUG: false,
 			scaleValues: false,
-			ak_address: AK8963Map.ADDRESS,
 			GYRO_FS: 0,
 			ACCEL_FS: 2,
 			gyroBiasOffset: mpu9250._DEFAULT_GYRO_OFFSET,
@@ -75,27 +61,17 @@ export class mpu9250 {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		this._config = extend({}, _default, config && config instanceof Object ? config : {})
 
-		/** IF no device configured should not able to run this plugin */
 		if (!this._config.device) {
 			throw new Error("Device parameter required!")
 		}
-		/** If address not defined */
 		if (!this._config.address) {
 			throw new Error("Address parameter required!")
 		}
 
-		/** print debug */
 		this.debug = new Debug(this._config.DEBUG || false)
-		/** I2C Service Read/Write */
 		this.i2c = new I2cService(this._config.address, { device: this._config.device })
-		/** Magnetomater */
-		this.ak8963 = new ak8963(this._config)
 	}
 
-	/**
-	 * @name initialize
-	 * @return {boolean}
-	 */
 	public initialize(): boolean {
 		this.debug.log("info", "Initialization MPU9250 ....")
 		// clear configuration
@@ -135,12 +111,6 @@ export class mpu9250 {
 		this.setSleepEnabled(false)
 		msleep(10)
 
-		if (this._config?.UpMagneto) {
-			this.debug.log("info", "Enabled magnetometer. Starting initialization ....")
-			this.enableMagnetometer()
-			msleep(10)
-			this.debug.log("info", "END of magnetometer initialization.")
-		}
 		this.debug.log("info", "END of MPU9150 initialization.")
 
 		// Print out the configuration
@@ -148,18 +118,11 @@ export class mpu9250 {
 			this.printSettings()
 			this.printAccelSettings()
 			this.printGyroSettings()
-			if (this.ak8963) {
-				this.ak8963.printSettings()
-			}
 		}
 
 		return true
 	}
 
-	/**
-	 * @name initialize
-	 * @return {Promise<boolean>}
-	 */
 	public async initializeAsync(): Promise<boolean> {
 		this.debug.log("info", "Initialization MPU9250 ....")
 		// clear configuration
@@ -192,11 +155,6 @@ export class mpu9250 {
 		// disable sleepEnabled
 		await this.setSleepEnabledAsync(false)
 
-		if (this._config?.UpMagneto) {
-			this.debug.log("info", "Enabled magnetometer. Starting initialization ....")
-			await this.enableMagnetometerAsync()
-			this.debug.log("info", "END of magnetometer initialization.")
-		}
 		this.debug.log("info", "END of MPU9150 initialization.")
 
 		// Print out the configuration
@@ -204,108 +162,33 @@ export class mpu9250 {
 			this.printSettings()
 			this.printAccelSettings()
 			this.printGyroSettings()
-			if (this.ak8963) {
-				this.ak8963.printSettings()
-			}
 		}
 
 		return await this.testDeviceAsync()
 	}
 
-	/**
-	 * @name resetConfig
-	 * @description Reset configuration
-	 */
 	public resetConfig(): void {
 		this.i2c.writeBit(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_DEVICE_RESET_BIT, 1)
 		msleep(10)
 		this.debug.log("info", "Reset configuration MPU9250.")
 	}
 
-	/**
-	 * @name resetConfigAsync
-	 * @description Reset Configuration
-	 */
 	public async resetConfigAsync(): Promise<void> {
 		await this.i2c.writeBitAsync(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_DEVICE_RESET_BIT, 1)
 		this.debug.log("info", "Reset configuration MPU9250.")
 	}
 
-	/**
-	 * @name testDevice
-	 * @return {boolean}
-	 */
 	public testDevice(): boolean {
 		const currentDeviceID = this.getIDDevice()
 		console.log(currentDeviceID)
 		return !!(currentDeviceID && (currentDeviceID === MPU9250Map.ID_MPU_9250 || currentDeviceID === MPU9250Map.ID_MPU_9255))
 	}
 
-	/**
-	 * @name testDeviceAsync
-	 * @return {Promise<boolean>}
-	 */
 	public async testDeviceAsync(): Promise<boolean> {
 		const currentDeviceID = await this.getIDDeviceAsync()
 		return !!(currentDeviceID && (currentDeviceID === MPU9250Map.ID_MPU_9250 || currentDeviceID === MPU9250Map.ID_MPU_9255))
 	}
 
-	/**
-	 * @name enableMagnetometer
-	 * @return {boolean}
-	 */
-	public enableMagnetometer(): boolean {
-		if (this.i2c) {
-			this.setI2CMasterModeEnabled(false)
-			msleep(100)
-
-			this.setByPASSEnabled(true)
-			msleep(100)
-
-			if (this.getByPASSEnabled() && this.ak8963) {
-				return this.ak8963.initialize()
-			} else {
-				this.debug.log("error", "Can't turn on RA_INT_PIN_CFG.")
-			}
-		}
-		return false
-	}
-
-	/**
-	 * @name enableMagnetometerAsync
-	 * @return {Promise<boolean>}
-	 */
-	public async enableMagnetometerAsync(): Promise<boolean> {
-		if (this.i2c) {
-			await this.setI2CMasterModeEnabledAsync(false)
-			await this.setByPASSEnabledAsync(true)
-			if (this.getByPASSEnabled() && this.ak8963) {
-				return await this.ak8963.initializeAsync()
-			} else {
-				this.debug.log("error", "Can't turn on RA_INT_PIN_CFG.")
-			}
-		}
-		return false
-	}
-
-	/**
-	 * @name getTemperatureCelsiusDigital
-	 * @param {number} temp
-	 * @return {number}
-	 */
-	public getTemperatureCelsiusDigital(temp: number): number {
-		if (temp) {
-			return temp / 333.87 + 21.0
-		}
-		return 0
-	}
-
-	/** Getter */
-
-	/**
-	 * @name getIDDevice
-	 * @return {number | false}
-	 */
 	public getIDDevice(): number | false {
 		if (this.i2c) {
 			return this.i2c.readByte(MPU9250Map.WHO_AM_I)
@@ -313,10 +196,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getIDDeviceAsync
-	 * @return {Promise<number | false>}
-	 */
 	public getIDDeviceAsync(): Promise<number | false> {
 		if (this.i2c) {
 			return this.i2c.readByteAsync(MPU9250Map.WHO_AM_I)
@@ -324,69 +203,6 @@ export class mpu9250 {
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name getTemperature
-	 * @return {number | false}
-	 */
-	public getTemperature(): number | false {
-		if (this.i2c) {
-			const buffer = this.i2c.readBytes(MPU9250Map.TEMP_OUT_H, 2)
-			return buffer.readInt16BE(0)
-		}
-		return false
-	}
-
-	/**
-	 * @name getTemperatureAsync
-	 * @return {Promise<number | false>}
-	 */
-	public getTemperatureAsync(): Promise<number | false> {
-		if (this.i2c) {
-			return this.i2c.readBytesAsync(MPU9250Map.TEMP_OUT_H, 2).then((buffer) => {
-				return buffer.readInt16BE(0)
-			})
-		}
-		return Promise.resolve(false)
-	}
-
-	/**
-	 * @name getTemperatureCelsius
-	 * @return {string}
-	 */
-	public getTemperatureCelsius(): string {
-		/*
-    ((TEMP_OUT – RoomTemp_Offset)/Temp_Sensitivity) + 21degC
-    */
-		let TEMP_OUT = this.getTemperature()
-		if (TEMP_OUT) {
-			TEMP_OUT = this.getTemperatureCelsiusDigital(TEMP_OUT)
-			return `${TEMP_OUT}°C`
-		} else {
-			return "no data"
-		}
-	}
-
-	/**
-	 * @name getTemperatureCelsiusAsync
-	 * @return {Promise<string>}
-	 */
-	public async getTemperatureCelsiusAsync(): Promise<string> {
-		/*
-    ((TEMP_OUT – RoomTemp_Offset)/Temp_Sensitivity) + 21degC
-    */
-		let TEMP_OUT = await this.getTemperatureAsync()
-		if (TEMP_OUT) {
-			TEMP_OUT = this.getTemperatureCelsiusDigital(TEMP_OUT)
-			return `${TEMP_OUT}°C`
-		} else {
-			return "no data"
-		}
-	}
-
-	/**
-	 * @name getMotion6
-	 * @return {number[] | false}
-	 */
 	public getMotion6(): number[] | false {
 		if (this.i2c) {
 			const buffer = this.i2c.readBytes(MPU9250Map.ACCEL_XOUT_H, 14)
@@ -415,10 +231,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getMotion6Async
-	 * @return {Promise<number[] | false>}
-	 */
 	public async getMotion6Async(): Promise<number[] | false> {
 		if (this.i2c) {
 			const buffer = await this.i2c.readBytesAsync(MPU9250Map.ACCEL_XOUT_H, 14)
@@ -447,52 +259,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getMotion9
-	 * @return {number[] | false}
-	 */
-	public getMotion9(): number[] | false {
-		if (this.i2c) {
-			const mpudata: number[] | false = this.getMotion6()
-			if (!mpudata) {
-				return false
-			}
-			let magdata = []
-			if (this.ak8963?.isEnabled && this.ak8963.isReady) {
-				magdata = this.ak8963.getMagAttitude() || [0, 0, 0]
-			} else {
-				magdata = [0, 0, 0]
-			}
-			return mpudata.concat(magdata)
-		}
-		return false
-	}
-
-	/**
-	 * @name getMotion9Async
-	 * @return {Promise<number[] | false>}
-	 */
-	public async getMotion9Async(): Promise<number[] | false> {
-		if (this.i2c) {
-			const mpudata: number[] | false = await this.getMotion6Async()
-			if (!mpudata) {
-				return false
-			}
-			let magdata = []
-			if (this.ak8963?.isEnabled && this.ak8963.isReady) {
-				magdata = (await this.ak8963.getMagAttitudeAsync()) || [0, 0, 0]
-			} else {
-				magdata = [0, 0, 0]
-			}
-			return mpudata.concat(magdata)
-		}
-		return false
-	}
-
-	/**
-	 * @name getAccel
-	 * @return {number[] | false}
-	 */
 	public getAccel(): number[] | false {
 		if (this.i2c) {
 			const buffer = this.i2c.readBytes(MPU9250Map.ACCEL_XOUT_H, 6)
@@ -515,10 +281,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getAccelAsync
-	 * @return {Promise<number[] | false>}
-	 */
 	public async getAccelAsync(): Promise<number[] | false> {
 		if (this.i2c) {
 			const buffer = await this.i2c.readBytesAsync(MPU9250Map.ACCEL_XOUT_H, 6)
@@ -541,10 +303,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getGyro
-	 * @return {number[] | false}
-	 */
 	public getGyro(): number[] | false {
 		if (this.i2c) {
 			const buffer = this.i2c.readBytes(MPU9250Map.GYRO_XOUT_H, 6)
@@ -563,10 +321,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getGyroAsync
-	 * @return {Async<number[] | false>}
-	 */
 	public async getGyroAsync(): Promise<number[] | false> {
 		if (this.i2c) {
 			const buffer = await this.i2c.readBytesAsync(MPU9250Map.GYRO_XOUT_H, 6)
@@ -585,10 +339,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getSleepEnabled
-	 * @return {number | false}
-	 */
 	public getSleepEnabled(): number | false {
 		if (this.i2c) {
 			return this.i2c.readBit(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_SLEEP_BIT)
@@ -596,10 +346,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getSleepEnabledAsync
-	 * @return {Promise<number | false>}
-	 */
 	public async getSleepEnabledAsync(): Promise<number | false> {
 		if (this.i2c) {
 			return this.i2c.readBitAsync(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_SLEEP_BIT)
@@ -607,10 +353,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getClockSource
-	 * @return {number | false}
-	 */
 	public getClockSource(): number | false {
 		if (this.i2c) {
 			return this.i2c.readByte(MPU9250Map.RA_PWR_MGMT_1) & 0x07
@@ -618,10 +360,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getClockSourceAsync
-	 * @return {Promise<number | false>}
-	 */
 	public async getClockSourceAsync(): Promise<number | false> {
 		if (this.i2c) {
 			return (await this.i2c.readByteAsync(MPU9250Map.RA_PWR_MGMT_1)) & 0x07
@@ -629,10 +367,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getFullScaleGyroRange
-	 * @return {number | false}
-	 */
 	public getFullScaleGyroRange(): number | false {
 		if (this.i2c) {
 			let byte = this.i2c.readByte(MPU9250Map.RA_GYRO_CONFIG)
@@ -643,10 +377,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getFullScaleGyroRangeAsync
-	 * @return {Promise<number | false>}
-	 */
 	public async getFullScaleGyroRangeAsync(): Promise<number | false> {
 		if (this.i2c) {
 			let byte = await this.i2c.readByteAsync(MPU9250Map.RA_GYRO_CONFIG)
@@ -657,10 +387,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getGyroPowerSettings
-	 * @return {number[] | false}
-	 */
 	public getGyroPowerSettings(): number[] | false {
 		if (this.i2c) {
 			let byte = this.i2c.readByte(MPU9250Map.RA_PWR_MGMT_2)
@@ -674,10 +400,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getGyroPowerSettingsAsync
-	 * @return {Promise<number[] | false>}
-	 */
 	public async getGyroPowerSettingsAsync(): Promise<number[] | false> {
 		if (this.i2c) {
 			let byte = await this.i2c.readByteAsync(MPU9250Map.RA_PWR_MGMT_2)
@@ -691,10 +413,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getAccelPowerSettings
-	 * @return {number[] | false}
-	 */
 	public getAccelPowerSettings(): number[] | false {
 		if (this.i2c) {
 			let byte = this.i2c.readByte(MPU9250Map.RA_PWR_MGMT_2)
@@ -708,10 +426,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getAccelPowerSettingsAsync
-	 * @return {Promise<number[] | false>}
-	 */
 	public async getAccelPowerSettingsAsync(): Promise<number[] | false> {
 		if (this.i2c) {
 			let byte = await this.i2c.readByteAsync(MPU9250Map.RA_PWR_MGMT_2)
@@ -725,10 +439,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getFullScaleAccelRange
-	 * @return {number | false}
-	 */
 	public getFullScaleAccelRange(): number | false {
 		if (this.i2c) {
 			let byte = this.i2c.readByte(MPU9250Map.RA_ACCEL_CONFIG_1)
@@ -739,10 +449,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getFullScaleAccelRangeAsync
-	 * @return {Promise<number | false>}
-	 */
 	public async getFullScaleAccelRangeAsync(): Promise<number | false> {
 		if (this.i2c) {
 			let byte = await this.i2c.readByteAsync(MPU9250Map.RA_ACCEL_CONFIG_1)
@@ -753,10 +459,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getByPASSEnabled
-	 * @return {number | false}
-	 */
 	public getByPASSEnabled(): number | false {
 		if (this.i2c) {
 			return this.i2c.readBit(MPU9250Map.RA_INT_PIN_CFG, MPU9250Map.INTCFG_BYPASS_EN_BIT)
@@ -764,10 +466,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getByPASSEnabled
-	 * @return {Promise<number | false>}
-	 */
 	public getByPASSEnabledAsync(): Promise<number | false> {
 		if (this.i2c) {
 			return this.i2c.readBitAsync(MPU9250Map.RA_INT_PIN_CFG, MPU9250Map.INTCFG_BYPASS_EN_BIT)
@@ -775,10 +473,6 @@ export class mpu9250 {
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name getI2CMasterMode
-	 * @return {number | false}
-	 */
 	public getI2CMasterMode(): number | false {
 		if (this.i2c) {
 			return this.i2c.readBit(MPU9250Map.RA_USER_CTRL, MPU9250Map.USERCTRL_I2C_MST_EN_BIT)
@@ -786,10 +480,6 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name getI2CMasterModeAsync
-	 * @return {Promise<number | false>}
-	 */
 	public getI2CMasterModeAsync(): Promise<number | false> {
 		if (this.i2c) {
 			return this.i2c.readBitAsync(MPU9250Map.RA_USER_CTRL, MPU9250Map.USERCTRL_I2C_MST_EN_BIT)
@@ -797,37 +487,19 @@ export class mpu9250 {
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name getPitch
-	 * @param {number[]} value
-	 * @return {number}
-	 */
 	public getPitch(value: number[]): number {
 		return (Math.atan2(value[0], value[2]) + Math.PI) * (180 / Math.PI) - 180
 	}
 
-	/**
-	 * @name getRoll
-	 * @param {number[]} value
-	 * @return {number}
-	 */
 	public getRoll(value: number[]): number {
 		return (Math.atan2(value[1], value[2]) + Math.PI) * (180 / Math.PI) - 180
 	}
 
-	/**
-	 * @name getYaw
-	 * @param {number[]} value
-	 * @return {number}
-	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public getYaw(value: number[]): 0 {
 		return 0
 	}
 
-	/**
-	 * @name printAccelSettings
-	 */
 	printSettings(): void {
 		this.debug.log("info", "MPU9250:")
 		if (this._config?.address) {
@@ -846,9 +518,6 @@ export class mpu9250 {
 		}
 	}
 
-	/**
-	 * @name printAccelSettings
-	 */
 	public printAccelSettings(): void {
 		this.debug.log("info", "Accelerometer:")
 		this.debug.log("info", `--> Full Scale Range (0x1C): ${mpu9250._STR_FS_ACCEL_RANGE[this.getFullScaleAccelRange() || 0]}`)
@@ -872,9 +541,6 @@ export class mpu9250 {
 		}
 	}
 
-	/**
-	 * @name printGyroSettings
-	 */
 	public printGyroSettings(): void {
 		this.debug.log("info", "Gyroscope:")
 		this.debug.log("info", `--> Full Scale Range (0x1B): ${mpu9250._STR_FS_GYRO_RANGE[this.getFullScaleGyroRange() || 0]}`)
@@ -889,13 +555,6 @@ export class mpu9250 {
 		}
 	}
 
-	/** Setter */
-
-	/**
-	 * @name setClockSource
-	 * @param {number} adrs
-	 * @return {number | false}
-	 */
 	public setClockSource(adrs: number): number | false {
 		if (this.i2c) {
 			this.i2c.writeBits(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_CLKSEL_BIT, MPU9250Map.PWR1_CLKSEL_LENGTH, adrs)
@@ -904,25 +563,14 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setClockSourceAsync
-	 * @param {number} adrs
-	 * @return {Promise<number | false>}
-	 */
-	public setClockSourceAsync(adrs: number): Promise<number | false> {
+	public async setClockSourceAsync(adrs: number): Promise<number | false> {
 		if (this.i2c) {
-			return this.i2c.writeBitsAsync(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_CLKSEL_BIT, MPU9250Map.PWR1_CLKSEL_LENGTH, adrs).then(() => {
-				return adrs
-			})
+			await this.i2c.writeBitsAsync(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_CLKSEL_BIT, MPU9250Map.PWR1_CLKSEL_LENGTH, adrs)
+			return adrs
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setFullScaleGyroRange
-	 * @param {number} adrs
-	 * @return {number | false}
-	 */
 	public setFullScaleGyroRange(adrs: number): number | false {
 		if (this.i2c) {
 			this._setGyroScalarInv(adrs)
@@ -932,26 +580,15 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setFullScaleGyroRangeAsync
-	 * @param {number} adrs
-	 * @return {Promise<undefined | false>}
-	 */
-	public setFullScaleGyroRangeAsync(adrs: number): Promise<number | false> {
+	public async setFullScaleGyroRangeAsync(adrs: number): Promise<number | false> {
 		if (this.i2c) {
 			this._setGyroScalarInv(adrs)
-			return this.i2c.writeBitsAsync(MPU9250Map.RA_GYRO_CONFIG, MPU9250Map.GCONFIG_FS_SEL_BIT, MPU9250Map.GCONFIG_FS_SEL_LENGTH, adrs).then(() => {
-				return adrs
-			})
+			await this.i2c.writeBitsAsync(MPU9250Map.RA_GYRO_CONFIG, MPU9250Map.GCONFIG_FS_SEL_BIT, MPU9250Map.GCONFIG_FS_SEL_LENGTH, adrs)
+			return adrs
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setFullScaleAccelRange
-	 * @param {number} adrs
-	 * @return {number | false}
-	 */
 	public setFullScaleAccelRange(adrs: number): number | false {
 		if (this.i2c) {
 			this._setAccelScalarInv(adrs)
@@ -961,26 +598,15 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setFullScaleAccelRangeAsync
-	 * @param {number} adrs
-	 * @return {Promise<number | false>}
-	 */
-	public setFullScaleAccelRangeAsync(adrs: number): Promise<number | false> {
+	public async setFullScaleAccelRangeAsync(adrs: number): Promise<number | false> {
 		if (this.i2c) {
 			this._setAccelScalarInv(adrs)
-			return this.i2c.writeBitsAsync(MPU9250Map.RA_ACCEL_CONFIG_1, MPU9250Map.ACONFIG_FS_SEL_BIT, MPU9250Map.ACONFIG_FS_SEL_LENGTH, adrs).then(() => {
-				return adrs
-			})
+			await this.i2c.writeBitsAsync(MPU9250Map.RA_ACCEL_CONFIG_1, MPU9250Map.ACONFIG_FS_SEL_BIT, MPU9250Map.ACONFIG_FS_SEL_LENGTH, adrs)
+			return adrs
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setSleepEnabled
-	 * @param {boolean} enable
-	 * @return {number | false}
-	 */
 	public setSleepEnabled(enable: boolean): number | false {
 		const val = enable ? 1 : 0
 		if (this.i2c) {
@@ -990,26 +616,15 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setSleepEnabledAsync
-	 * @param {boolean} enable
-	 * @return {Promise<number | false>}
-	 */
-	public setSleepEnabledAsync(enable: boolean): Promise<number | false> {
+	public async setSleepEnabledAsync(enable: boolean): Promise<number | false> {
 		const val = enable ? 1 : 0
 		if (this.i2c) {
-			return this.i2c.writeBitAsync(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_SLEEP_BIT, val).then(() => {
-				return val
-			})
+			await this.i2c.writeBitAsync(MPU9250Map.RA_PWR_MGMT_1, MPU9250Map.PWR1_SLEEP_BIT, val)
+			return val
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setI2CMasterModeEnabled
-	 * @param {boolean} enable
-	 * @return {number | false}
-	 */
 	public setI2CMasterModeEnabled(enable: boolean): number | false {
 		const val = enable ? 1 : 0
 		if (this.i2c) {
@@ -1019,26 +634,15 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setI2CMasterModeEnabledAsync
-	 * @param {boolean} enable
-	 * @return {Promise<number | false>}
-	 */
-	public setI2CMasterModeEnabledAsync(enable: boolean): Promise<number | false> {
+	public async setI2CMasterModeEnabledAsync(enable: boolean): Promise<number | false> {
 		const val = enable ? 1 : 0
 		if (this.i2c) {
-			return this.i2c.writeBitAsync(MPU9250Map.RA_USER_CTRL, MPU9250Map.USERCTRL_I2C_MST_EN_BIT, val).then(() => {
-				return val
-			})
+			await this.i2c.writeBitAsync(MPU9250Map.RA_USER_CTRL, MPU9250Map.USERCTRL_I2C_MST_EN_BIT, val)
+			return val
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setByPASSEnabled
-	 * @param {boolean} enable
-	 * @return {number | false}
-	 */
 	public setByPASSEnabled(enable: boolean): number | false {
 		const val = enable ? 1 : 0
 		if (this.i2c) {
@@ -1048,26 +652,15 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setByPASSEnabledAsync
-	 * @param {boolean} enable
-	 * @return {Promise<number | false>}
-	 */
-	public setByPASSEnabledAsync(enable: boolean): Promise<number | false> {
+	public async setByPASSEnabledAsync(enable: boolean): Promise<number | false> {
 		const val = enable ? 1 : 0
 		if (this.i2c) {
-			return this.i2c.writeBitAsync(MPU9250Map.RA_INT_PIN_CFG, MPU9250Map.INTCFG_BYPASS_EN_BIT, val).then(() => {
-				return val
-			})
+			await this.i2c.writeBitAsync(MPU9250Map.RA_INT_PIN_CFG, MPU9250Map.INTCFG_BYPASS_EN_BIT, val)
+			return val
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setConfig
-	 * @param {number} dlpf_cfg
-	 * @return {number | false}
-	 */
 	public setDLPFConfig(dlpf_cfg: number): number | false {
 		if (this.i2c) {
 			this.i2c.writeBits(MPU9250Map.RA_CONFIG, 0, 3, dlpf_cfg)
@@ -1076,25 +669,14 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setDLPFConfigAsync
-	 * @param {number} dlpf_cfg
-	 * @return {Promise<number | false>}
-	 */
-	public setDLPFConfigAsync(dlpf_cfg: number): Promise<number | false> {
+	public async setDLPFConfigAsync(dlpf_cfg: number): Promise<number | false> {
 		if (this.i2c) {
-			return this.i2c.writeBitsAsync(MPU9250Map.RA_CONFIG, 0, 3, dlpf_cfg).then(() => {
-				return dlpf_cfg
-			})
+			await this.i2c.writeBitsAsync(MPU9250Map.RA_CONFIG, 0, 3, dlpf_cfg)
+			return dlpf_cfg
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setAccelDLPFConfig
-	 * @param {number} sample_rate
-	 * @return {number | false}
-	 */
 	public setAccelDLPFConfig(a_dlpf_cfg: number): number | false {
 		if (this.i2c) {
 			this.i2c.writeBits(MPU9250Map.RA_ACCEL_CONFIG_2, 0, 4, a_dlpf_cfg)
@@ -1103,25 +685,14 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setAccelDLPFConfig
-	 * @param {number} sample_rate
-	 * @return {Promise<number | false>}
-	 */
-	public setAccelDLPFConfigAsync(a_dlpf_cfg: number): Promise<number | false> {
+	public async setAccelDLPFConfigAsync(a_dlpf_cfg: number): Promise<number | false> {
 		if (this.i2c) {
-			return this.i2c.writeBitsAsync(MPU9250Map.RA_ACCEL_CONFIG_2, 0, 4, a_dlpf_cfg).then(() => {
-				return a_dlpf_cfg
-			})
+			await this.i2c.writeBitsAsync(MPU9250Map.RA_ACCEL_CONFIG_2, 0, 4, a_dlpf_cfg)
+			return a_dlpf_cfg
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name setSampleRate
-	 * @param {number} sample_rate
-	 * @return {number | false}
-	 */
 	public setSampleRate(sample_rate: number): number | false {
 		if (this.i2c) {
 			this.i2c.writeBits(MPU9250Map.SMPLRT_DIV, 0, 8, this._estimateRate(sample_rate))
@@ -1130,27 +701,14 @@ export class mpu9250 {
 		return false
 	}
 
-	/**
-	 * @name setSampleRateAsync
-	 * @param {number} sample_rate
-	 * @return {Promise<number | false>}
-	 */
-	public setSampleRateAsync(sample_rate: number): Promise<number | false> {
+	public async setSampleRateAsync(sample_rate: number): Promise<number | false> {
 		if (this.i2c) {
-			return this.i2c.writeBitsAsync(MPU9250Map.SMPLRT_DIV, 0, 8, this._estimateRate(sample_rate)).then(() => {
-				return sample_rate
-			})
+			await this.i2c.writeBitsAsync(MPU9250Map.SMPLRT_DIV, 0, 8, this._estimateRate(sample_rate))
+			return sample_rate
 		}
 		return Promise.resolve(false)
 	}
 
-	/**
-	 * @name scaleAccel
-	 * @description This wee function just simplifies the code.  It scales the Accelerometer values appropriately. The values are scaled to 1g and the offset it taken into account.
-	 * @param {number} val
-	 * @param {number} offset
-	 * @param {number[]} scalerArr
-	 */
 	public static scaleAccel(val: number, offset: number, scalerArr: number[]): number {
 		if (val < 0) {
 			return -(val - offset) / (scalerArr[0] - offset)
@@ -1159,21 +717,11 @@ export class mpu9250 {
 		}
 	}
 
-	/**
-	 * @name vectorToYesNo
-	 * @param {number[]} v
-	 */
 	public static vectorToYesNo(v: number[]): string {
 		const YesNo = (val: number) => (val ? "No" : "Yes")
 		return `(${YesNo(v[0])}, ${YesNo(v[1])}, ${YesNo(v[2])})`
 	}
 
-	/**
-	 * @name _estimateRate
-	 * @description Calculate sample rate
-	 * @param {number} sample_rate
-	 * @return {number}
-	 */
 	private _estimateRate(sample_rate: number): number {
 		if (sample_rate < MPU9250Map.SAMPLERATE_MAX && sample_rate >= 8000) {
 			sample_rate = 8000
@@ -1187,11 +735,6 @@ export class mpu9250 {
 		return sample_rate
 	}
 
-	/**
-	 * @name _setGyroScalarInv
-	 * @param {number} adrs
-	 * @return {number}
-	 */
 	private _setGyroScalarInv(adrs: number): void {
 		if (this._config?.scaleValues) {
 			this.gyroScalarInv = 1 / MPU9250Map.GYRO_SCALE_FACTOR[adrs]
@@ -1200,11 +743,6 @@ export class mpu9250 {
 		}
 	}
 
-	/**
-	 * @name _setAccelScalarInv
-	 * @param {number} adrs
-	 * @return {number}
-	 */
 	private _setAccelScalarInv(adrs: number): void {
 		if (this._config?.scaleValues) {
 			this.accelScalarInv = 1 / MPU9250Map.ACCEL_SCALE_FACTOR[adrs]
@@ -1213,11 +751,6 @@ export class mpu9250 {
 		}
 	}
 
-	/**
-	 * @name _getFsGyroValue
-	 * @param {number} index
-	 * @return {number}
-	 */
 	private _getFsGyroValue(index: number): number {
 		let gyro_value = MPU9250Map.GYRO_FS_250
 		if (this._config?.GYRO_FS && mpu9250._FS_GYRO_RANGE[index]) {
@@ -1226,11 +759,6 @@ export class mpu9250 {
 		return gyro_value
 	}
 
-	/**
-	 * @name _getFsAccelValue
-	 * @param {number} index
-	 * @return {number}
-	 */
 	private _getFsAccelValue(index: number): number {
 		let accel_fs = MPU9250Map.ACCEL_FS_4
 		if (this._config?.GYRO_FS && mpu9250._FS_ACCEL_RANGE[index]) {
@@ -1239,9 +767,6 @@ export class mpu9250 {
 		return accel_fs
 	}
 
-	/**
-	 * @return {boolean}
-	 */
 	public get hasSampleRate(): boolean {
 		return !!(
 			this._config?.SAMPLE_RATE &&
