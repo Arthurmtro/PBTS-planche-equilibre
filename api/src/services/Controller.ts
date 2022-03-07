@@ -231,16 +231,16 @@ export const getMpuInfos = () => {
 	const GYRO_NAME = "Gyro (°/sec)"
 	const stats = new Stats([GYRO_NAME], 1000)
 
-	console.log("\nGyro.x   Gyro.y   Gyro.z")
+	console.log("\nGyro.x   Gyro.y")
 	const m6: any = ApiController.mpu.getMotion6()
 
 	// Make the numbers pretty
 	let str = ""
 	for (let i = 0; i < m6.length; i++) {
-		str += Math.floor(m6[i])
+		str += " " + Math.floor(m6[i]) + " "
 	}
 	// stats.add(ACCEL_NAME, m6[0], m6[1], m6[2])
-	stats.add(GYRO_NAME, m6[3], m6[4], m6[5])
+	stats.add(GYRO_NAME, m6[3], m6[4], 0)
 
 	// eslint-disable-next-line no-undef
 	// process.stdout.write(t + str + "  \r")
