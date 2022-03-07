@@ -12,7 +12,6 @@ import { cylinderType } from "../types/cylinderType"
 import { fetchAllProfiles } from "../libs/fetchAllProfiles"
 import { delayFunction } from "../libs/delayFunction"
 import { mpu9250 } from "./../libs/mpu9250/index"
-import { Stats } from "./../libs/mpu9250/Stats"
 
 const i2cBus = os.arch() === "arm" || (os.arch() === "arm64" && require("i2c-bus"))
 
@@ -223,11 +222,8 @@ class Controller {
 
 export const ApiController = new Controller()
 
-let stats: Stats
-const GYRO_NAME = "Gyro (°/sec)"
-
-if (os.arch() === "arm" || (os.arch() === "arm64" && ApiController.mpu.initialize())) {
-	stats = new Stats([GYRO_NAME], 1000)
+if (os.arch() === "arm" || os.arch() === "arm64") {
+	ApiController.mpu.initialize()
 }
 
 export const getMpuInfos = () => {
@@ -236,15 +232,11 @@ export const getMpuInfos = () => {
 	console.log("\nGyro.x   Gyro.y")
 	const m6: any = ApiController.mpu.getMotion6()
 
-	// Make the numbers pretty
-	let str = ""
-	for (let i = 3; i < 5; i++) {
-		str += " " + Math.floor(m6[i]) + " "
+	const stuctData = {
+		gyroX: Math.floor(m6[3]),
+		gyroY: Math.floor(m6[4]),
 	}
 
-	stats.add(GYRO_NAME, m6[3], m6[4], 0)
-
-	// eslint-disable-next-line no-undef
-	// process.stdout.write(t + str + "  \r")
-	return str + "  \r"
+	// process.stdout.write(m6[3], m6[4])
+	return stuctData
 }
