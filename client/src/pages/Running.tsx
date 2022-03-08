@@ -1,4 +1,6 @@
 import styles from "../styles/Running.module.css"
+import { useState, useEffect } from "react"
+import { io } from "socket.io-client"
 
 // Contexts
 import { useRunningProfile } from "../contexts/runningProvider"
@@ -10,9 +12,33 @@ import Box from "../components/Box"
 import ModelViewer from "../components/ModelViewer"
 
 import logo from "../assets/logo.gif"
+import { api_url } from "../config"
+
+type mpuInfosType = {
+	gyroX: number
+	gyroY: number
+}
 
 export default function RunningPage() {
 	const { runningProfile } = useRunningProfile()
+	const [mpuInfos, setMpuInfos] = useState<mpuInfosType>()
+
+	useEffect(() => {
+		console.log("api_url :>> ", api_url)
+		const socket = io(api_url, {
+			transports: ["websocket"],
+		})
+
+		socket.on("connect", () => console.log(socket.id))
+		socket.on("connect_error", () => {
+			setTimeout(() => socket.connect(), 5000)
+		})
+
+		socket.on("mpuInfos", (data) => {
+			setMpuInfos(data)
+			console.log("data :>> ", data)
+		})
+	}, [])
 
 	return (
 		<>
@@ -41,7 +67,9 @@ export default function RunningPage() {
 							<Box size="block">
 								<div className={styles.info}>
 									<span />
-									<h4>Donnée temps `réel` :</h4>
+									<h4>
+										Donnée temps : GyroX : {mpuInfos?.gyroX} GyroT: {mpuInfos?.gyroY}{" "}
+									</h4>
 									<span />
 								</div>
 							</Box>
