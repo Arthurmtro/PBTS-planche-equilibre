@@ -48,6 +48,7 @@ export default function RunningPage() {
 								</div>
 							</Box>
 						</div>
+
 						<Box size="fill">
 							<div className={styles["model-container"]}>
 								<ModelViewer debug />
