@@ -67,5 +67,5 @@ const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
 	socket.emit("FromAPI", response)
 	socket.emit("mpuInfos", getMpuInfos())
 
-	console.log(getMpuInfos())
+	// console.log(getMpuInfos()) // Debug
 }
