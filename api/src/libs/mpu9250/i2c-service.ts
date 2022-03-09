@@ -3,7 +3,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import os from "os"
 
-const i2c = os.arch() === "arm" || os.arch() === "arm64" ? require("i2c") : require("./facticeI2c").i2c
+const i2c = runningOnRasberry ? require("i2c") : require("./facticeI2c").i2c
 
 export class I2cService extends i2c {
 	constructor(address: number, options: { device: string; debug?: boolean }) {
