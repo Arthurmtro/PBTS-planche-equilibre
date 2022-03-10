@@ -1,8 +1,8 @@
-.Slider {
+.lider {
 	background: var(--button-background);
 	color: var(--button-color);
-	width: 23px;
-	height: 24px;
+	height: 2.25vw;
+	width: 2.25vw;
 
 	padding: 1vw;
 
@@ -10,12 +10,3 @@
 	border-radius: 100%;
 	cursor: pointer;
 }
-.slider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 23px;
-	height: 24px;
-	border: 0;
-	background: url('contrasticon.png');
-	cursor: pointer;
-  }

@@ -1,0 +1,24 @@
+
+.header{
+	display: flex;
+}
+.right {
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	
+}
+
+.centre {
+	justify-content: space-around;
+	align-items: center;
+	width: 50%;
+
+}
+.left {
+	
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	
+}
