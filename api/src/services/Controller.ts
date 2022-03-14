@@ -207,15 +207,18 @@ class Controller {
 		try {
 			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
 
-			// Check if filename already exist
 			console.log("body => ", body)
 
-			// Create new profile
-			const fileName: string = body.label.trim().replace(" ", "_")
+			// Check if filename already exist
 
-			const profile =
-				// Add to the folder
-				res.sendStatus(200)
+			// Create new profile
+			// const fileName: string = body.label.trim().replace(" ", "_")
+
+			// const profile = fileName
+
+			// Add to the folder
+
+			res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
 			res.status(401).send(error)
