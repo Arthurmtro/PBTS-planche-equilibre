@@ -1,24 +1,11 @@
 
-.header{
+.verrins {
 	display: flex;
-}
-.right {
-	justify-content: space-around;
-	align-items: center;
-	width: 100%;
-	
+	justify-content: space-between;
 }
 
-.centre {
-	justify-content: space-around;
-	align-items: center;
-	width: 50%;
-
-}
-.left {
-	
-	justify-content: space-around;
-	align-items: center;
-	width: 100%;
-	
+.commands {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
 }
