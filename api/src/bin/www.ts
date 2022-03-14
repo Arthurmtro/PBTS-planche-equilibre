@@ -61,10 +61,7 @@ io.on("connection", (socket) => {
 })
 
 const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
-	const response = new Date()
-
 	// Emitting a new message. Will be consumed by the client
-	socket.emit("FromAPI", response)
 	socket.emit("mpuInfos", getMpuInfos())
 
 	// console.log(getMpuInfos()) // Debug
