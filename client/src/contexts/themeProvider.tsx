@@ -1,5 +1,5 @@
 import { SetStateAction, createContext, useContext, ReactNode, Dispatch, useState, useMemo, useEffect } from "react"
-import { toggleTheme } from "../lib/theme"
+import { toggleTheme } from "../libs/theme"
 
 interface IThemeContext {
 	darkMode: boolean
