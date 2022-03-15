@@ -1,0 +1,17 @@
+.commands {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.option-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.spacer-slider{
+	padding: 1vh 0;
+	border: 1px solid black;
+}

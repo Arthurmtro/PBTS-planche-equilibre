@@ -43,7 +43,6 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
 			<div className={styles.content}>
 				<div className={styles.infos}>
 					<h1>{profile.label}</h1>
-					<h3>{profile.category}</h3>
 				</div>
 				<div className={styles.actions}>
 					<Badge disabled color={runningProfile && runningProfile.fileName === profile.fileName ? "success" : "danger"} />

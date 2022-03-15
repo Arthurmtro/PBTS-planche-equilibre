@@ -1,52 +1,48 @@
 import styles from "../styles/EditProfile.module.css";
 import { useState } from "react";
 
-import Slider from "../components/Slider";
+import { ActionsType } from "../types/commands";
 
-
-type CommandsType = {
-	openner: number
-	speed: number
-}
-
-
-const OptionList = ({idVerrin, commands} : {idVerrin: number, commands: CommandsType[] }) => {
-	console.log("options = ", idVerrin)
-
-	return (
-		<>
-			<p>Verin {idVerrin}</p>  
-			<div className={styles.commands}>
-			{
-				commands.map(() => (
-					<>
-						<Slider label="Pourcentage deploiment" nbverin={idVerrin} min={0} max={100} /> 
-						<Slider label="Pourcentage de la vites" nbverin={idVerrin} min={0} max={99}/>
-					</>
-				))
-			}
-			</div>
-		</>
-	)
-}
+// Components
+import OptionList from "../components/OptionList";
 
 export default function EditProfilePage() {
-	const [verrinIds, setVerrinIds] = useState<number[]>([0,  1, 2])
-	const [commands, setCommands] = useState<CommandsType[]>([])
+	const [label, setLabel] = useState<string>("dawdawd")
+	const [actions, setActions] = useState<ActionsType[]>([
+		{
+			cylinderId: "Verin1",
+			commands:[]
+		},
+		{
+			cylinderId: "Verin12",
+			commands:[]
+		},
+		{
+			cylinderId: "Verin3",
+			commands:[]
+		},
+	])
 
-	// Memo
-	const handleClick = () => {
-		setCommands(prev => [...prev, {
-			openner: 0,
-			speed: 0
-		}])
+	const handleFinishProfile = () => {
+		// Appel api
+
+		// Formatage du json
+
+		const profile = {
+			label: label,
+			actions: actions
+		}
+
+		console.log('profile', profile)
 	}
 
 	return (
 		<>
+			<h1>Ajouter un profile</h1>
+			<input type="text" value={label} onChange={(event)=> setLabel(event.target.value) } />
 			<div className={styles.verrins}>
-				{verrinIds.map((verrinId =>  <OptionList key={verrinId} idVerrin={verrinId}  commands={commands}  /> ))}
+				{actions.map(((action, key) =>  <OptionList key={action.cylinderId} actionId={key}  actions={actions} setActions={setActions} /> ))}
 			</div>
-			<button onClick={() => handleClick()}>Add Line</button>
+			<button onClick={()=> handleFinishProfile()}>Fini chef</button>
 		</>
 	)}

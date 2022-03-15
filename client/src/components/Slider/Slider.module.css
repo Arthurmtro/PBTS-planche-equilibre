@@ -1,12 +1,19 @@
-.lider {
-	background: var(--button-background);
-	color: var(--button-color);
-	height: 2.25vw;
-	width: 2.25vw;
+.slider {
+	padding: 1vh 0;
+	display: flex;
+	justify-content: space-around;
+	
+}
 
-	padding: 1vw;
-
+.number-input {
 	border: none;
-	border-radius: 100%;
-	cursor: pointer;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.281);
+	border-right: 1px solid rgba(0, 0, 0, 0.281);
+	background: none;
+    outline: none;
+	
+}
+
+.back-slider{
+	background-image: none;
 }
