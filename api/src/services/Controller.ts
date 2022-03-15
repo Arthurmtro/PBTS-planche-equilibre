@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Pca9685Driver from "pca9685"
+import { Cylinder } from "./Cylinder"
+import { unlinkSync, writeFileSync } from "fs"
 import { Response } from "express"
 import { join } from "path"
 import os from "os"
@@ -9,17 +10,10 @@ import { actionType, profileType } from "./../types/profileTypes"
 import { cylinderType } from "../types/cylinderType"
 
 // Libs
+import { runningOnRasberry } from "../libs/runningOnRasberry"
 import { fetchAllProfiles } from "../libs/fetchAllProfiles"
 import { delayFunction } from "../libs/delayFunction"
 import { mpu9250 } from "./../libs/mpu9250/index"
-
-const i2cBus = os.arch() === "arm" || (os.arch() === "arm64" && require("i2c-bus"))
-
-if (!(os.arch() === "arm" || os.arch() === "arm64")) {
-	console.warn("Not using I2C, You are not on raspberrypi", os.arch())
-}
-
-//////////////////////
 
 const MAG_CALIBRATION = {
 	min: { x: -106.171875, y: -56.8125, z: -14.828125 },
@@ -58,7 +52,7 @@ const ACCEL_CALIBRATION = {
 class Controller {
 	private cylindersData: cylinderType[]
 	private profiles: profileType[]
-	private pwm: Pca9685Driver
+	private cylinders: Cylinder[]
 	private isActive: boolean
 	public mpu: mpu9250
 
@@ -66,28 +60,25 @@ class Controller {
 		this.isActive = false
 		this.profiles = fetchAllProfiles()
 		this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
-		this.pwm =
-			i2cBus &&
-			new Pca9685Driver(
-				{
-					i2c: i2cBus?.openSync(1),
-					address: 0x40,
-					frequency: 1000,
-					debug: false,
-				},
-				(error) => {
-					if (error) {
-						throw new Error(`Error initializing, ${error}`)
-					}
-					this.init()
-				}
+
+		// Init Cylinder
+		this.cylinders = []
+		for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
+			if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed)
+				break
+
+			this.cylinders.push(
+				new Cylinder(
+					String(idxCylinder),
+					this.cylindersData[idxCylinder].forwardId,
+					this.cylindersData[idxCylinder].backwardId,
+					this.cylindersData[idxCylinder].maxSpeed
+				)
 			)
+		}
 
 		this.mpu = new mpu9250({
-			// i2c path (default is '/dev/i2c-1')
 			device: "/dev/i2c-1",
-
-			// Enable/Disable debug mode (default false)
 			DEBUG: true,
 
 			// Set the Gyroscope sensitivity (default 0), where:
@@ -114,120 +105,188 @@ class Controller {
 
 			accelCalibration: ACCEL_CALIBRATION,
 		})
-
-		// console.log("mpu => ", this.mpu)
 	}
 
-	public init(res?: Response) {
+	public init(res: Response) {
 		try {
-			if (!this.pwm) throw "PWM is not initialised !"
-
-			this.isActive = false
-
-			console.log("Execution de la sequence")
-
-			for (let index = 0; index < this.cylindersData.length; index++) {
-				console.log("Cylinder " + this.cylindersData[index].id)
-				this.pwm.channelOff(this.cylindersData[index].backwardId)
-				this.pwm.channelOff(this.cylindersData[index].forwardId)
-				this.pwm.setDutyCycle(this.cylindersData[index].backwardId, 1)
+			// Function async !!! WARNING !!! Maybe it can block
+			for (let idxCylinder = 0; idxCylinder <= this.cylindersData.length; idxCylinder++) {
+				if (this.cylinders[idxCylinder].init()) break
 			}
-			delayFunction(23000)
 
-			return res
+			res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
+			res.status(503).send(new Error(error as string))
 		}
 	}
 
-	public async getStatus(res: Response) {
+	public fetchStatus(res: Response) {
 		try {
-			if (!this.pwm) throw "PWM is not initialised !"
+			if (!runningOnRasberry) {
+				console.warn("You are not on raspberrypi", os.arch())
+				res.status(200).send("Connexion OK, Not using I2C, You are not on raspberrypi")
+				return
+			}
 
 			res.status(200).send("Connexion OK")
 		} catch (error) {
-			return res.status(503).send(new Error(error as string))
+			res.status(503).send(new Error(error as string))
 		}
 	}
 
-	public async getCylindersInfos(res: Response) {
+	public fetchCylindersInfos(res: Response) {
 		try {
 			res.status(200).send(JSON.stringify(this.cylindersData))
 		} catch (error) {
-			return res.status(503).send(new Error(error as string))
+			res.status(503).send(new Error(error as string))
 		}
 	}
 
-	public async getProfiles(res: Response) {
+	public fetchProfiles(res: Response) {
 		try {
-			if (!this.profiles) throw "Their is no profiles !"
+			if (!this.profiles) throw "No profiles in database !"
+
 			res.status(200).send(JSON.stringify(this.profiles))
 		} catch (error) {
-			return res.status(503).send(new Error(error as string))
+			res.status(503).send(new Error(error as string))
 		}
 	}
 
 	public async runProfileWithId(profileId: string, res?: Response) {
 		try {
-			if (!this.pwm) throw "PWM is not initialised !"
 			if (profileId === undefined) throw "Their is no profile ID"
 
 			const correspondingProfile = this.profiles.find(({ fileName }) => fileName === profileId)
 
 			if (!correspondingProfile) throw "Can't find corresponding profile"
 
-			this.isActive = true
-
-			// const runProfiles = await executeProfile(this.isActive, this.pwm, this.)
-
-			res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
-
-			const executeProfile = async (action: actionType, cylinder?: cylinderType) => {
-				if (!this.isActive || !cylinder) return
-
+			const executeProfile = async (action: actionType, cylinder?: Cylinder) => {
 				for (const command of action.commands) {
 					if (!this.isActive) return
 					console.log("Execution de la séquence ", command)
-					this.pwm.channelOff(cylinder.forwardId)
-					this.pwm.channelOff(cylinder.backwardId)
 
-					if (command.action !== "stop") {
-						this.pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
-						this.pwm.setDutyCycle(cylinder[`${command.action}Id`], command.speed)
+					switch (command.action) {
+						case "forward":
+							cylinder?.open(1)
+							break
+						case "backward":
+							cylinder?.close(1)
+							break
+						case "stop":
+						default:
+							cylinder?.stop()
+							break
 					}
 
 					await delayFunction(command.time).then(() => command)
 				}
-				return
+				return false
 			}
 
 			for (const action of correspondingProfile.actions) {
 				if (!this.isActive) throw "Active is not true"
 
-				const cylinder = this.cylindersData.find(({ id }) => id === action.cylinderId)
+				const cylinder = this.cylinders.find(({ id }) => id === action.cylinderId)
 
 				executeProfile(action, cylinder).then(() => {
-					this.pwm.allChannelsOff()
-
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
-					this.init()
+					if (res) this.init(res)
 				})
 			}
+
+			// res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
 		} catch (error) {
 			console.log("error", error)
+		}
+	}
+
+	public async createProfile(body: profileType, res: Response) {
+		try {
+			// Checks
+			if (!body.label) throw "Missing argument: label"
+			if (!body.actions) throw "Missing argument: actions"
+
+			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
+			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
+
+			// Check if filename already exist
+			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
+
+			// Create new profile
+			const fileName: string = body.label.trim().replace(" ", "_")
+
+			const profile = { ...body, fileName }
+
+			// Add to the folder
+			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${fileName}.json`, JSON.stringify(profile))
+
+			this.profiles = this.profiles.concat(profile)
+
+			console.log("this.profiles = ", this.profiles)
+
+			res.sendStatus(200)
+		} catch (error) {
+			console.log("error", error)
+			res.status(400).send(error)
+		}
+	}
+
+	public async updateProfile(body: profileType, res: Response) {
+		try {
+			// Checks
+			if (!body.label) throw "Missing argument: label"
+			if (!body.actions) throw "Missing argument: actions"
+			if (!body.category) throw "Missing argument: category"
+
+			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
+			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
+
+			// Check if filename already exist
+			const associatedProfile = this.profiles.find((profile) => profile.fileName === body.fileName)
+
+			if (!associatedProfile) throw "This profile does not exist !"
+
+			// Add to the folder
+			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${body.fileName}.json`, JSON.stringify(body))
+
+			res.sendStatus(200)
+		} catch (error) {
+			console.log("error", error)
+			res.status(400).send(error)
+		}
+	}
+
+	public async deleteProfile(body: { fileName: string }, res: Response) {
+		try {
+			// Checks
+			if (!body.fileName) throw "Missing argument: label"
+
+			// Check if filename already exist
+			const associatedProfile = this.profiles.find((profile) => profile.fileName === body.fileName)
+
+			if (!associatedProfile) throw "This profile does not exist !"
+
+			// Add to the folder
+			await unlinkSync(`${join(__dirname, "../../config/profiles/")}${body.fileName}.json`)
+
+			res.sendStatus(200)
+		} catch (error) {
+			console.log("error", error)
+			res.status(400).send(error)
 		}
 	}
 }
 
 export const ApiController = new Controller()
 
-if (os.arch() === "arm" || os.arch() === "arm64") {
+if (runningOnRasberry) {
 	ApiController.mpu.initialize()
 }
 
 export const getMpuInfos = () => {
-	if (!(os.arch() === "arm" || os.arch() === "arm64")) return
+	if (!runningOnRasberry) return
 
 	console.log("\nGyro.x   Gyro.y")
 	const m6: any = ApiController.mpu.getMotion6()

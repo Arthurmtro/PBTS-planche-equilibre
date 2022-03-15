@@ -15,7 +15,6 @@ type ParamsType = {
 }
 
 var interval: NodeJS.Timer
-var gyroInterval: NodeJS.Timer
 
 export default function Layout({ children }: ParamsType) {
 	const { runningProfile, setRunningProfile, timeSpend, setTimeSpend, gyroValues, setGyroValues } = useRunningProfile()
@@ -32,6 +31,8 @@ export default function Layout({ children }: ParamsType) {
 		})
 
 		socket.on("mpuInfos", (data) => {
+			if (!runningProfile) return
+
 			const newX = (gyroValues.gyroX += data.gyroX)
 			const newY = (gyroValues.gyroY += data.gyroY)
 
@@ -50,18 +51,19 @@ export default function Layout({ children }: ParamsType) {
 		interval = setInterval(() => {
 			setTimeSpend((prev) => prev + 10)
 		}, 10)
-		gyroInterval = setInterval(() => {}, 2000)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [runningProfile])
 
 	useEffect(() => {
 		if (runningProfile === null) {
-			clearInterval(interval)
-			return clearInterval(gyroInterval)
+			setGyroValues({
+				gyroX: 0,
+				gyroY: 0,
+			})
+			return clearInterval(interval)
 		}
 		if (timeSpend >= runningProfile.duration) {
 			clearInterval(interval)
-			clearInterval(gyroInterval)
 			setRunningProfile(null)
 			setTimeSpend(0)
 			setGyroValues({

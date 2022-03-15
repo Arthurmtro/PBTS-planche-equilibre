@@ -2,7 +2,7 @@ export type profileType = {
 	actions: actionType[]
 	fileName: string
 	duration: number
-	cateory: string
+	category: string
 	label: string
 }
 
