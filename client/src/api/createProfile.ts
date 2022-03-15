@@ -12,6 +12,8 @@ export default async function createProfile(profile: profileType) {
         if(!profile.label) throw new Error("Missing property: label")
         if(!profile.actions) throw new Error("Missing property: actions")
 
+        console.log('sendProfil', profile)
+
         const response = await fetch(`${api_url}/create-profile`, {
             body: JSON.stringify(profile),
             method: "POST"
