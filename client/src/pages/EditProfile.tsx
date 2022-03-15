@@ -3,30 +3,33 @@ import { useState } from "react";
 
 import { ActionsType } from "../types/commands";
 
+// Api
+import createProfile from "../api/createProfile"
+
 // Components
 import OptionList from "../components/OptionList";
 
+const INITIAL_STATE = [
+	{
+		cylinderId: "Verin1",
+		commands:[]
+	},
+	{
+		cylinderId: "Verin12",
+		commands:[]
+	},
+	{
+		cylinderId: "Verin3",
+		commands:[]
+	},
+]
+
 export default function EditProfilePage() {
 	const [label, setLabel] = useState<string>("dawdawd")
-	const [actions, setActions] = useState<ActionsType[]>([
-		{
-			cylinderId: "Verin1",
-			commands:[]
-		},
-		{
-			cylinderId: "Verin12",
-			commands:[]
-		},
-		{
-			cylinderId: "Verin3",
-			commands:[]
-		},
-	])
+	const [actions, setActions] = useState<ActionsType[]>(INITIAL_STATE)
 
 	const handleFinishProfile = () => {
 		// Appel api
-
-		// Formatage du json
 
 		const profile = {
 			label: label,
@@ -34,6 +37,8 @@ export default function EditProfilePage() {
 		}
 
 		console.log('profile', profile)
+
+		createProfile(profile)
 	}
 
 	return (

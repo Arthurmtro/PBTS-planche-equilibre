@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom"
+
 // Api
 import runProfile from "../../api/runProfile"
 import initPlanche from "../../api/initPlanche"
@@ -21,12 +23,15 @@ type ProfileBoxParams = {
 export default function ProfileBox({ profile }: ProfileBoxParams) {
 	const { runningProfile, setRunningProfile, setTimeSpend } = useRunningProfile()
 
+	const navigate = useNavigate()
+
 	const setProfile = () => {
 		if (!profile.fileName) return
 
 		setTimeSpend(0)
 		setRunningProfile(profile)
 		runProfile(profile.fileName)
+		navigate('/running')
 	}
 
 	const stopProfile = () => {
