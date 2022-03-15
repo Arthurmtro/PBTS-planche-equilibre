@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-mixed-spaces-and-tabs */
-import os from "os"
+import { runningOnRasberry } from "../runningOnRasberry"
 
 const i2c = runningOnRasberry ? require("i2c") : require("./facticeI2c").i2c
 

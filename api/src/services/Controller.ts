@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Cylinder } from "./Cylinder"
+import { unlinkSync, writeFileSync } from "fs"
 import { Response } from "express"
 import { join } from "path"
 import os from "os"
@@ -13,8 +14,6 @@ import { runningOnRasberry } from "../libs/runningOnRasberry"
 import { fetchAllProfiles } from "../libs/fetchAllProfiles"
 import { delayFunction } from "../libs/delayFunction"
 import { mpu9250 } from "./../libs/mpu9250/index"
-
-//////////////////////
 
 const MAG_CALIBRATION = {
 	min: { x: -106.171875, y: -56.8125, z: -14.828125 },
@@ -64,7 +63,10 @@ class Controller {
 
 		// Init Cylinder
 		this.cylinders = []
-		for (let idxCylinder = 0; idxCylinder <= this.cylindersData.length; idxCylinder++) {
+		for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
+			if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed)
+				break
+
 			this.cylinders.push(
 				new Cylinder(
 					String(idxCylinder),
@@ -76,10 +78,7 @@ class Controller {
 		}
 
 		this.mpu = new mpu9250({
-			// i2c path (default is '/dev/i2c-1')
 			device: "/dev/i2c-1",
-
-			// Enable/Disable debug mode (default false)
 			DEBUG: true,
 
 			// Set the Gyroscope sensitivity (default 0), where:
@@ -203,25 +202,78 @@ class Controller {
 		}
 	}
 
-	public async createProfile(body: any, res: Response) {
+	public async createProfile(body: profileType, res: Response) {
 		try {
-			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
+			// Checks
+			if (!body.label) throw "Missing argument: label"
+			if (!body.actions) throw "Missing argument: actions"
+			if (!body.category) throw "Missing argument: category"
 
-			console.log("body => ", body)
+			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
+			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
 
 			// Check if filename already exist
+			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
 
 			// Create new profile
-			// const fileName: string = body.label.trim().replace(" ", "_")
+			const fileName: string = body.label.trim().replace(" ", "_")
 
-			// const profile = fileName
+			const profile = { ...body, fileName }
 
 			// Add to the folder
+			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${fileName}.json`, JSON.stringify(profile))
+
+			this.profiles = this.profiles.concat(profile)
 
 			res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
-			res.status(401).send(error)
+			res.status(400).send(error)
+		}
+	}
+
+	public async updateProfile(body: profileType, res: Response) {
+		try {
+			// Checks
+			if (!body.label) throw "Missing argument: label"
+			if (!body.actions) throw "Missing argument: actions"
+			if (!body.category) throw "Missing argument: category"
+
+			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
+			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
+
+			// Check if filename already exist
+			const associatedProfile = this.profiles.find((profile) => profile.fileName === body.fileName)
+
+			if (!associatedProfile) throw "This profile does not exist !"
+
+			// Add to the folder
+			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${body.fileName}.json`, JSON.stringify(body))
+
+			res.sendStatus(200)
+		} catch (error) {
+			console.log("error", error)
+			res.status(400).send(error)
+		}
+	}
+
+	public async deleteProfile(body: { fileName: string }, res: Response) {
+		try {
+			// Checks
+			if (!body.fileName) throw "Missing argument: label"
+
+			// Check if filename already exist
+			const associatedProfile = this.profiles.find((profile) => profile.fileName === body.fileName)
+
+			if (!associatedProfile) throw "This profile does not exist !"
+
+			// Add to the folder
+			await unlinkSync(`${join(__dirname, "../../config/profiles/")}${body.fileName}.json`)
+
+			res.sendStatus(200)
+		} catch (error) {
+			console.log("error", error)
+			res.status(400).send(error)
 		}
 	}
 }
