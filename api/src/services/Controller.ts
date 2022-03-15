@@ -207,7 +207,6 @@ class Controller {
 			// Checks
 			if (!body.label) throw "Missing argument: label"
 			if (!body.actions) throw "Missing argument: actions"
-			if (!body.category) throw "Missing argument: category"
 
 			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
 			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
@@ -224,6 +223,8 @@ class Controller {
 			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${fileName}.json`, JSON.stringify(profile))
 
 			this.profiles = this.profiles.concat(profile)
+
+			console.log("this.profiles = ", this.profiles)
 
 			res.sendStatus(200)
 		} catch (error) {
