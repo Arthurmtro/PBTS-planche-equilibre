@@ -14,7 +14,7 @@ export default async function createProfile(profile: profileType) {
 
         const response = await fetch(`${api_url}/create-profile`, {
             body: JSON.stringify(profile),
-            method: "POST",
+            method: "POST"
         })
 
         if (!response.ok) {
