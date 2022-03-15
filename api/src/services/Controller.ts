@@ -210,7 +210,7 @@ class Controller {
 			if (!body.actions) throw "Missing argument: actions"
 
 			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
-			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
+			if (body.actions.some((action) => !action.commands )) throw "Missing argument: commands"
 
 			// Check if filename already exist
 			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
