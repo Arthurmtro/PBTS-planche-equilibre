@@ -16,7 +16,11 @@ export default async function createProfile(profile: profileType) {
 
         const response = await fetch(`${api_url}/create-profile`, {
             body: JSON.stringify(profile),
-            method: "DELETE"
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST"
         })
 
         if (!response.ok) {

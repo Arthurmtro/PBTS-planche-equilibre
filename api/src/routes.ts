@@ -33,6 +33,7 @@ router.get("/run-profile", (req, res) => {
 })
 
 router.post("/create-profile", (req, res) => {
+	console.log("req.body", req.body)
 	return ApiController.createProfile(req.body, res)
 })
 
