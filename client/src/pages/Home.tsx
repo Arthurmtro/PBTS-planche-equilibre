@@ -6,14 +6,18 @@ import { useProfilesData } from "../contexts/profilesProvider"
 // Components
 import ProgressBar from "../components/ProgressBar"
 import ProfileBox from "../components/ProfileBox"
+import Button from "../components/Button"
+import { useNavigate } from "react-router-dom"
 
 export default function HomePage() {
 	const { profiles, status, error } = useProfilesData()
-
+	const navigate = useNavigate()
 	return (
 		<div>
 			<ProgressBar />
-
+			<div className={styles['spercer-botton']}>
+				<Button onClick={()=>navigate("/editProfile")}>Create Profile</Button>
+			</div>
 			<div>
 				{status === "loading" || status === "idle" ? (
 					<h1>Chargement ...</h1>
