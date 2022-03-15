@@ -204,6 +204,7 @@ class Controller {
 
 	public async createProfile(body: profileType, res: Response) {
 		try {
+			console.log("body", body)
 			// Checks
 			if (!body.label) throw "Missing argument: label"
 			if (!body.actions) throw "Missing argument: actions"
