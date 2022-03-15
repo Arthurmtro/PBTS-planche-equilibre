@@ -1,17 +1,20 @@
 [
-  {
-    "id": "Verin1",
-    "forwardId": 4,
-    "backwardId": 5
-  },
-  {
-    "id": "Verin2",
-    "forwardId": 2,
-    "backwardId": 3
-  },
-  {
-    "id": "Verin3",
-    "forwardId": 6,
-    "backwardId": 7
-  }
+	{
+		"id": "Verin1",
+		"forwardId": 4,
+		"backwardId": 5,
+		"maxSpeed": 49
+	},
+	{
+		"id": "Verin2",
+		"forwardId": 2,
+		"backwardId": 3,
+		"maxSpeed": 49
+	},
+	{
+		"id": "Verin3",
+		"forwardId": 6,
+		"backwardId": 7,
+		"maxSpeed": 49
+	}
 ]

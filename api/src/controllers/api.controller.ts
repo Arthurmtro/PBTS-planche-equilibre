@@ -1,3 +1,4 @@
+import { runningOnRasberry } from "./../libs/runningOnRasberry"
 import path from "path"
 import { profileType } from "./../types/profileTypes"
 import { Pca9685Driver } from "pca9685"
@@ -15,7 +16,7 @@ const cylindersData = require(path.join(__dirname, "../../config/cylinders.json"
 
 let i2cBus
 
-if (os.arch() === "arm" || os.arch() === "arm64") {
+if (runningOnRasberry) {
 	// raspberrypi
 	i2cBus = require("i2c-bus")
 } else {

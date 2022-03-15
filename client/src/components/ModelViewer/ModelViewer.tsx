@@ -7,7 +7,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import Model from "../../assets/planche_model.gltf"
 
 // Lib
-import { loadModel } from "../../lib/loadModel"
+import { loadModel } from "../../libs/loadModel"
 
 export default function ModelViewer({ enableRotate = false, debug = false }: { enableRotate?: boolean; debug?: boolean }) {
 	const refContainer = useRef<HTMLDivElement>(null)
