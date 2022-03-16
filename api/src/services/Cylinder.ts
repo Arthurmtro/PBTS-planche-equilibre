@@ -54,25 +54,37 @@ export class Cylinder {
 
 			return false
 		} catch (error) {
-			console.log("error", error)
+			console.log("Cylinder:init", error)
 			return true
 		}
 	}
 
 	public open(speed: number) {
-		this.stop()
-		console.log("open", speed)
-		this.pca9685Driver.setDutyCycle(this.forwardId, speed)
+		try {
+			this.stop()
+			console.log("open", speed)
+			this.pca9685Driver.setDutyCycle(this.forwardId, speed)
+		} catch (error) {
+			console.log("Cylinder:open", error)
+		}
 	}
 
 	public close(speed: number) {
-		this.stop()
-		console.log("close", speed)
-		this.pca9685Driver.setDutyCycle(this.backwardId, speed)
+		try {
+			this.stop()
+			console.log("close", speed)
+			this.pca9685Driver.setDutyCycle(this.backwardId, speed)
+		} catch (error) {
+			console.log("Cylinder:close", error)
+		}
 	}
 
 	public stop() {
-		this.pca9685Driver.channelOff(this.forwardId)
-		this.pca9685Driver.channelOff(this.backwardId)
+		try {
+			this.pca9685Driver.channelOff(this.forwardId)
+			this.pca9685Driver.channelOff(this.backwardId)
+		} catch (error) {
+			console.log("Cylinder:stop", error)
+		}
 	}
 }
