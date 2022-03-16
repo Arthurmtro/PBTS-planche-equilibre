@@ -61,11 +61,13 @@ export class Cylinder {
 
 	public open(speed: number) {
 		this.stop()
+		console.log("open", speed)
 		this.pca9685Driver.setDutyCycle(this.forwardId, speed)
 	}
 
 	public close(speed: number) {
 		this.stop()
+		console.log("close", speed)
 		this.pca9685Driver.setDutyCycle(this.backwardId, speed)
 	}
 
