@@ -71,7 +71,7 @@ class Controller {
 			//      1 => 500 degrees / second
 			//      2 => 1000 degrees / second
 			//      3 => 2000 degrees / second
-			GYRO_FS: 0,
+			GYRO_FS: 3,
 
 			// Set the Accelerometer sensitivity (default 2), where:
 			//      0 => +/- 2 g
