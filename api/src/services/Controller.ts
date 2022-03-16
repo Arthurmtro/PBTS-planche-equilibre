@@ -314,15 +314,15 @@ export const getMpuInfos = () => {
 	// console.log("\nGyro.x   Gyro.y")
 	const m6: any = ApiController.mpu.getMotion6()
 
-	if ((Math.floor(m6[3]) > -2 && Math.floor(m6[3]) < 2) || (Math.floor(m6[4]) > -2 && Math.floor(m6[4]) < 2)) {
-		console.log("reducing")
-		const stuctData = {
-			gyroX: 0,
-			gyroY: 0,
-		}
+	// if ((Math.floor(m6[3]) > -2 && Math.floor(m6[3]) < 2) || (Math.floor(m6[4]) > -2 && Math.floor(m6[4]) < 2)) {
+	// 	console.log("reducing")
+	// 	const stuctData = {
+	// 		gyroX: 0,
+	// 		gyroY: 0,
+	// 	}
 
-		return stuctData
-	}
+	// 	return stuctData
+	// }
 
 	const stuctData = {
 		gyroX: Math.floor(m6[3]),
