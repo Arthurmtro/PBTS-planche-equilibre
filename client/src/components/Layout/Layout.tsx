@@ -36,7 +36,7 @@ export default function Layout({ children }: ParamsType) {
 			setTimeout(() => socket.connect(), 5000)
 		})
 
-		socket.on("mpuInfos", (data) => {
+		socket.on("mpuInfos", (data: { gyroX: number; gyroY: number }) => {
 			console.log("runningProfile :>> ", runningProfile)
 			if (runningProfile === null) {
 				console.log("No profile running")
@@ -45,12 +45,13 @@ export default function Layout({ children }: ParamsType) {
 
 			console.log("data :>> ", data)
 
-			const newX = Number(gyroValues.gyroX) + Number(data.gyroX)
-			const newY = Number(gyroValues.gyroY) + Number(data.gyroY)
+			setGyroValues((prev) => {
+				const newValues = prev
 
-			setGyroValues({
-				gyroX: newX,
-				gyroY: newY,
+				newValues.gyroX += data.gyroX
+				newValues.gyroY += data.gyroY
+
+				return newValues
 			})
 			console.log("data :>> ", data)
 		})
