@@ -39,7 +39,6 @@ export default function Layout({ children }: ParamsType) {
 		socket.on("mpuInfos", (data: { gyroX: number; gyroY: number }) => {
 			console.log("runningProfile :>> ", runningProfile)
 			if (runningProfile === null) {
-				console.log("No profile running")
 				return
 			}
 
@@ -50,6 +49,8 @@ export default function Layout({ children }: ParamsType) {
 
 				newValues.gyroX += data.gyroX
 				newValues.gyroY += data.gyroY
+
+				console.log("newValues :>> ", newValues)
 
 				return newValues
 			})
