@@ -107,17 +107,17 @@ class Controller {
 		})
 	}
 
-	public init(res: Response) {
+	public init(res?: Response) {
 		try {
 			// Function async !!! WARNING !!! Maybe it can block
-			for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
+			for (let idxCylinder = 0; idxCylinder < this.cylinders.length; idxCylinder++) {
 				if (this.cylinders[idxCylinder].init()) break
 			}
 
-			res.sendStatus(200)
+			if (res) res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
-			res.status(503).send(new Error(error as string))
+			if (res) res.status(503).send(new Error(error as string))
 		}
 	}
 
@@ -201,7 +201,7 @@ class Controller {
 				executeProfile(action, cylinder).then(() => {
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
-					// if (res) return this.init(res)
+					return this.init()
 				})
 			}
 
