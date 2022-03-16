@@ -164,25 +164,29 @@ class Controller {
 			if (!correspondingProfile) throw "Can't find corresponding profile"
 
 			const executeProfile = async (action: actionType, cylinder?: Cylinder) => {
-				for (const command of action.commands) {
-					if (!this.isActive) throw "Active is not true"
-					if (!cylinder) throw "Verrin not working"
-					console.log("Execution de la séquence: ", command)
+				try {
+					for (const command of action.commands) {
+						if (!this.isActive) throw "Active is not true"
+						if (!cylinder) throw "Verrin not working"
+						console.log("Execution de la séquence: ", command)
 
-					switch (command.action) {
-						case "forward":
-							cylinder.open(1)
-							break
-						case "backward":
-							cylinder.close(1)
-							break
-						case "stop":
-						default:
-							cylinder.stop()
-							break
+						switch (command.action) {
+							case "forward":
+								cylinder.open(1)
+								break
+							case "backward":
+								cylinder.close(1)
+								break
+							case "stop":
+							default:
+								cylinder.stop()
+								break
+						}
+
+						await delayFunction(command.time).then(() => command)
 					}
-
-					await delayFunction(command.time).then(() => command)
+				} catch (error) {
+					console.log("Controller:runProfileWithId:executeProfile ", error)
 				}
 				return false
 			}
