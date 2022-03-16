@@ -159,6 +159,8 @@ class Controller {
 
 			const correspondingProfile = this.profiles.find(({ fileName }) => fileName === profileId)
 
+			this.isActive = true
+
 			if (!correspondingProfile) throw "Can't find corresponding profile"
 
 			const executeProfile = async (action: actionType, cylinder?: Cylinder) => {
@@ -199,7 +201,7 @@ class Controller {
 			// res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
 		} catch (error) {
 			console.log("error", error)
-			res?.sendStatus(500)
+			res?.sendStatus(400)
 		}
 	}
 
