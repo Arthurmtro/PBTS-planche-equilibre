@@ -196,6 +196,8 @@ class Controller {
 
 				console.log("action", action)
 
+				console.log("this.cylinders", this.cylinders)
+
 				const cylinder = this.cylinders.find(({ id }) => id === action.cylinderId)
 
 				if (!cylinder) throw "Their is no corresponding Cylinder"
