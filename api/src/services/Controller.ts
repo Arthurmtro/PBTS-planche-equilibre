@@ -69,7 +69,7 @@ class Controller {
 
 			this.cylinders.push(
 				new Cylinder(
-					String(idxCylinder),
+					this.cylindersData[idxCylinder].id,
 					this.cylindersData[idxCylinder].forwardId,
 					this.cylindersData[idxCylinder].backwardId,
 					this.cylindersData[idxCylinder].maxSpeed

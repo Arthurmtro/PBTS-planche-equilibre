@@ -14,7 +14,7 @@ import { useProfilesData } from "../contexts/profilesProvider"
 
 const INITIAL_STATE = [
 	{
-		cylinderId: "Verin1",
+		cylinderId: 0,
 		commands: [],
 	},
 	{

@@ -7,7 +7,7 @@ import { delayFunction } from "./../libs/delayFunction"
 const i2cBus = runningOnRasberry && require("i2c-bus")
 
 export class Cylinder {
-	public id: string
+	public id: number
 
 	// Cylinder Properties infos
 	private backwardId: number
@@ -16,7 +16,7 @@ export class Cylinder {
 
 	private pca9685Driver: Pca9685Driver
 
-	constructor(id: string, forwardId: number, backwardId: number, maxSpeed: number) {
+	constructor(id: number, forwardId: number, backwardId: number, maxSpeed: number) {
 		this.id = id
 		this.forwardId = forwardId
 		this.backwardId = backwardId

@@ -4,15 +4,15 @@
 	"duration": 8000,
 	"actions": [
 		{
-			"cylinderId": "Verin1",
+			"cylinderId": 0,
 			"commands": [{ "action": "forward", "speed": 1, "time": 8000 }]
 		},
 		{
-			"cylinderId": "Verin2",
+			"cylinderId": 1,
 			"commands": [{ "action": "stop", "time": 8000 }]
 		},
 		{
-			"cylinderId": "Verin3",
+			"cylinderId": 2,
 			"commands": [{ "action": "stop", "time": 8000 }]
 		}
 	]
