@@ -192,13 +192,14 @@ class Controller {
 				executeProfile(action, cylinder).then(() => {
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
-					if (res) this.init(res)
+					if (res) return this.init(res)
 				})
 			}
 
 			// res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
 		} catch (error) {
 			console.log("error", error)
+			res?.sendStatus(500)
 		}
 	}
 
