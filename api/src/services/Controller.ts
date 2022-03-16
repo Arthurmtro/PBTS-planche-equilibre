@@ -214,7 +214,7 @@ class Controller {
 			if (!body.label) throw "Missing argument: label"
 			if (!body.actions) throw "Missing argument: actions"
 
-			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
+			if (body.actions.some((action) => action.cylinderId === null)) throw "Missing argument: cylinderId"
 			if (body.actions.some((action) => !action.commands)) throw "Missing argument: commands"
 
 			// Check if filename already exist
@@ -252,7 +252,7 @@ class Controller {
 			if (!body.actions) throw "Missing argument: actions"
 			if (!body.category) throw "Missing argument: category"
 
-			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
+			if (body.actions.some((action) => action.cylinderId === null)) throw "Missing argument: cylinderId"
 			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
 
 			// Check if filename already exist
@@ -270,18 +270,22 @@ class Controller {
 		}
 	}
 
-	public async deleteProfile(body: { fileName: string }, res: Response) {
+	public async deleteProfile(fileName: string, res: Response) {
 		try {
 			// Checks
-			if (!body.fileName) throw "Missing argument: label"
+			if (!fileName) throw "Missing argument: fileName"
+
+			console.log("fileName", fileName)
 
 			// Check if filename already exist
-			const associatedProfile = this.profiles.find((profile) => profile.fileName === body.fileName)
+			const associatedProfile = this.profiles.find((profile) => profile.fileName === fileName)
 
 			if (!associatedProfile) throw "This profile does not exist !"
 
 			// Add to the folder
-			await unlinkSync(`${join(__dirname, "../../config/profiles/")}${body.fileName}.json`)
+			await unlinkSync(`${join(__dirname, "../../config/profiles/")}${fileName}.json`)
+
+			this.profiles = this.profiles.filter((profile) => profile.fileName !== fileName)
 
 			res.sendStatus(200)
 		} catch (error) {

@@ -44,6 +44,11 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
 		initPlanche()
 	}
 
+	const handleDelete = (fileName: string) => {
+		deleteProfile(fileName)
+		window.location.reload()
+	}
+
 	return (
 		<Box size="fill">
 			<div className={styles.content}>
@@ -58,7 +63,7 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
 						</Button>
 					) : (
 						<>
-							<Button disabled={runningProfile !== null} color="danger" onClick={() => deleteProfile(String(profile.fileName))}>
+							<Button disabled={runningProfile !== null} color="danger" onClick={() => handleDelete(String(profile.fileName))}>
 								Delete
 							</Button>
 							<Button disabled={runningProfile !== null} color="white" onClick={() => navigate(`/edit-profile/${profile.fileName}`)}>
