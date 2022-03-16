@@ -40,11 +40,9 @@ export default function RunningPage() {
 							</Box>
 							<Box size="block">
 								<div className={styles.info}>
-									<span />
-									<h4>
-										Donnée temps : GyroX : {gyroValues?.gyroX} GyroY: {gyroValues?.gyroY}{" "}
-									</h4>
-									<span />
+									<h4>Donnée temps :</h4>
+									<span>GyroX: {gyroValues?.gyroX}</span>
+									<span>GyroY: {gyroValues?.gyroY}</span>
 								</div>
 							</Box>
 						</div>

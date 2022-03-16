@@ -1,5 +1,5 @@
 export type cylinderType = {
-	id: string
+	id: number
 	forwardId: number
 	backwardId: number
 	maxSpeed: number

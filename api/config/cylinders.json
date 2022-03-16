@@ -1,18 +1,18 @@
 [
 	{
-		"id": "Verin1",
+		"id": 0,
 		"forwardId": 4,
 		"backwardId": 5,
 		"maxSpeed": 49
 	},
 	{
-		"id": "Verin2",
+		"id": 1,
 		"forwardId": 2,
 		"backwardId": 3,
 		"maxSpeed": 49
 	},
 	{
-		"id": "Verin3",
+		"id": 2,
 		"forwardId": 6,
 		"backwardId": 7,
 		"maxSpeed": 49

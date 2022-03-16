@@ -7,7 +7,7 @@ import { delayFunction } from "./../libs/delayFunction"
 const i2cBus = runningOnRasberry && require("i2c-bus")
 
 export class Cylinder {
-	public id: string
+	public id: number
 
 	// Cylinder Properties infos
 	private backwardId: number
@@ -16,7 +16,7 @@ export class Cylinder {
 
 	private pca9685Driver: Pca9685Driver
 
-	constructor(id: string, forwardId: number, backwardId: number, maxSpeed: number) {
+	constructor(id: number, forwardId: number, backwardId: number, maxSpeed: number) {
 		this.id = id
 		this.forwardId = forwardId
 		this.backwardId = backwardId
@@ -44,7 +44,7 @@ export class Cylinder {
 		try {
 			if (!this.pca9685Driver) throw "pca9685Driver is not initialised !"
 
-			console.log("Execution de la sequence")
+			console.log("Execution de la sequence: Initialisation")
 
 			// console.log("Cylinder " + this.id)
 			this.stop()
@@ -54,23 +54,37 @@ export class Cylinder {
 
 			return false
 		} catch (error) {
-			console.log("error", error)
+			console.log("Cylinder:init", error)
 			return true
 		}
 	}
 
 	public open(speed: number) {
-		this.stop()
-		this.pca9685Driver.setDutyCycle(this.forwardId, speed)
+		try {
+			this.stop()
+			console.log("open", speed)
+			this.pca9685Driver.setDutyCycle(this.forwardId, speed)
+		} catch (error) {
+			console.log("Cylinder:open", error)
+		}
 	}
 
 	public close(speed: number) {
-		this.stop()
-		this.pca9685Driver.setDutyCycle(this.backwardId, speed)
+		try {
+			this.stop()
+			console.log("close", speed)
+			this.pca9685Driver.setDutyCycle(this.backwardId, speed)
+		} catch (error) {
+			console.log("Cylinder:close", error)
+		}
 	}
 
 	public stop() {
-		this.pca9685Driver.channelOff(this.forwardId)
-		this.pca9685Driver.channelOff(this.backwardId)
+		try {
+			this.pca9685Driver.channelOff(this.forwardId)
+			this.pca9685Driver.channelOff(this.backwardId)
+		} catch (error) {
+			console.log("Cylinder:stop", error)
+		}
 	}
 }

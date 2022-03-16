@@ -1,36 +1,35 @@
 import { api_url } from "../config"
 
-import {ActionsType} from "../types/commands"
+import { ActionsType } from "../types/commands"
 
-type profileType =  {
-    label: string;
-    actions: ActionsType[];
+type profileType = {
+	label: string
+	actions: ActionsType[]
 }
 
 export default async function createProfile(profile: profileType) {
-    try {
-        if(!profile.label) throw new Error("Missing property: label")
-        if(!profile.actions) throw new Error("Missing property: actions")
+	try {
+		if (!profile.label) throw new Error("Missing property: label")
+		if (!profile.actions) throw new Error("Missing property: actions")
 
-        console.log('sendProfil', profile)
+		const response = await fetch(`${api_url}/create-profile`, {
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			method: "POST",
+			body: JSON.stringify(profile),
+		})
 
-        const response = await fetch(`${api_url}/create-profile`, {
-            body: JSON.stringify(profile),
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            method: "POST"
-        })
+		if (!response.ok) {
+			throw new Error("Problem fetching cylinders infos")
+		}
 
-        if (!response.ok) {
-            throw new Error("Problem fetching cylinders infos")
-        }
+		// await response.json()
 
-        const cylinders = await response.json()
-
-        return cylinders
-    } catch (error) {
-        console.log(error)
-    }
+		return true
+	} catch (error) {
+		console.log(error)
+		return false
+	}
 }

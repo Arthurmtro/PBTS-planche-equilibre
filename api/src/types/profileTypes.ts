@@ -8,7 +8,7 @@ export type profileType = {
 
 export type actionType = {
 	commands: commandType[]
-	cylinderId: string
+	cylinderId: number
 }
 
 export type commandType = {

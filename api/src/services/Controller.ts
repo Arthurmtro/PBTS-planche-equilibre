@@ -58,24 +58,9 @@ class Controller {
 
 	constructor() {
 		this.isActive = false
-		this.profiles = fetchAllProfiles()
-		this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
-
-		// Init Cylinder
+		this.profiles = []
+		this.cylindersData = []
 		this.cylinders = []
-		for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
-			if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed)
-				break
-
-			this.cylinders.push(
-				new Cylinder(
-					String(idxCylinder),
-					this.cylindersData[idxCylinder].forwardId,
-					this.cylindersData[idxCylinder].backwardId,
-					this.cylindersData[idxCylinder].maxSpeed
-				)
-			)
-		}
 
 		this.mpu = new mpu9250({
 			device: "/dev/i2c-1",
@@ -86,7 +71,7 @@ class Controller {
 			//      1 => 500 degrees / second
 			//      2 => 1000 degrees / second
 			//      3 => 2000 degrees / second
-			GYRO_FS: 0,
+			GYRO_FS: 3,
 
 			// Set the Accelerometer sensitivity (default 2), where:
 			//      0 => +/- 2 g
@@ -105,19 +90,46 @@ class Controller {
 
 			accelCalibration: ACCEL_CALIBRATION,
 		})
+		try {
+			this.isActive = false
+			this.profiles = fetchAllProfiles()
+			this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
+
+			console.log("this.cylindersData ", this.cylindersData)
+
+			// Init Cylinder
+			for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
+				if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed) {
+					throw "Missing informations, cannot initialise Cylinders"
+				}
+
+				this.cylinders.push(
+					new Cylinder(
+						this.cylindersData[idxCylinder].id,
+						this.cylindersData[idxCylinder].forwardId,
+						this.cylindersData[idxCylinder].backwardId,
+						this.cylindersData[idxCylinder].maxSpeed
+					)
+				)
+			}
+
+			console.log("this.cylinders", this.cylinders)
+		} catch (error) {
+			console.log("Controller:Constructor ", error)
+		}
 	}
 
-	public init(res: Response) {
+	public init(res?: Response) {
 		try {
-			// Function async !!! WARNING !!! Maybe it can block
-			for (let idxCylinder = 0; idxCylinder <= this.cylindersData.length; idxCylinder++) {
+			this.isActive = false
+			for (let idxCylinder = 0; idxCylinder < this.cylinders.length; idxCylinder++) {
 				if (this.cylinders[idxCylinder].init()) break
 			}
 
-			res.sendStatus(200)
+			if (res) res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
-			res.status(503).send(new Error(error as string))
+			if (res) res.status(503).send(new Error(error as string))
 		}
 	}
 
@@ -159,27 +171,34 @@ class Controller {
 
 			const correspondingProfile = this.profiles.find(({ fileName }) => fileName === profileId)
 
+			this.isActive = true
+
 			if (!correspondingProfile) throw "Can't find corresponding profile"
 
 			const executeProfile = async (action: actionType, cylinder?: Cylinder) => {
-				for (const command of action.commands) {
-					if (!this.isActive) return
-					console.log("Execution de la séquence ", command)
+				try {
+					for (const command of action.commands) {
+						if (!this.isActive) throw "Active is not true"
+						if (!cylinder) throw "Verrin not working"
+						console.log("Execution de la séquence: ", command)
 
-					switch (command.action) {
-						case "forward":
-							cylinder?.open(1)
-							break
-						case "backward":
-							cylinder?.close(1)
-							break
-						case "stop":
-						default:
-							cylinder?.stop()
-							break
+						switch (command.action) {
+							case "forward":
+								cylinder.open(command.speed)
+								break
+							case "backward":
+								cylinder.close(command.speed)
+								break
+							case "stop":
+							default:
+								cylinder.stop()
+								break
+						}
+
+						await delayFunction(command.time).then(() => command)
 					}
-
-					await delayFunction(command.time).then(() => command)
+				} catch (error) {
+					console.log("Controller:runProfileWithId:executeProfile ", error)
 				}
 				return false
 			}
@@ -189,16 +208,19 @@ class Controller {
 
 				const cylinder = this.cylinders.find(({ id }) => id === action.cylinderId)
 
+				if (!cylinder) throw "Their is no corresponding Cylinder"
+
 				executeProfile(action, cylinder).then(() => {
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
-					if (res) this.init(res)
+					return this.init()
 				})
 			}
 
-			// res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
+			res?.status(200).json({ message: `Profil ${correspondingProfile.label} en cours !` })
 		} catch (error) {
 			console.log("error", error)
+			res?.sendStatus(400)
 		}
 	}
 
@@ -210,7 +232,7 @@ class Controller {
 			if (!body.actions) throw "Missing argument: actions"
 
 			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
-			if (body.actions.some((action) => !action.commands )) throw "Missing argument: commands"
+			if (body.actions.some((action) => !action.commands)) throw "Missing argument: commands"
 
 			// Check if filename already exist
 			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
@@ -289,21 +311,12 @@ if (runningOnRasberry) {
 export const getMpuInfos = () => {
 	if (!runningOnRasberry) return
 
-	console.log("\nGyro.x   Gyro.y")
+	// console.log("\nGyro.x   Gyro.y")
 	const m6: any = ApiController.mpu.getMotion6()
 
-	if ((Math.floor(m6[3]) > -2 && Math.floor(m6[3]) < 2) || (Math.floor(m6[4]) > -2 && Math.floor(m6[4]) < 2)) {
-		const stuctData = {
-			gyroX: 0,
-			gyroY: 0,
-		}
-
-		return stuctData
-	}
-
 	const stuctData = {
-		gyroX: Math.floor(m6[3]),
-		gyroY: Math.floor(m6[4]),
+		gyroX: (m6[3] + 5).toPrecision(10),
+		gyroY: m6[4].toPrecision(10),
 	}
 
 	// process.stdout.write(m6[3], m6[4])

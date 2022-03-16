@@ -11,13 +11,13 @@ import ProfilesDataProvider from "./contexts/profilesProvider"
 import ThemeProvider from "./contexts/themeProvider"
 
 // Pages
+import ConfigurationPage from "./pages/Configuration"
+import EditProfilePage from "./pages/EditProfile"
 import RunningPage from "./pages/Running"
 import HomePage from "./pages/Home"
-import EditProfilePage from "./pages/EditProfile"
 
 // Components
 import Layout from "./components/Layout"
-import ConfigurationPage from "./pages/Configuration"
 
 const queryClient = new QueryClient()
 
@@ -45,7 +45,7 @@ export default function App() {
 									<Route path="/" element={<HomePage />} />
 									<Route path="/configuration" element={<ConfigurationPage />} />
 									<Route path="/running" element={<RunningPage />} />
-									<Route path="/EditProfile" element={<EditProfilePage />} />
+									<Route path="/edit-profile/:profileId" element={<EditProfilePage />} />
 									<Route
 										path="*"
 										element={
