@@ -8,6 +8,7 @@ import createProfile from "../api/createProfile"
 
 // Components
 import OptionList from "../components/OptionList";
+import Button from "../components/Button"
 
 const INITIAL_STATE = [
 	{
@@ -48,6 +49,6 @@ export default function EditProfilePage() {
 			<div className={styles.verrins}>
 				{actions.map(((action, key) =>  <OptionList key={action.cylinderId} actionId={key}  actions={actions} setActions={setActions} /> ))}
 			</div>
-			<button onClick={()=> handleFinishProfile()}>Fini chef</button>
+			<Button color="secondary" onClick={()=> handleFinishProfile()}>Fini chef</Button>
 		</>
 	)}

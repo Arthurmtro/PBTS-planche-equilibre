@@ -9,12 +9,15 @@ import { ConvertMsToS, convertToSpeed } from "../../libs/convertTime";
 
 // Components
 import Slider from "../Slider";
+import Button from "../Button"
+import Select from "../Select"
 
 type OptionListType = {
 	actionId: number, actions: ActionsType[], setActions: Dispatch<SetStateAction<ActionsType[]>> 
 }
 
 export default function OptionList({ actionId, actions, setActions }: OptionListType  ) {
+
 	const updateCommands = (commandId: number, key: string, value: string | number) => {
 		const newArray: ActionsType[] = [...actions]
 
@@ -63,16 +66,14 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 									<div>No command.action</div>
 								)
 							}
-							<select id="monselect" value={action.action} onChange={(e) => updateCommands(idx, "action", e.target.value)}>
-								<option value="stop">Stop</option>
-								<option value="forward">Ouvrir</option>
-								<option value="backward">Fermer</option>
-							</select>
+							<Select idx={idx}  setter={updateCommands} value={action.action}/>
+							
+							
 						</article>
 					))
 				}
 			</div>
-			<button onClick={() => handleClick()}>Add Line</button>
+			<Button onClick={() => handleClick()}>Add Line</Button>
 		</article>
 	)
 }
