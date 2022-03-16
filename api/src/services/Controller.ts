@@ -263,6 +263,10 @@ class Controller {
 			// Add to the folder
 			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${body.fileName}.json`, JSON.stringify(body))
 
+			this.profiles = this.profiles.filter((profile) => profile.fileName !== body.fileName)
+
+			this.profiles = this.profiles.concat(associatedProfile)
+
 			res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
