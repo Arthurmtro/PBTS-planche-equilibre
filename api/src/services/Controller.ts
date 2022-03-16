@@ -57,54 +57,61 @@ class Controller {
 	public mpu: mpu9250
 
 	constructor() {
-		this.isActive = false
-		this.profiles = fetchAllProfiles()
-		this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
+		try {
+			this.isActive = false
+			this.profiles = fetchAllProfiles()
+			this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
 
-		// Init Cylinder
-		this.cylinders = []
-		for (let idxCylinder = 0; idxCylinder < this.cylinders.length; idxCylinder++) {
-			if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed)
-				break
+			// Init Cylinder
+			this.cylinders = []
+			for (let idxCylinder = 0; idxCylinder < this.cylinders.length; idxCylinder++) {
+				if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed) {
+					throw "Missing informations, cannot initialise Cylinders"
+				}
 
-			this.cylinders.push(
-				new Cylinder(
-					this.cylindersData[idxCylinder].id,
-					this.cylindersData[idxCylinder].forwardId,
-					this.cylindersData[idxCylinder].backwardId,
-					this.cylindersData[idxCylinder].maxSpeed
+				this.cylinders.push(
+					new Cylinder(
+						this.cylindersData[idxCylinder].id,
+						this.cylindersData[idxCylinder].forwardId,
+						this.cylindersData[idxCylinder].backwardId,
+						this.cylindersData[idxCylinder].maxSpeed
+					)
 				)
-			)
+			}
+
+			console.log("this.cylinders", this.cylinders)
+
+			this.mpu = new mpu9250({
+				device: "/dev/i2c-1",
+				DEBUG: true,
+
+				// Set the Gyroscope sensitivity (default 0), where:
+				//      0 => 250 degrees / second
+				//      1 => 500 degrees / second
+				//      2 => 1000 degrees / second
+				//      3 => 2000 degrees / second
+				GYRO_FS: 0,
+
+				// Set the Accelerometer sensitivity (default 2), where:
+				//      0 => +/- 2 g
+				//      1 => +/- 4 g
+				//      2 => +/- 8 g
+				//      3 => +/- 16 g
+				ACCEL_FS: 0,
+
+				scaleValues: true,
+
+				UpMagneto: false,
+
+				magCalibration: MAG_CALIBRATION,
+
+				gyroBiasOffset: GYRO_OFFSET,
+
+				accelCalibration: ACCEL_CALIBRATION,
+			})
+		} catch (error) {
+			console.log("Controller:Constructor ", error)
 		}
-
-		this.mpu = new mpu9250({
-			device: "/dev/i2c-1",
-			DEBUG: true,
-
-			// Set the Gyroscope sensitivity (default 0), where:
-			//      0 => 250 degrees / second
-			//      1 => 500 degrees / second
-			//      2 => 1000 degrees / second
-			//      3 => 2000 degrees / second
-			GYRO_FS: 0,
-
-			// Set the Accelerometer sensitivity (default 2), where:
-			//      0 => +/- 2 g
-			//      1 => +/- 4 g
-			//      2 => +/- 8 g
-			//      3 => +/- 16 g
-			ACCEL_FS: 0,
-
-			scaleValues: true,
-
-			UpMagneto: false,
-
-			magCalibration: MAG_CALIBRATION,
-
-			gyroBiasOffset: GYRO_OFFSET,
-
-			accelCalibration: ACCEL_CALIBRATION,
-		})
 	}
 
 	public init(res?: Response) {
