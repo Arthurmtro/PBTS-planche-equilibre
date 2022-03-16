@@ -194,7 +194,11 @@ class Controller {
 			for (const action of correspondingProfile.actions) {
 				if (!this.isActive) throw "Active is not true"
 
+				console.log("action", action)
+
 				const cylinder = this.cylinders.find(({ id }) => id === action.cylinderId)
+
+				if (!cylinder) throw "Their is no corresponding Cylinder"
 
 				executeProfile(action, cylinder).then(() => {
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
