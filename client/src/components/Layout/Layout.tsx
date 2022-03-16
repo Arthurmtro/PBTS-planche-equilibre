@@ -25,13 +25,13 @@ export default function Layout({ children }: ParamsType) {
 			transports: ["websocket"],
 		})
 
-		socket.on("connect", () => console.log(socket.id))
+		socket.on("connect", () => console.log("socket.id: ", socket.id))
 		socket.on("connect_error", () => {
 			setTimeout(() => socket.connect(), 5000)
 		})
 
 		socket.on("mpuInfos", (data) => {
-			if (!runningProfile) return
+			// if (!runningProfile) return
 
 			console.log("data :>> ", data)
 
