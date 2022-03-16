@@ -31,7 +31,8 @@ export default function Layout({ children }: ParamsType) {
 		})
 
 		socket.on("mpuInfos", (data) => {
-			if (!runningProfile) {
+			console.log("runningProfile :>> ", runningProfile)
+			if (runningProfile === null) {
 				console.log("No profile running")
 				return
 			}
