@@ -184,10 +184,10 @@ class Controller {
 
 						switch (command.action) {
 							case "forward":
-								cylinder.open(1)
+								cylinder.open(command.speed)
 								break
 							case "backward":
-								cylinder.close(1)
+								cylinder.close(command.speed)
 								break
 							case "stop":
 							default:

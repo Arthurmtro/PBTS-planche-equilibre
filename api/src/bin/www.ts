@@ -64,5 +64,5 @@ const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
 	// Emitting a new message. Will be consumed by the client
 	socket.emit("mpuInfos", getMpuInfos())
 
-	// console.log(getMpuInfos()) // Debug
+	console.log("getMpuInfos()", getMpuInfos()) // Debug
 }
