@@ -16,42 +16,39 @@ type ParamsType = {
 
 var interval: NodeJS.Timer
 
+const socket = io(api_url, {
+	transports: ["websocket"],
+})
+
+socket.on("connect", () => console.log("socket.id: ", socket.id))
+socket.on("connect_error", () => {
+	setTimeout(() => socket.connect(), 5000)
+})
+
 export default function Layout({ children }: ParamsType) {
 	const { runningProfile, setRunningProfile, timeSpend, setTimeSpend, gyroValues, setGyroValues } = useRunningProfile()
 
-	useEffect(() => {
-		console.log("api_url :>> ", api_url)
-		const socket = io(api_url, {
-			transports: ["websocket"],
+	socket.on("mpuInfos", (data) => {
+		console.log("runningProfile :>> ", runningProfile)
+		if (runningProfile === null) {
+			console.log("No profile running")
+			return
+		}
+
+		console.log("data :>> ", data)
+
+		const newX = (gyroValues.gyroX += data.gyroX)
+		const newY = (gyroValues.gyroY += data.gyroY)
+
+		setGyroValues({
+			gyroX: newX,
+			gyroY: newY,
 		})
-
-		socket.on("connect", () => console.log("socket.id: ", socket.id))
-		socket.on("connect_error", () => {
-			setTimeout(() => socket.connect(), 5000)
-		})
-
-		socket.on("mpuInfos", (data) => {
-			console.log("runningProfile :>> ", runningProfile)
-			if (runningProfile === null) {
-				console.log("No profile running")
-				return
-			}
-
-			console.log("data :>> ", data)
-
-			const newX = (gyroValues.gyroX += data.gyroX)
-			const newY = (gyroValues.gyroY += data.gyroY)
-
-			setGyroValues({
-				gyroX: newX,
-				gyroY: newY,
-			})
-			console.log("data :>> ", data)
-		})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		console.log("data :>> ", data)
+	})
 
 	useEffect(() => {
+		console.log("runningProfile :>> ", runningProfile)
 		if (!runningProfile) return clearInterval(interval)
 
 		interval = setInterval(() => {
