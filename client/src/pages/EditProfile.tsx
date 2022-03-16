@@ -29,8 +29,8 @@ const INITIAL_STATE = [
 
 export default function EditProfilePage() {
 	const { profiles } = useProfilesData()
-	const navigate = useNavigate()
 	const { profileId } = useParams()
+	const navigate = useNavigate()
 
 	const [label, setLabel] = useState<string>("")
 

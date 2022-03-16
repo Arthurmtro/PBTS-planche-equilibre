@@ -45,7 +45,7 @@ export default function App() {
 									<Route path="/" element={<HomePage />} />
 									<Route path="/configuration" element={<ConfigurationPage />} />
 									<Route path="/running" element={<RunningPage />} />
-									<Route path="/EditProfile/:profileId" element={<EditProfilePage />} />
+									<Route path="/edit-profile/:profileId" element={<EditProfilePage />} />
 									<Route
 										path="*"
 										element={

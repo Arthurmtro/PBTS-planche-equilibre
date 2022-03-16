@@ -164,7 +164,7 @@ class Controller {
 			const executeProfile = async (action: actionType, cylinder?: Cylinder) => {
 				for (const command of action.commands) {
 					if (!this.isActive) return
-					console.log("Execution de la séquence ", command)
+					console.log("Execution de la séquence: ", command)
 
 					switch (command.action) {
 						case "forward":
@@ -210,7 +210,7 @@ class Controller {
 			if (!body.actions) throw "Missing argument: actions"
 
 			if (body.actions.some((action) => !action.cylinderId)) throw "Missing argument: cylinderId"
-			if (body.actions.some((action) => !action.commands )) throw "Missing argument: commands"
+			if (body.actions.some((action) => !action.commands)) throw "Missing argument: commands"
 
 			// Check if filename already exist
 			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
@@ -289,7 +289,7 @@ if (runningOnRasberry) {
 export const getMpuInfos = () => {
 	if (!runningOnRasberry) return
 
-	console.log("\nGyro.x   Gyro.y")
+	// console.log("\nGyro.x   Gyro.y")
 	const m6: any = ApiController.mpu.getMotion6()
 
 	if ((Math.floor(m6[3]) > -2 && Math.floor(m6[3]) < 2) || (Math.floor(m6[4]) > -2 && Math.floor(m6[4]) < 2)) {
