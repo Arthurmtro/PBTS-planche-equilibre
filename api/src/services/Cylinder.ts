@@ -44,7 +44,7 @@ export class Cylinder {
 		try {
 			if (!this.pca9685Driver) throw "pca9685Driver is not initialised !"
 
-			console.log("Execution de la sequence")
+			console.log("Execution de la sequence: Initialisation")
 
 			// console.log("Cylinder " + this.id)
 			this.stop()
