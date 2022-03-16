@@ -15,6 +15,7 @@ import styles from "./ProfileBox.module.css"
 import Button from "../Button"
 import Badge from "../Badge"
 import Box from "../Box"
+import deleteProfile from "../../api/deleteProfile"
 
 type ProfileBoxParams = {
 	profile: IProfile
@@ -31,7 +32,7 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
 		setTimeSpend(0)
 		setRunningProfile(profile)
 		runProfile(profile.fileName)
-		navigate('/running')
+		navigate("/running")
 	}
 
 	const stopProfile = () => {
@@ -56,9 +57,17 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
 							Stop
 						</Button>
 					) : (
-						<Button disabled={runningProfile !== null} color="secondary" onClick={() => setProfile()}>
-							lancer
-						</Button>
+						<>
+							<Button disabled={runningProfile !== null} color="danger" onClick={() => deleteProfile(String(profile.fileName))}>
+								Delete
+							</Button>
+							<Button disabled={runningProfile !== null} color="white" onClick={() => navigate(`/edit-profile/${profile.fileName}`)}>
+								Edit
+							</Button>
+							<Button disabled={runningProfile !== null} color="secondary" onClick={() => setProfile()}>
+								lancer
+							</Button>
+						</>
 					)}
 				</div>
 			</div>

@@ -17,7 +17,7 @@ type ParamsType = {
 var interval: NodeJS.Timer
 
 export default function Layout({ children }: ParamsType) {
-	const { runningProfile, setRunningProfile, timeSpend, setTimeSpend, gyroValues, setGyroValues } = useRunningProfile()
+	const { runningProfile, setRunningProfile, timeSpend, setTimeSpend, setGyroValues } = useRunningProfile()
 
 	useEffect(() => {
 		console.log("runningProfile :>> ", runningProfile)

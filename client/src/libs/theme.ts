@@ -9,7 +9,6 @@ export const toggleTheme = () => {
 		},
 		{ once: true }
 	)
-	console.log("togled")
 	localStorage.setItem("planche-equilibre-theme", String(document.documentElement.classList.contains("dark")))
 	document.documentElement.classList.toggle("dark")
 }

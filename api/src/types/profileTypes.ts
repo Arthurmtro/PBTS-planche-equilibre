@@ -12,7 +12,8 @@ export type actionType = {
 }
 
 export type commandType = {
-	action: "forward" | "backward" | "stop"
-	speed: number
 	time: number
+	action: string
+	opening: number
+	speed: number
 }

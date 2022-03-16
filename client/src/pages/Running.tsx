@@ -41,8 +41,8 @@ export default function RunningPage() {
 							<Box size="block">
 								<div className={styles.info}>
 									<h4>Donnée temps :</h4>
-									<span>GyroX: {gyroValues?.gyroX}</span>
-									<span>GyroY: {gyroValues?.gyroY}</span>
+									<span>GyroX: {Math.floor(gyroValues?.gyroX)}</span>
+									<span>GyroY: {Math.floor(gyroValues?.gyroY)}</span>
 								</div>
 							</Box>
 						</div>

@@ -15,39 +15,26 @@ import { fetchAllProfiles } from "../libs/fetchAllProfiles"
 import { delayFunction } from "../libs/delayFunction"
 import { mpu9250 } from "./../libs/mpu9250/index"
 
-const MAG_CALIBRATION = {
-	min: { x: -106.171875, y: -56.8125, z: -14.828125 },
-	max: { x: 71.9609375, y: 117.17578125, z: 164.25 },
-	offset: { x: -17.10546875, y: 30.181640625, z: 74.7109375 },
-	scale: {
-		x: 1.491020130696022,
-		y: 1.5265373476123123,
-		z: 1.483149376145188,
-	},
-}
-
-// These values were generated using calibrate_gyro.js - you will want to create your own.
-// NOTE: These are temperature dependent.
 const GYRO_OFFSET = {
 	x: -1.068045801,
 	y: -0.156656488,
 	z: 1.3846259541,
 }
 
-// These values were generated using calibrate_accel.js - you will want to create your own.
-const ACCEL_CALIBRATION = {
-	offset: {
-		x: 0.00943176,
-		y: 0.00170817,
-		z: 0.05296142,
-	},
-	scale: {
-		x: [-0.993164, 1.0102189],
-		y: [-0.9981974, 1.0055884],
-		z: [-0.9598844, 1.0665967],
-	},
+const CYLINDER_SPEED = 4.35
+
+export const ConvertMsToS = (ms: number) => {
+	return (ms / 1000).toPrecision(5)
 }
-//////////////////////
+
+export const speedPercentToRealSpeed = (speedPercent: number) => {
+	// return (speedPercent * CYLINDER_SPEED) /  100
+	return (speedPercent / 100) * CYLINDER_SPEED
+}
+
+export const convertToSpeed = (opening: number, speed: number) => {
+	return (opening / speedPercentToRealSpeed(speed)) * 10e2
+}
 
 class Controller {
 	private cylindersData: cylinderType[]
@@ -84,11 +71,7 @@ class Controller {
 
 			UpMagneto: false,
 
-			magCalibration: MAG_CALIBRATION,
-
 			gyroBiasOffset: GYRO_OFFSET,
-
-			accelCalibration: ACCEL_CALIBRATION,
 		})
 		try {
 			this.isActive = false
@@ -240,6 +223,12 @@ class Controller {
 			// Create new profile
 			const fileName: string = body.label.trim().replace(" ", "_")
 
+			for (const action of body.actions) {
+				for (const command of action.commands) {
+					command.time = convertToSpeed(command.opening, command.speed)
+				}
+			}
+
 			const profile = { ...body, fileName }
 
 			// Add to the folder
@@ -315,8 +304,8 @@ export const getMpuInfos = () => {
 	const m6: any = ApiController.mpu.getMotion6()
 
 	const stuctData = {
-		gyroX: (m6[3] + 5).toPrecision(10),
-		gyroY: m6[4].toPrecision(10),
+		gyroX: m6[3] + 5,
+		gyroY: m6[4],
 	}
 
 	// process.stdout.write(m6[3], m6[4])
