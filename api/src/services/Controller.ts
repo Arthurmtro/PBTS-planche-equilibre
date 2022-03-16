@@ -95,8 +95,10 @@ class Controller {
 			this.profiles = fetchAllProfiles()
 			this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
 
+			console.log("this.cylindersData ", this.cylindersData)
+
 			// Init Cylinder
-			for (let idxCylinder = 0; idxCylinder < this.cylinders.length; idxCylinder++) {
+			for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
 				if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed) {
 					throw "Missing informations, cannot initialise Cylinders"
 				}
