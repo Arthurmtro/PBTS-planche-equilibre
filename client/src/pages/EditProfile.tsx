@@ -34,10 +34,9 @@ export default function EditProfilePage() {
 	const { profileId } = useParams()
 	const navigate = useNavigate()
 
-	const [label, setLabel] = useState<string>("")
-
 	const findedProfile = profiles?.find((profile) => profile.fileName === profileId) as any
 
+	const [label, setLabel] = useState<string>(profiles && findedProfile ? findedProfile.label : "")
 	// console.log("findedProfile :>> ", findedProfile)
 
 	const [actions, setActions] = useState<ActionsType[]>(profiles && findedProfile ? findedProfile.actions : INITIAL_STATE)

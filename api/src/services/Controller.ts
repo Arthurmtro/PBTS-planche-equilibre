@@ -250,7 +250,6 @@ class Controller {
 			// Checks
 			if (!body.label) throw "Missing argument: label"
 			if (!body.actions) throw "Missing argument: actions"
-			if (!body.category) throw "Missing argument: category"
 
 			if (body.actions.some((action) => action.cylinderId === null)) throw "Missing argument: cylinderId"
 			if (body.actions.some((action) => !action.commands || action.commands.length === 0)) throw "Missing argument: commands"
