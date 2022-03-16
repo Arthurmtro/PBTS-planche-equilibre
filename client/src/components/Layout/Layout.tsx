@@ -37,8 +37,8 @@ export default function Layout({ children }: ParamsType) {
 
 		console.log("data :>> ", data)
 
-		const newX = (gyroValues.gyroX += data.gyroX)
-		const newY = (gyroValues.gyroY += data.gyroY)
+		const newX = (gyroValues.gyroX += Math.floor(data.gyroX))
+		const newY = (gyroValues.gyroY += Math.floor(data.gyroY))
 
 		setGyroValues({
 			gyroX: newX,
