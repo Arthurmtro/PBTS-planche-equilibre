@@ -33,6 +33,8 @@ export default function Layout({ children }: ParamsType) {
 		socket.on("mpuInfos", (data) => {
 			if (!runningProfile) return
 
+			console.log("data :>> ", data)
+
 			const newX = (gyroValues.gyroX += data.gyroX)
 			const newY = (gyroValues.gyroY += data.gyroY)
 

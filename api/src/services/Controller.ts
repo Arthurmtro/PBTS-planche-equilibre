@@ -121,7 +121,7 @@ class Controller {
 
 	public init(res?: Response) {
 		try {
-			// Function async !!! WARNING !!! Maybe it can block
+			this.isActive = false
 			for (let idxCylinder = 0; idxCylinder < this.cylinders.length; idxCylinder++) {
 				if (this.cylinders[idxCylinder].init()) break
 			}
@@ -315,7 +315,7 @@ export const getMpuInfos = () => {
 	const m6: any = ApiController.mpu.getMotion6()
 
 	const stuctData = {
-		gyroX: m6[3].toPrecision(10),
+		gyroX: (m6[3] + 5).toPrecision(10),
 		gyroY: m6[4].toPrecision(10),
 	}
 
