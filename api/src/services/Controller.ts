@@ -194,10 +194,6 @@ class Controller {
 			for (const action of correspondingProfile.actions) {
 				if (!this.isActive) throw "Active is not true"
 
-				console.log("action", action)
-
-				console.log("this.cylinders", this.cylinders)
-
 				const cylinder = this.cylinders.find(({ id }) => id === action.cylinderId)
 
 				if (!cylinder) throw "Their is no corresponding Cylinder"
