@@ -165,19 +165,20 @@ class Controller {
 
 			const executeProfile = async (action: actionType, cylinder?: Cylinder) => {
 				for (const command of action.commands) {
-					if (!this.isActive) return
+					if (!this.isActive) throw "Active is not true"
+					if (!cylinder) throw "Verrin not working"
 					console.log("Execution de la séquence: ", command)
 
 					switch (command.action) {
 						case "forward":
-							cylinder?.open(1)
+							cylinder.open(1)
 							break
 						case "backward":
-							cylinder?.close(1)
+							cylinder.close(1)
 							break
 						case "stop":
 						default:
-							cylinder?.stop()
+							cylinder.stop()
 							break
 					}
 
