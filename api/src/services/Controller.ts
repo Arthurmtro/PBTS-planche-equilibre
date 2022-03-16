@@ -315,6 +315,7 @@ export const getMpuInfos = () => {
 	const m6: any = ApiController.mpu.getMotion6()
 
 	if ((Math.floor(m6[3]) > -2 && Math.floor(m6[3]) < 2) || (Math.floor(m6[4]) > -2 && Math.floor(m6[4]) < 2)) {
+		console.log("reducing")
 		const stuctData = {
 			gyroX: 0,
 			gyroY: 0,
