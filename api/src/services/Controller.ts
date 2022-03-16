@@ -63,7 +63,7 @@ class Controller {
 
 		// Init Cylinder
 		this.cylinders = []
-		for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
+		for (let idxCylinder = 0; idxCylinder < this.cylinders.length; idxCylinder++) {
 			if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed)
 				break
 
@@ -110,7 +110,7 @@ class Controller {
 	public init(res: Response) {
 		try {
 			// Function async !!! WARNING !!! Maybe it can block
-			for (let idxCylinder = 0; idxCylinder <= this.cylindersData.length; idxCylinder++) {
+			for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
 				if (this.cylinders[idxCylinder].init()) break
 			}
 
