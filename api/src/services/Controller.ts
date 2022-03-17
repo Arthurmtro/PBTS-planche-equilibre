@@ -266,6 +266,8 @@ class Controller {
 
 			this.profiles = this.profiles.concat(associatedProfile)
 
+			console.log("associatedProfile", associatedProfile)
+
 			res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
