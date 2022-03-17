@@ -268,6 +268,8 @@ class Controller {
 
 			console.log("associatedProfile", associatedProfile)
 
+			console.log("this.profiles", this.profiles)
+
 			res.sendStatus(200)
 		} catch (error) {
 			console.log("error", error)
