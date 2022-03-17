@@ -199,6 +199,8 @@ class Controller {
 					finishProfileCpt++
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
+					cylinder.stop()
+
 					if (finishProfileCpt === correspondingProfile.actions.length) {
 						this.init()
 					}
