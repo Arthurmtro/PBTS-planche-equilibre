@@ -350,8 +350,10 @@ export const getMpuInfos = () => {
 	const m6: any = ApiController.mpu.getMotion6()
 
 	const stuctData = {
-		gyroX: m6[3] > SECURE_VALUE || m6[3] < -SECURE_VALUE ? m6[3] + 5 : 0,
-		gyroY: m6[4] > SECURE_VALUE || m6[4] < -SECURE_VALUE ? m6[4] : 0,
+		// gyroX: m6[3] > SECURE_VALUE || m6[3] < -SECURE_VALUE ? m6[3] + 5 : 0,
+		// gyroY: m6[4] > SECURE_VALUE || m6[4] < -SECURE_VALUE ? m6[4] : 0,
+		gyroX: m6[3],
+		gyroY: m6[4],
 	}
 
 	// process.stdout.write(m6[3], m6[4])
