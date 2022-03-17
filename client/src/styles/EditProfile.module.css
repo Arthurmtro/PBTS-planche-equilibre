@@ -1,11 +1,11 @@
-
 .verrins {
-	display:flex;
+	display: flex;
 	justify-content: space-between;
+	align-items: flex-start;
 	margin: 0 auto;
 	padding-bottom: 1vh;
 }
 
-.slider{
+.slider {
 	margin: 0 auto;
 }

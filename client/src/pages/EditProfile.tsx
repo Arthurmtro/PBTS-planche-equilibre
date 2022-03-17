@@ -13,7 +13,6 @@ import OptionList from "../components/OptionList"
 import { IProfile } from "../types/Infos"
 import { useProfilesData } from "../contexts/profilesProvider"
 import Button from "../components/Button"
-import Box from "../components/Box"
 
 const INITIAL_STATE = [
 	{
@@ -82,7 +81,6 @@ export default function EditProfilePage() {
 		<>
 			<h1>{!profileId ? "Ajouter un profile" : "Edit profile"}</h1>
 			<input type="text" value={label} onChange={(event) => setLabel(event.target.value)} />
-			
 
 			<div className={styles.verrins}>
 				{actions.map((action, key) => (

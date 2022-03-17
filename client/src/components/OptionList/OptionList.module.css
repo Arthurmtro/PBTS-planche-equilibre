@@ -3,21 +3,23 @@
 	justify-content: space-between;
 	flex-direction: column;
 	padding-bottom: 1vh;
+
+	border: 1px solid black;
 }
 
-.option-container{
+.option-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.spacer-slider{
+.spacer-slider {
 	padding: 1vh 1vh;
 	border: 1px solid black;
 }
 
-.seleter{
+.seleter {
 	color: rgba(255, 255, 255, 0.6);
 	background-color: #0563af;
 	color: white;
@@ -25,7 +27,6 @@
 	border: none;
 	font-size: 20px;
 	outline: none;
-	
 }
 
 .content {
@@ -34,6 +35,6 @@
 	padding: 1vw 1.5vw;
 }
 
-.test{
+.test {
 	padding: 1vh 0;
 }
