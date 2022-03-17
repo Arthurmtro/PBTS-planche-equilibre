@@ -11,6 +11,7 @@ import { ConvertMsToS, convertToSpeed } from "../../libs/convertTime";
 import Slider from "../Slider";
 import Button from "../Button"
 import Select from "../Select"
+import Box from "../Box"
 
 type OptionListType = {
 	actionId: number, actions: ActionsType[], setActions: Dispatch<SetStateAction<ActionsType[]>> 
@@ -39,12 +40,16 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 	}
 
 	return (
+		
 		<article className={styles['option-container']}>
 			<h4>Verin:  {actionId}</h4>
 			<div className={styles.commands}>
 				{
 					actions[actionId].commands && actions[actionId].commands.map((action, idx) => (
-						<article className={styles['spacer-slider']} key={idx}>
+						
+						<div className={styles.test}>
+						<Box key={idx}>
+							<div className={styles.content}>
 							{
 								action.action === "backward" || action.action === "forward" ? (
 								<>
@@ -68,9 +73,11 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 							}
 							<Select idx={idx}  setter={updateCommands} value={action.action}/>
 							
-							
-						</article>
-					))
+							</div>
+						</Box>
+						
+						</div>
+					))	
 				}
 			</div>
 			<Button onClick={() => handleClick()}>Add Line</Button>

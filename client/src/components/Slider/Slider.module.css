@@ -11,6 +11,7 @@
 	border-right: 1px solid rgba(0, 0, 0, 0.281);
 	background: none;
     outline: none;
+	color: var(--font-color);
 	
 }
 

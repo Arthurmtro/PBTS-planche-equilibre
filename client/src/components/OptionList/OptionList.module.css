@@ -13,18 +13,27 @@
 }
 
 .spacer-slider{
-	padding: 1vh 0;
+	padding: 1vh 1vh;
 	border: 1px solid black;
 }
 
 .seleter{
 	color: rgba(255, 255, 255, 0.6);
-	
 	background-color: #0563af;
-  color: white;
-  padding: 12px;
-  border: none;
-  font-size: 20px;
-  outline: none;
+	color: white;
+	padding: 12px;
+	border: none;
+	font-size: 20px;
+	outline: none;
 	
+}
+
+.content {
+	justify-content: space-between;
+	height: 100%;
+	padding: 1vw 1.5vw;
+}
+
+.test{
+	padding: 1vh 0;
 }
