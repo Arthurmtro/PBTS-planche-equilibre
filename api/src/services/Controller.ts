@@ -356,6 +356,18 @@ export const getMpuInfos = () => {
 		gyroY: m6[4],
 	}
 
+	let cptX = 0
+	let moyX = 0
+
+	cptX++
+	moyX = (moyX + m6[3]) / cptX
+
+	let moyY = 0
+	let cptY = 0
+
+	cptY++
+	moyY = (moyY + m6[3]) / cptY
+
 	// process.stdout.write(m6[3], m6[4])
 	return stuctData
 }
