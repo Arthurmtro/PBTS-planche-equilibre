@@ -223,13 +223,20 @@ class Controller {
 			// Create new profile
 			const fileName: string = body.label.trim().replace(" ", "_")
 
+			let duration = 0
+
 			for (const action of body.actions) {
+				let actionDuration = 0
+
 				for (const command of action.commands) {
 					command.time = convertToSpeed(command.opening, command.speed)
+					actionDuration += command.time
 				}
+
+				if (actionDuration > duration) duration = actionDuration
 			}
 
-			const profile = { ...body, fileName }
+			const profile = { ...body, fileName, duration }
 
 			// Add to the folder
 			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${fileName}.json`, JSON.stringify(profile))
@@ -245,7 +252,7 @@ class Controller {
 		}
 	}
 
-	public async updateProfile(body: profileType, res: Response) {
+	public updateProfile(body: profileType, res: Response) {
 		try {
 			// Checks
 			if (!body.label) throw "Missing argument: label"
@@ -259,10 +266,28 @@ class Controller {
 
 			if (!associatedProfile) throw "This profile does not exist !"
 
-			// Add to the folder
-			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${body.fileName}.json`, JSON.stringify(body))
+			associatedProfile.label = body.label
+			associatedProfile.actions = body.actions
 
-			this.profiles = this.profiles.filter((profile) => profile.fileName !== body.fileName)
+			// Add to the folder
+			writeFileSync(`${join(__dirname, "../../config/profiles/")}${associatedProfile.fileName}.json`, JSON.stringify(associatedProfile))
+
+			let duration = 0
+
+			for (const action of associatedProfile.actions) {
+				let actionDuration = 0
+
+				for (const command of action.commands) {
+					command.time = convertToSpeed(command.opening, command.speed)
+					actionDuration += command.time
+				}
+
+				if (actionDuration > duration) duration = actionDuration
+			}
+
+			associatedProfile.duration = duration
+
+			this.profiles = this.profiles.filter((profile) => profile.fileName !== associatedProfile.fileName)
 
 			this.profiles = this.profiles.concat(associatedProfile)
 
