@@ -5,7 +5,6 @@ export type CommandsType = {
 	speed?: number
 }
 
-
 export type ActionsType = {
 	cylinderId: string
 	commands: CommandsType[]

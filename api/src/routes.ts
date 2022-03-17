@@ -33,16 +33,16 @@ router.get("/run-profile", (req, res) => {
 })
 
 router.post("/create-profile", (req, res) => {
-	console.log("req.body", req.body)
 	return ApiController.createProfile(req.body, res)
+})
+
+router.get("/delete-profile", (req, res) => {
+	console.log("req.body", String(req.query.profileId))
+	return ApiController.deleteProfile(String(req.query.fileName), res)
 })
 
 router.patch("/update-profile", (req, res) => {
 	return ApiController.updateProfile(req.body, res)
-})
-
-router.delete("/delete-profile", (req, res) => {
-	return ApiController.deleteProfile(req.body, res)
 })
 
 router.get("/init", (req, res) => {

@@ -6,6 +6,7 @@ import { ActionsType } from "../types/commands"
 
 // Api
 import createProfile from "../api/createProfile"
+import updateProfile from "../api/updateProfile"
 
 // Components
 import OptionList from "../components/OptionList"
@@ -20,11 +21,11 @@ const INITIAL_STATE = [
 		commands: [],
 	},
 	{
-		cylinderId: "Verin12",
+		cylinderId: 1,
 		commands: [],
 	},
 	{
-		cylinderId: "Verin3",
+		cylinderId: 2,
 		commands: [],
 	},
 ]
@@ -34,15 +35,18 @@ export default function EditProfilePage() {
 	const { profileId } = useParams()
 	const navigate = useNavigate()
 
-	const [label, setLabel] = useState<string>("")
-
 	const findedProfile = profiles?.find((profile) => profile.fileName === profileId) as any
 
-	const [actions, setActions] = useState<ActionsType[]>(profiles && findedProfile ? findedProfile : INITIAL_STATE)
+	const [label, setLabel] = useState<string>(profiles && findedProfile ? findedProfile.label : "")
+	// console.log("findedProfile :>> ", findedProfile)
+
+	const [actions, setActions] = useState<ActionsType[]>(profiles && findedProfile ? findedProfile.actions : INITIAL_STATE)
 	const [runningProfile] = useState<IProfile | null>(null)
 
+	console.log("actions :>> ", actions)
+
 	useEffect(() => {
-		if (runningProfile) {
+		if ((profileId && !profiles) || runningProfile) {
 			navigate("/")
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,6 +60,15 @@ export default function EditProfilePage() {
 
 		console.log("profile", profile)
 
+		if (profileId) {
+			const success = await updateProfile(profile, findedProfile.fileName)
+
+			if (!success) return
+
+			navigate("/")
+
+			return window.location.reload()
+		}
 		const success = await createProfile(profile)
 
 		if (!success) return
@@ -76,8 +89,9 @@ export default function EditProfilePage() {
 					<OptionList key={action.cylinderId} actionId={key} actions={actions} setActions={setActions} />
 				))}
 			</div>
-			
-			<Button color="secondary" onClick={()=> handleFinishProfile()}>Fini chef</Button>
+			<Button color="secondary" onClick={() => handleFinishProfile()}>
+				Fini chef
+			</Button>
 		</>
 	)
 }

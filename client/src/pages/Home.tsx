@@ -15,8 +15,8 @@ export default function HomePage() {
 	return (
 		<div>
 			<ProgressBar />
-			<div className={styles['spercer-botton']}>
-				<Button onClick={()=>navigate("/edit-Profile")}>Create Profile</Button>
+			<div className={styles["spercer-botton"]}>
+				<Button onClick={() => navigate("/edit-profile")}>Create Profile</Button>
 				<Button>Suprimer</Button>
 			</div>
 			<div>
