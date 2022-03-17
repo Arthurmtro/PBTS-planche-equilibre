@@ -7,7 +7,7 @@ type profileType = {
 	actions: ActionsType[]
 }
 
-export default async function updateProfile(profile: profileType) {
+export default async function updateProfile(profile: profileType, fileName: string) {
 	try {
 		if (!profile.label) throw new Error("Missing property: label")
 		if (!profile.actions) throw new Error("Missing property: actions")
@@ -18,7 +18,7 @@ export default async function updateProfile(profile: profileType) {
 				"Content-Type": "application/json",
 			},
 			method: "PATCH",
-			body: JSON.stringify(profile),
+			body: JSON.stringify({ ...profile, fileName }),
 		})
 
 		if (!response.ok) {

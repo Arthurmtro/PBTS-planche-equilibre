@@ -60,7 +60,7 @@ export default function EditProfilePage() {
 		console.log("profile", profile)
 
 		if (profileId) {
-			const success = await updateProfile(profile)
+			const success = await updateProfile(profile, findedProfile.fileName)
 
 			if (!success) return
 
