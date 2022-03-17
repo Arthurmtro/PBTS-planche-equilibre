@@ -368,6 +368,9 @@ export const getMpuInfos = () => {
 	cptY++
 	moyY = (moyY + m6[3]) / cptY
 
+	console.log("moyX", moyX)
+	console.log("moyY", moyY)
+
 	// process.stdout.write(m6[3], m6[4])
 	return stuctData
 }
