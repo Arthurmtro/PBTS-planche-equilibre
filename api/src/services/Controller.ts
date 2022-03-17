@@ -277,9 +277,13 @@ class Controller {
 			for (const action of associatedProfile.actions) {
 				let actionDuration = 0
 
+				console.log("action.commands = ", action.commands)
+
 				for (const command of action.commands) {
-					command.time = convertToSpeed(command.opening, command.speed)
-					actionDuration += command.time
+					if (command.action !== "stop") {
+						command.time = convertToSpeed(command.opening, command.speed)
+						actionDuration += command.time
+					}
 				}
 
 				if (actionDuration > duration) duration = actionDuration
@@ -290,10 +294,6 @@ class Controller {
 			this.profiles = this.profiles.filter((profile) => profile.fileName !== associatedProfile.fileName)
 
 			this.profiles = this.profiles.concat(associatedProfile)
-
-			console.log("associatedProfile", associatedProfile)
-
-			console.log("this.profiles", this.profiles)
 
 			res.sendStatus(200)
 		} catch (error) {
