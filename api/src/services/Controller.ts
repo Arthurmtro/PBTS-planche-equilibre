@@ -186,6 +186,8 @@ class Controller {
 				return false
 			}
 
+			let finishProfileCpt = 0
+
 			for (const action of correspondingProfile.actions) {
 				if (!this.isActive) throw "Active is not true"
 
@@ -194,9 +196,12 @@ class Controller {
 				if (!cylinder) throw "Their is no corresponding Cylinder"
 
 				executeProfile(action, cylinder).then(() => {
+					finishProfileCpt++
 					console.log(`Profil ${correspondingProfile.label}, cylinder "${action.cylinderId}": terminé !`)
 
-					return this.init()
+					if (finishProfileCpt === correspondingProfile.actions.length) {
+						this.init()
+					}
 				})
 			}
 
@@ -229,8 +234,10 @@ class Controller {
 				let actionDuration = 0
 
 				for (const command of action.commands) {
-					command.time = convertToSpeed(command.opening, command.speed)
-					actionDuration += command.time
+					if (command.action !== "stop") {
+						command.time = convertToSpeed(command.opening, command.speed)
+						actionDuration += command.time
+					}
 				}
 
 				if (actionDuration > duration) duration = actionDuration
