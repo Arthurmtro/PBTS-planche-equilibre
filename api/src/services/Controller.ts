@@ -16,8 +16,8 @@ import { delayFunction } from "../libs/delayFunction"
 import { mpu9250 } from "./../libs/mpu9250/index"
 
 const GYRO_OFFSET = {
-	x: 0,
-	y: 0,
+	x: -3.55,
+	y: 0.95,
 	z: 0,
 }
 
@@ -342,12 +342,6 @@ if (runningOnRasberry) {
 	ApiController.mpu.initialize()
 }
 
-let cptX = 0
-let moyX = 0
-
-let moyY = 0
-let cptY = 0
-
 export const getMpuInfos = () => {
 	if (!runningOnRasberry) return
 	const SECURE_VALUE = 0.4
@@ -361,15 +355,6 @@ export const getMpuInfos = () => {
 		gyroX: m6[3],
 		gyroY: m6[4],
 	}
-
-	cptX++
-	moyX = (moyX + m6[3]) / cptX
-
-	cptY++
-	moyY = (moyY + m6[3]) / cptY
-
-	console.log("moyX", moyX)
-	console.log("moyY", moyY)
 
 	// process.stdout.write(m6[3], m6[4])
 	return stuctData
