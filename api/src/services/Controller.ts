@@ -102,6 +102,9 @@ class Controller {
 		}
 	}
 
+	/**
+	 *
+	 **/
 	public init(res?: Response) {
 		try {
 			this.isActive = false
