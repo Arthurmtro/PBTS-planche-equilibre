@@ -342,6 +342,12 @@ if (runningOnRasberry) {
 	ApiController.mpu.initialize()
 }
 
+let cptX = 0
+let moyX = 0
+
+let moyY = 0
+let cptY = 0
+
 export const getMpuInfos = () => {
 	if (!runningOnRasberry) return
 	const SECURE_VALUE = 0.4
@@ -356,14 +362,8 @@ export const getMpuInfos = () => {
 		gyroY: m6[4],
 	}
 
-	let cptX = 0
-	let moyX = 0
-
 	cptX++
 	moyX = (moyX + m6[3]) / cptX
-
-	let moyY = 0
-	let cptY = 0
 
 	cptY++
 	moyY = (moyY + m6[3]) / cptY
