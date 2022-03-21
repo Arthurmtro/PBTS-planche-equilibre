@@ -16,7 +16,7 @@ import { delayFunction } from "../libs/delayFunction"
 import { mpu9250 } from "./../libs/mpu9250/index"
 
 const GYRO_OFFSET = {
-	x: -3.55,
+	x: 3.55,
 	y: 0.95,
 	z: 0,
 }
