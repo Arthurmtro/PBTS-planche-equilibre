@@ -1,14 +1,14 @@
 .commands {
 	display: flex;
 	justify-content: space-between;
-	flex-direction: column;
-	padding-bottom: 1vh;
+	flex-direction:row;
+	padding: 1vh 1vh;
 }
 
 .option-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	display:flex;
+	flex-direction:row;
+	
 	align-items: center;
 }
 
@@ -34,5 +34,7 @@
 }
 
 .test {
-	padding: 1vh 0;
+	padding: 0vh 1vh;
 }
+
+

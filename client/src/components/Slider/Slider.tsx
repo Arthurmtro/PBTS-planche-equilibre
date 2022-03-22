@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./Slider.module.css";
 
 type SliderType = {
@@ -9,15 +10,19 @@ type SliderType = {
 }
 
 export default function Slider({ label, setter, value = 0, min = 0, max = 100 }: SliderType) {
-
+  const [sliderValue, setSliderValue] = useState<number>(value)
   return (
     <div className={styles.slider}>
       <label>{label}</label>
-      <input className={styles['back-slider']} type="range" id={label} name={label} min={min} max={max} step="1" value={value} onChange={(event) => {
-        setter(Number(event.target.value))
+      <input className={styles['back-slider']} type="range" id={label} name={label} min={min} max={max} step="1" value={sliderValue} onChange={(event) => {
+        setSliderValue(Number(event.target.value))
+      }} onMouseUp={() => {
+        setter(sliderValue)
       }} />
-      <input className={styles["number-input"]} type="number" name="" id="" min={min} max={max} value={value} onChange={(event) => {
-        setter(Number(event.target.value))
+      <input className={styles["number-input"]} type="number" name="" id="" min={min} max={max} value={sliderValue} onChange={(event) => {
+        setSliderValue(Number(event.target.value))
+      }} onMouseUp={() => {
+        setter(sliderValue)
       }} />
 
     </div>

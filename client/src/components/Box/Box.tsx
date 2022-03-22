@@ -1,7 +1,7 @@
 import { CSSProperties, ReactNode } from "react"
 import styles from "./Box.module.css"
 
-interface IBoxParams {
+export interface IBoxParams {
 	size?: "lg" | "md" | "sm" | "fill" | "block"
 	children?: ReactNode
 }

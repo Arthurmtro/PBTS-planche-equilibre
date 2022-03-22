@@ -13,6 +13,11 @@ export default function Button({ idx, setter, value }: ISelectnParams) {
 			<option value="stop">Stop</option>
 			<option value="forward">Ouvrir</option>
 			<option value="backward">Fermer</option>
+			<option value="bascule-arriere">Bascule arriere</option>
+			<option value="bascule-avant">Bascule avant</option>
+			<option value="basculeD">Bascule droite</option>
+			<option value="basculeG">Bascule gauche</option>
+			<option value="roulis">Roulis</option>
 		</select>
 	)
 }

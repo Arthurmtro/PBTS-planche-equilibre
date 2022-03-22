@@ -1,9 +1,11 @@
 .select{
-    background-color: var(--font-color);
-      color: var(--color-primary);
-      padding: 12px;
+    background-color: var(--color-primary);
+      color: var(--font-color);
+      padding: 2px;
       border: none;
-      font-size: 20px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      font-size: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
       outline: none;
+      
+      border: 2px solid rgba(71, 71, 71, 0.781);
 }
