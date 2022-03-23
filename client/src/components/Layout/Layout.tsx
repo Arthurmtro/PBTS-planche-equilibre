@@ -1,14 +1,14 @@
 import styles from "./Layout.module.css"
+import { io } from "socket.io-client"
 import { useEffect } from "react"
 
 // Context
 import { useRunningProfile } from "../../contexts/runningProvider"
 
 // Components
-import NavBar from "../NavBar"
-import StatusBar from "../StatusBar"
 import { api_url } from "../../config"
-import { io } from "socket.io-client"
+import StatusBar from "../StatusBar"
+import NavBar from "../NavBar"
 
 type ParamsType = {
 	children: React.ReactNode
@@ -41,8 +41,6 @@ export default function Layout({ children }: ParamsType) {
 			if (runningProfile === null) {
 				return
 			}
-
-			console.log("data :>> ", data)
 
 			setGyroValues((prev) => {
 				const newValues = prev

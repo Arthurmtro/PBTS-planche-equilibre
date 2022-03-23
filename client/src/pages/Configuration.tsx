@@ -4,7 +4,6 @@ import { useTheme } from "../contexts/themeProvider"
 
 // Components
 import Box from "../components/Box"
-import ModelViewer from "../components/ModelViewer"
 
 export default function ConfigurationPage() {
 	const { darkMode, setDarkMode } = useTheme()
@@ -20,8 +19,6 @@ export default function ConfigurationPage() {
 				}}>
 				toggle Theme: {String(darkMode)}
 			</button>
-
-			<ModelViewer enableRotate />
 		</div>
 	)
 }
