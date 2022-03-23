@@ -22,7 +22,7 @@ type OptionListType = {
 }
 
 type SlidersProps = {
-	idx: number,
+	idx: number
 	action: CommandsType
 }
 
@@ -40,7 +40,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 		setActions(newArray)
 	}
 
-	// Memo
 	const handleClick = () => {
 		let newArray: ActionsType[] = [...actions]
 
@@ -58,108 +57,81 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 
 	const Sliders = ({ idx, action }: SlidersProps) => {
 		switch (action.action) {
-			case "backward": case "forward":
-				return <>
-					<Slider
-						label="Deploiment (en %)"
-						min={1}
-						max={100}
-						value={action.opening}
-						setter={(val) => updateCommands(idx, "opening", val)}
-					/>
-					<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-					{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-				</>
+			case "backward":
+			case "forward":
+				return (
+					<>
+						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
+					</>
+				)
 			case "stop":
 				setBoxSize("md")
-				return <>
-					<Slider
-						label="Temp d'arret (en ms)"
-						min={1}
-						max={25000}
-						value={action.time}
-						setter={(val) => {
-							console.log(val);
-							updateCommands(idx, "time", val)
-						}}
-					/>
-					{console.log(action.time)}
-					{action.time && <p>Temp: {ConvertMsToS(action.time)}s</p>}
-				</>
+				return (
+					<>
+						<Slider
+							label="Temp d'arret (en ms)"
+							min={1}
+							max={25000}
+							value={action.time}
+							setter={(val) => {
+								console.log(val)
+								updateCommands(idx, "time", val)
+							}}
+						/>
+						{console.log(action.time)}
+						{action.time && <p>Temp: {ConvertMsToS(action.time)}s</p>}
+					</>
+				)
 
 			case "bascule-avant":
 				setBoxSize("fill")
-				return <>
-					<Slider
-						label="Deploiment (en %)"
-						min={1}
-						max={100}
-						value={action.opening}
-						setter={(val) => updateCommands(idx, "opening", val)}
-					/>
-					<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-					{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-
-				</>
+				return (
+					<>
+						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
+					</>
+				)
 			case "bascule-arriere":
 				setBoxSize("fill")
-				return <>
-					<Slider
-						label="Deploiment (en %)"
-						min={1}
-						max={100}
-						value={action.opening}
-						setter={(val) => updateCommands(idx, "opening", val)}
-					/>
-					<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-					{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-
-				</>
-
+				return (
+					<>
+						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
+					</>
+				)
 
 			case "basculeD":
 				setBoxSize("fill")
-				return <>
-					<Slider
-						label="Deploiment (en %)"
-						min={1}
-						max={100}
-						value={action.opening}
-						setter={(val) => updateCommands(idx, "opening", val)}
-					/>
-					<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-					{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-
-				</>
+				return (
+					<>
+						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
+					</>
+				)
 
 			case "basculeG":
 				setBoxSize("fill")
-				return <>
-					<Slider
-						label="Deploiment (en %)"
-						min={1}
-						max={100}
-						value={action.opening}
-						setter={(val) => updateCommands(idx, "opening", val)}
-					/>
-					<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-					{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-
-				</>
+				return (
+					<>
+						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
+					</>
+				)
 			case "roulis":
 				setBoxSize("fill")
-				return <>
-					<Slider
-						label="Deploiment (en %)"
-						min={1}
-						max={100}
-						value={action.opening}
-						setter={(val) => updateCommands(idx, "opening", val)}
-					/>
-					<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-					{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-
-				</>
+				return (
+					<>
+						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
+					</>
+				)
 			default:
 				return <div>No command.action</div>
 		}
@@ -176,7 +148,9 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 							<Box size={boxSize}>
 								<div className={styles.content}>
 									<Select idx={idx} setter={updateCommands} value={action.action} />
-									<Button onClick={() => deleteCommand(idx)} color="danger">Delete</Button>
+									<Button onClick={() => deleteCommand(idx)} color="danger">
+										Delete
+									</Button>
 									<Sliders idx={idx} action={action} />
 								</div>
 							</Box>
@@ -184,8 +158,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 					))}
 			</div>
 			<Button onClick={() => handleClick()}>Add Line</Button>
-
 		</article>
-
 	)
 }
