@@ -13,19 +13,19 @@ router.get("/", (req, res) => {
 })
 
 router.get("/hostname/", (req, res) => {
-	res.send(`hostname is ${os.hostname()}`)
+	return res.send(`hostname is ${os.hostname()}`)
 })
 
 router.get("/fetch-status", async (req, res) => {
-	return await ApiController.fetchStatus(res)
+	return ApiController.fetchStatus(res)
 })
 
 router.get("/fetch-cylinders-infos", async (req, res) => {
-	return await ApiController.fetchCylindersInfos(res)
+	return ApiController.fetchCylindersInfos(res)
 })
 
 router.get("/fetch-profiles", async (req, res) => {
-	return await ApiController.fetchProfiles(res)
+	return ApiController.fetchProfiles(res)
 })
 
 router.get("/run-profile", (req, res) => {

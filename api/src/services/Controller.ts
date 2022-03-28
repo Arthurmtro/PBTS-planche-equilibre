@@ -78,8 +78,6 @@ class Controller {
 			this.profiles = fetchAllProfiles()
 			this.cylindersData = require(join(__dirname, "../../config/cylinders.json"))
 
-			console.log("this.cylindersData ", this.cylindersData)
-
 			// Init Cylinder
 			for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
 				if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed) {
@@ -95,8 +93,6 @@ class Controller {
 					)
 				)
 			}
-
-			console.log("this.cylinders", this.cylinders)
 		} catch (error) {
 			console.log("Controller:Constructor ", error)
 		}
@@ -122,9 +118,8 @@ class Controller {
 	public fetchStatus(res: Response) {
 		try {
 			if (!runningOnRasberry) {
-				console.warn("You are not on raspberrypi", os.arch())
-				res.status(200).send("Connexion OK, Not using I2C, You are not on raspberrypi")
-				return
+				console.log("Connexion OK, Not using I2C, You are not on raspberrypi", os.arch())
+				return res.status(200).send("Connexion OK, Not using I2C, You are not on raspberrypi")
 			}
 
 			res.status(200).send("Connexion OK")
@@ -347,7 +342,6 @@ if (runningOnRasberry) {
 
 export const getMpuInfos = () => {
 	if (!runningOnRasberry) return
-	const SECURE_VALUE = 0.4
 
 	// console.log("\nGyro.x   Gyro.y")
 	const m6: any = ApiController.mpu.getMotion6()
