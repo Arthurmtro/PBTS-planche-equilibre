@@ -13,7 +13,8 @@
 		"dev:client": "cd client && yarn dev",
 		"dev:api": "cd api && yarn dev",
 		"install:client": "cd client && npm install",
-		"install:api": "cd api && yarn"
+		"install:api": "cd api && yarn",
+		"test:api": "cd api && yarn test:unit"
 	},
 	"dependencies": {
 		"@types/extend": "^3.0.1",
