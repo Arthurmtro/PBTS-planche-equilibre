@@ -246,6 +246,11 @@
   "resolved" "https://registry.npmjs.org/astral-regex/-/astral-regex-2.0.0.tgz"
   "version" "2.0.0"
 
+"async@~0.1.22":
+  "integrity" "sha1-D8GqoIig4+8Ovi2IMbqw3PiEUGE="
+  "resolved" "https://registry.npmjs.org/async/-/async-0.1.22.tgz"
+  "version" "0.1.22"
+
 "balanced-match@^1.0.0":
   "integrity" "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw=="
   "resolved" "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
@@ -793,6 +798,13 @@
   "version" "3.1.2"
   dependencies:
     "brace-expansion" "^1.1.7"
+
+"moka@^0.2.0":
+  "integrity" "sha1-URj5nWs+ShqLoT753RjADilr6kQ="
+  "resolved" "https://registry.npmjs.org/moka/-/moka-0.2.0.tgz"
+  "version" "0.2.0"
+  dependencies:
+    "async" "~0.1.22"
 
 "ms@2.1.2":
   "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
