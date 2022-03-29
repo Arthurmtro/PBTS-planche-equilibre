@@ -93,7 +93,7 @@ class Controller {
 				return res.status(200).send("Connexion OK, Not using I2C, You are not on raspberrypi")
 			}
 
-			res.status(200).send("Connexion OK")
+			res.sendStatus(200)
 		} catch (error) {
 			res.status(503).send(new Error(error as string))
 		}
