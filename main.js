@@ -14,17 +14,17 @@ async function update_telemetry() {
 	var gyro_xyz = Mpu.get_gyro_xyz()
 	var accel_xyz = Mpu.get_accel_xyz()
 
-	var gyro_data = {
+	var Mpu_data = {
 		gyro_xyz: gyro_xyz,
 		accel_xyz: accel_xyz,
 		rollpitch: Mpu.get_roll_pitch(gyro_xyz, accel_xyz),
 	}
 
-	console.log(gyro_data)
+	console.log(Mpu_data)
 
 	setTimeout(update_telemetry, 500)
 }
 
-if (gyro) {
+if (Mpu) {
 	update_telemetry()
 }
