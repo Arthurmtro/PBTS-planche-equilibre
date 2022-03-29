@@ -320,8 +320,8 @@ export const getMpuInfos = () => {
 	// }
 
 	const stuctData = {
-		gyroX: gyro_xyz.x,
-		gyroY: gyro_xyz.y,
+		gyroX: gyro_xyz?.x,
+		gyroY: gyro_xyz?.y,
 	}
 
 	// process.stdout.write(m6[3], m6[4])
