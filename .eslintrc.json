@@ -15,5 +15,8 @@
 		"linebreak-style": ["error", "windows"],
 		"quotes": ["error", "double"],
 		"semi": ["error", "never"]
+	},
+	"scripts": {
+		"test": "moka --recursive --exit"
 	}
 }
