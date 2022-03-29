@@ -3,7 +3,7 @@ import { createServer, Server } from "http"
 
 let server: Server
 
-import app from "../../app"
+import app from "../app"
 
 beforeAll(async () => {
 	server = await createServer(app)
