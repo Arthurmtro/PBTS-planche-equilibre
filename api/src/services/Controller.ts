@@ -13,13 +13,7 @@ import { cylinderType } from "../types/cylinderType"
 import { runningOnRasberry } from "../libs/runningOnRasberry"
 import { fetchAllProfiles } from "../libs/fetchAllProfiles"
 import { delayFunction } from "../libs/delayFunction"
-import { mpu9250 } from "./../libs/mpu9250/index"
-
-const GYRO_OFFSET = {
-	x: 3.55,
-	y: 0.95,
-	z: 0,
-}
+import MPU9250 from "../libs/mpu9250"
 
 const CYLINDER_SPEED = 4.35
 
@@ -41,7 +35,7 @@ class Controller {
 	private profiles: profileType[]
 	private cylinders: Cylinder[]
 	private isActive: boolean
-	public mpu: mpu9250
+	public mpu: MPU9250
 
 	constructor() {
 		this.isActive = false
@@ -49,30 +43,7 @@ class Controller {
 		this.cylindersData = []
 		this.cylinders = []
 
-		this.mpu = new mpu9250({
-			device: "/dev/i2c-1",
-			DEBUG: true,
-
-			// Set the Gyroscope sensitivity (default 0), where:
-			//      0 => 250 degrees / second
-			//      1 => 500 degrees / second
-			//      2 => 1000 degrees / second
-			//      3 => 2000 degrees / second
-			GYRO_FS: 3,
-
-			// Set the Accelerometer sensitivity (default 2), where:
-			//      0 => +/- 2 g
-			//      1 => +/- 4 g
-			//      2 => +/- 8 g
-			//      3 => +/- 16 g
-			ACCEL_FS: 0,
-
-			scaleValues: true,
-
-			UpMagneto: false,
-
-			gyroBiasOffset: GYRO_OFFSET,
-		})
+		this.mpu = new MPU9250(4, 0x68)
 		try {
 			this.isActive = false
 			this.profiles = fetchAllProfiles()
@@ -336,21 +307,21 @@ class Controller {
 
 export const ApiController = new Controller()
 
-if (runningOnRasberry) {
-	ApiController.mpu.initialize()
-}
-
 export const getMpuInfos = () => {
 	if (!runningOnRasberry) return
 
-	// console.log("\nGyro.x   Gyro.y")
-	const m6: any = ApiController.mpu.getMotion6()
+	const gyro_xyz = ApiController.mpu.get_gyro_xyz()
+	// const accel_xyz = ApiController.mpu.get_accel_xyz()
+
+	// const gyro_data = {
+	// 	gyro_xyz: gyro_xyz,
+	// 	accel_xyz: accel_xyz,
+	// 	rollpitch: ApiController.mpu.get_roll_pitch(gyro_xyz, accel_xyz),
+	// }
 
 	const stuctData = {
-		// gyroX: m6[3] > SECURE_VALUE || m6[3] < -SECURE_VALUE ? m6[3] + 5 : 0,
-		// gyroY: m6[4] > SECURE_VALUE || m6[4] < -SECURE_VALUE ? m6[4] : 0,
-		gyroX: m6[3],
-		gyroY: m6[4],
+		gyroX: gyro_xyz.x,
+		gyroY: gyro_xyz.y,
 	}
 
 	// process.stdout.write(m6[3], m6[4])

@@ -31,15 +31,16 @@
 
 html.dark {
 	--color-primary: #222222;
-	--color-secondary: rgb(170, 109, 214);
+	--color-secondary: rgb(27, 134, 120);
+	/* --color-secondary: rgb(27, 134, 80); */
 	--color-background: #363636;
 
 	--font-color: #fefefe;
 
 	--box-background: #222222;
 
-	--color-rgb-primary: 94, 46, 216;
-	--color-rgb-secondary: 170, 109, 214;
+	--color-rgb-primary: 27, 134, 80;
+	--color-rgb-secondary: 27, 134, 120;
 }
 
 html.theming,
