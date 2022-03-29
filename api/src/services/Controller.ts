@@ -197,7 +197,7 @@ class Controller {
 			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
 
 			// Create new profile
-			const fileName: string = body.label.trim().replace(" ", "_")
+			const fileName: string = body.label.trim().split(" ").join("_")
 
 			let duration = 0
 
@@ -220,8 +220,6 @@ class Controller {
 			await writeFileSync(`${join(__dirname, "../../config/profiles/")}${fileName}.json`, JSON.stringify(profile))
 
 			this.profiles = this.profiles.concat(profile)
-
-			console.log("this.profiles = ", this.profiles)
 
 			res.sendStatus(200)
 		} catch (error) {
