@@ -5,11 +5,11 @@ let server: Server
 
 import app from "../app"
 
-beforeAll(async () => {
+beforeEach(async () => {
 	server = await createServer(app)
 })
 
-afterAll(async () => {
+afterEach(async () => {
 	await server.close()
 })
 
