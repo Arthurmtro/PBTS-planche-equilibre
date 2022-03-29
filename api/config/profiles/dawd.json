@@ -1,1 +1,10 @@
-{"label":"dawd","actions":[{"cylinderId":0,"commands":[{"action":"stop","time":8975,"speed":1,"opening":1}]},{"cylinderId":1,"commands":[]},{"cylinderId":2,"commands":[]}],"fileName":"dawd","duration":0}
+{
+	"label": "dawd",
+	"actions": [
+		{ "cylinderId": 0, "commands": [{ "action": "stop", "time": 8975, "speed": 1, "opening": 1 }] },
+		{ "cylinderId": 1, "commands": [] },
+		{ "cylinderId": 2, "commands": [] }
+	],
+	"fileName": "dawd",
+	"duration": 0
+}

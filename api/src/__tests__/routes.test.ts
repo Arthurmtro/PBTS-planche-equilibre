@@ -37,7 +37,7 @@ describe("GET /fetch-status", () => {
 				.send({
 					label: "jest test of the dead",
 					actions: [
-						{ cylinderId: 0, commands: [Array] },
+						{ cylinderId: 0, commands: [{ action: "stop", time: 8975, speed: 1, opening: 1 }] },
 						{ cylinderId: 1, commands: [] },
 						{ cylinderId: 2, commands: [] },
 					],
@@ -47,11 +47,11 @@ describe("GET /fetch-status", () => {
 		})
 	})
 
-	// describe("Delete Profile", () => {
-	// 	test("Should respond with a 200 status code", async () => {
-	// 		const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead").send()
+	describe("Delete Profile", () => {
+		test("Should respond with a 200 status code", async () => {
+			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead").send()
 
-	// 		expect(response.statusCode).toBe(200)
-	// 	})
-	// })
+			expect(response.statusCode).toBe(200)
+		})
+	})
 })
