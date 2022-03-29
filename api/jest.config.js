@@ -11,4 +11,6 @@ const config = {
 	testEnvironment: "node",
 	moduleFileExtensions: [...defaults.moduleFileExtensions, "ts", "tsx", "coffee"],
 }
-export default config
+
+// eslint-disable-next-line no-undef
+module.exports = config
