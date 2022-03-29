@@ -56,7 +56,7 @@ if (mpu.initialize()) {
 	console.log("\nGyro.x   Gyro.y ")
 	setInterval(function () {
 		var m6
-		m6 = mpu.getMotion6()
+		m6 = mpu.getMotion6() // on appelle getMotion
 
 		// Make the numbers pretty
 		var str = ""
@@ -66,7 +66,7 @@ if (mpu.initialize()) {
 		stats.add(GYRO_NAME, m6[3], m6[4], m6[5])
 
 		// eslint-disable-next-line no-undef
-		process.stdout.write(str + "  \r")
+		process.stdout.write(str + "  \r") // on affiche les valeur du groscope
 	}, 5)
 }
 
