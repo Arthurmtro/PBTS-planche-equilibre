@@ -7,7 +7,7 @@
 		"start": "yarn build && node ./dist/bin/www.js",
 		"watch": "tsc -p tsconfig.json -w",
 		"dev": "nodemon ./src/bin/www.ts",
-		"test:unit": "yarn build && jest --detectOpenHandles --forceExit --runInBand",
+		"test:unit": "yarn build && jest --runInBand",
 		"build": "tsc --project ./"
 	},
 	"dependencies": {
