@@ -10,7 +10,7 @@ const config = {
 	preset: "ts-jest",
 	testEnvironment: "node",
 	moduleFileExtensions: [...defaults.moduleFileExtensions, "ts", "tsx", "coffee"],
-	modulePathIgnorePatterns: ["<rootDir>/srv"],
+	modulePathIgnorePatterns: ["<rootDir>/src"],
 }
 
 // eslint-disable-next-line no-undef
