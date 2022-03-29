@@ -1,12 +1,20 @@
 const Mpu9250 = require("./Mpu9250")
-var assert = require("assert").strict
+const assert = require("assert").strict
+
+var address = 0x68 //MPU6050 addess
+var bus = 4 //i2c bus used
 
 describe("Test Suite 1", function () {
-	var Mpu = new Mpu9250(4, 0x68)
+	const Mpu = new Mpu9250(bus, address)
 
-	it("Test 1: Recuperation de données XYZ", function () {
+	it("Test 1: Recuperation de données XYZ Test validée", function () {
 		// metre sa fonction
 		assert.ok(Mpu.get_gyro_xyz(), "Cela ne devrait pas échouer")
+	})
+
+	it("Test 2: Recuperation de données XYZ Test validée", function () {
+		// metre sa fonction
+		assert.ok(Mpu.read_raw_data(), "Cela ne devrait pas échouer")
 	})
 
 	/*it("Test 2", function () {
