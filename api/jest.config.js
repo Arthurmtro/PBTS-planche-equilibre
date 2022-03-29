@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+// eslint-disable-next-line no-undef
+const { defaults } = require("jest-config")
 // import type { Config } from "@jest/types"
-import { defaults } from "jest-config"
 
 // Sync object
 // const config: Config.InitialOptions = {
