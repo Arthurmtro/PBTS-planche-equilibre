@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { mpu9250 } = require("./dist/mpu9250")
-	// Instantiate and initialize.
-	; ("use strict")
+// Instantiate and initialize.
+;("use strict")
 
 // These values were generated using calibrate_gyro.js - you will want to create your own.
 // NOTE: These are temperature dependent.
@@ -14,6 +14,7 @@ var GYRO_OFFSET = {
 
 // These values were generated using calibrate_accel.js - you will want to create your own.
 var ACCEL_CALIBRATION = {
+	//yd
 	offset: {
 		x: 0.00943176,
 		y: 0.00170817,
@@ -56,7 +57,6 @@ if (mpu.initialize()) {
 	setInterval(function () {
 		var m6
 		m6 = mpu.getMotion6()
-
 
 		// Make the numbers pretty
 		var str = ""

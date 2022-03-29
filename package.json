@@ -4,6 +4,7 @@
 	"description": "Simple reading Data from mpu9250 with node.js and i2c package.",
 	"main": "dist/index.js",
 	"scripts": {
+		"start": "git pull && node main.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
