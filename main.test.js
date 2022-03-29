@@ -12,9 +12,14 @@ describe("Test Suite 1", function () {
 		assert.ok(Mpu.get_gyro_xyz(), "Cela ne devrait pas échouer")
 	})
 
-	it("Test 2: lire data ", function () {
+	it("Test 2: Lire Accel  ", function () {
 		// metre sa fonction
 		assert.ok(Mpu.get_accel_xyz, "Cela ne devrait pas échouer")
+	})
+
+	it("Test 3: tangage du rouleau  ", function () {
+		// metre sa fonction
+		assert.ok(Mpu.get_roll_pitch, "Cela ne devrait pas échouer")
 	})
 
 	/*it("Test 2", function () {
