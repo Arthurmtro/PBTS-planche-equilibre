@@ -14,7 +14,7 @@ describe("Test Suite 1", function () {
 
 	it("Test 2: lire data ", function () {
 		// metre sa fonction
-		assert.ok(Mpu.read_raw_data(), "Cela ne devrait pas échouer")
+		assert.ok(Mpu.get_accel_xyz, "Cela ne devrait pas échouer")
 	})
 
 	/*it("Test 2", function () {
