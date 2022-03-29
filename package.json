@@ -18,10 +18,8 @@
 		"mpu9250"
 	],
 	"dependencies": {
-		"coffee-script": "^1.12.7",
 		"extend": "3.0.2",
-		"geomagnetism": "0.0.2",
-		"i2c": "^0.2.5"
+		"geomagnetism": "0.0.2"
 	},
 	"devDependencies": {
 		"@types/extend": "^3.0.1",

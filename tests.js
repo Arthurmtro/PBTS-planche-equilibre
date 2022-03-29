@@ -1,13 +1,12 @@
-var i2c = require("./dist/i2c-service")
+const Mpu9250 = require("./Mpu9250")
 var assert = require("assert").strict
-var adrs = 0
-var length = 0
 
 describe("Test Suite 1", function () {
-	it("Test 1", function () {
+	var Mpu = new Mpu9250(4, 0x68)
+
+	it("Test 1: Recuperation de données XYZ", function () {
 		// metre sa fonction
-		let readBytes = new ReadBit()
-		assert.ok(readBytes.readBytes(adrs, length).length, 1, "Cela ne devrait pas échouer")
+		assert.ok(Mpu.get_gyro_xyz(), "Cela ne devrait pas échouer")
 		return true
 	})
 
