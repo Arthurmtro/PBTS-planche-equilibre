@@ -2,12 +2,17 @@
 	"name": "api",
 	"version": "0.0.0",
 	"main": "./bin/www.js",
+	"jest": {
+		"testPathIgnorePatterns": [
+			"src"
+		]
+	},
 	"private": true,
 	"scripts": {
 		"start": "yarn build && node ./dist/bin/www.js",
 		"watch": "tsc -p tsconfig.json -w",
 		"dev": "nodemon ./src/bin/www.ts",
-		"test:unit": "jest",
+		"test:unit": "yarn build && jest",
 		"build": "tsc --project ./"
 	},
 	"dependencies": {
