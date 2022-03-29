@@ -30,22 +30,22 @@ describe("GET /fetch-status", () => {
 		})
 	})
 
-	// describe("Create Profile", () => {
-	// 	test("Should respond with a 200 status code", async () => {
-	// 		const response = await request(server)
-	// 			.post("/create-profile")
-	// 			.send({
-	// 				label: "jest test of the dead",
-	// 				actions: [
-	// 					{ cylinderId: 0, commands: [Array] },
-	// 					{ cylinderId: 1, commands: [] },
-	// 					{ cylinderId: 2, commands: [] },
-	// 				],
-	// 			})
+	describe("Create Profile", () => {
+		test("Should respond with a 200 status code", async () => {
+			const response = await request(server)
+				.post("/create-profile")
+				.send({
+					label: "jest test of the dead",
+					actions: [
+						{ cylinderId: 0, commands: [Array] },
+						{ cylinderId: 1, commands: [] },
+						{ cylinderId: 2, commands: [] },
+					],
+				})
 
-	// 		expect(response.statusCode).toBe(200)
-	// 	})
-	// })
+			expect(response.statusCode).toBe(200)
+		})
+	})
 
 	// describe("Delete Profile", () => {
 	// 	test("Should respond with a 200 status code", async () => {
