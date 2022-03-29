@@ -5,18 +5,18 @@ let server: Server
 
 import app from "../app"
 
-beforeEach(async () => {
-	server = await createServer(app)
+beforeEach(() => {
+	server = createServer(app)
 })
 
-afterEach(async () => {
-	await server.close()
+afterEach(() => {
+	server.close()
 })
 
 describe("GET /fetch-status", () => {
 	describe("Fetch Server Status", () => {
 		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get("/fetch-status")
+			const response = await request(server).get("/fetch-status").end()
 
 			return expect(response.statusCode).toBe(200)
 		})
@@ -24,7 +24,7 @@ describe("GET /fetch-status", () => {
 
 	describe("Init cylinder", () => {
 		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get("/init")
+			const response = await request(server).get("/init").end()
 
 			expect(response.statusCode).toBe(200)
 		})
@@ -42,6 +42,7 @@ describe("GET /fetch-status", () => {
 						{ cylinderId: 2, commands: [] },
 					],
 				})
+				.end()
 
 			expect(response.statusCode).toBe(200)
 		})
@@ -49,7 +50,7 @@ describe("GET /fetch-status", () => {
 
 	describe("Delete Profile", () => {
 		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead").send()
+			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead").end()
 
 			expect(response.statusCode).toBe(200)
 		})
