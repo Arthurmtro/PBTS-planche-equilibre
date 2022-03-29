@@ -6,8 +6,7 @@ describe("Test Suite 1", function () {
 
 	it("Test 1: Recuperation de données XYZ", function () {
 		// metre sa fonction
-		assert.ok(Mpu.get_gyro_xyz().z === "dqzd", "Cela ne devrait pas échouer")
-		return true
+		assert.ok(Mpu.get_gyro_xyz(), "Cela ne devrait pas échouer")
 	})
 
 	/*it("Test 2", function () {
