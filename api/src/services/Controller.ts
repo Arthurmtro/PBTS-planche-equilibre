@@ -254,7 +254,7 @@ class Controller {
 
 			res.sendStatus(200)
 		} catch (error) {
-			console.log("error", error)
+			console.log("createProfile: ", error)
 			res.status(400).send(error)
 		}
 	}

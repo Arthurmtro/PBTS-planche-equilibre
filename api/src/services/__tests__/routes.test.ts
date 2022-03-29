@@ -45,7 +45,7 @@ describe("GET /fetch-status", () => {
 
 	describe("Delete Profile", () => {
 		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get(`/create-profile?fileName=${"jest_test_of_the_dead"}`).send()
+			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead").send()
 
 			expect(response.statusCode).toBe(200)
 		})
