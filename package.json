@@ -19,7 +19,8 @@
 	],
 	"dependencies": {
 		"extend": "3.0.2",
-		"geomagnetism": "0.0.2"
+		"geomagnetism": "0.0.2",
+		"i2c-bus": "^5.2.2"
 	},
 	"devDependencies": {
 		"@types/extend": "^3.0.1",
