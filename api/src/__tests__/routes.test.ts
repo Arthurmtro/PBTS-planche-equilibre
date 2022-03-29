@@ -18,9 +18,8 @@ describe("GET /fetch-status", () => {
 		test("Should respond with a 200 status code", async () => {
 			const response = await request(server).get("/fetch-status")
 
-			return
 			if (response) {
-				expect(response.statusCode).toBe(200)
+				return expect(response.statusCode).toBe(200)
 			}
 		})
 	})
@@ -30,7 +29,7 @@ describe("GET /fetch-status", () => {
 			const response = await request(server).get("/init")
 
 			if (response) {
-				expect(response.statusCode).toBe(200)
+				return expect(response.statusCode).toBe(200)
 			}
 		})
 	})
@@ -49,7 +48,7 @@ describe("GET /fetch-status", () => {
 				})
 
 			if (response) {
-				expect(response.statusCode).toBe(200)
+				return expect(response.statusCode).toBe(200)
 			}
 		})
 	})
@@ -59,7 +58,7 @@ describe("GET /fetch-status", () => {
 			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead")
 
 			if (response) {
-				expect(response.statusCode).toBe(200)
+				return expect(response.statusCode).toBe(200)
 			}
 		})
 	})
