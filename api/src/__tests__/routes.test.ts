@@ -18,17 +18,17 @@ describe("GET /fetch-status", () => {
 		test("Should respond with a 200 status code", async () => {
 			const response = await request(server).get("/fetch-status")
 
-			expect(response.statusCode).toBe(200)
+			return expect(response.statusCode).toBe(200)
 		})
 	})
 
-	describe("Init cylinder", () => {
-		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get("/init")
+	// describe("Init cylinder", () => {
+	// 	test("Should respond with a 200 status code", async () => {
+	// 		const response = await request(server).get("/init")
 
-			expect(response.statusCode).toBe(200)
-		})
-	})
+	// 		expect(response.statusCode).toBe(200)
+	// 	})
+	// })
 
 	// describe("Create Profile", () => {
 	// 	test("Should respond with a 200 status code", async () => {
