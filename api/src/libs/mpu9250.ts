@@ -24,21 +24,24 @@ export default class MPU9250 {
 
 	constructor(i2cbus: number, mpuaddress: number) {
 		this.address = mpuaddress
-		this.bus = i2c.openSync(i2cbus)
+		if (i2c) {
+			this.bus = i2c?.openSync(i2cbus)
 
-		// On réveille le capteur
-		this.bus.writeByteSync(this.address, PWR_MGMT_1, 0)
-		//write to sample rate register
-		this.bus.writeByteSync(this.address, SMPLRT_DIV, 7)
-		//Write to Configuration register
-		this.bus.writeByteSync(this.address, CONFIG, 0)
-		//Write to Gyro configuration register
-		this.bus.writeByteSync(this.address, GYRO_CONFIG, 24)
-		//Write to interrupt enable register
-		this.bus.writeByteSync(this.address, INT_ENABLE, 1)
+			// On réveille le capteur
+			this.bus.writeByteSync(this.address, PWR_MGMT_1, 0)
+			//write to sample rate register
+			this.bus.writeByteSync(this.address, SMPLRT_DIV, 7)
+			//Write to Configuration register
+			this.bus.writeByteSync(this.address, CONFIG, 0)
+			//Write to Gyro configuration register
+			this.bus.writeByteSync(this.address, GYRO_CONFIG, 24)
+			//Write to interrupt enable register
+			this.bus.writeByteSync(this.address, INT_ENABLE, 1)
+		}
 	}
 
 	read_raw_data(addr: number) {
+		if (!this.bus) return
 		const high = this.bus.readByteSync(this.address, addr)
 		const low = this.bus.readByteSync(this.address, addr + 1)
 		let value = (high << 8) + low
@@ -50,6 +53,7 @@ export default class MPU9250 {
 
 	//Read Gyroscope raw xyz
 	get_gyro_xyz() {
+		if (!this.bus) return
 		const x = this.read_raw_data(GYRO_XOUT_H)
 		const y = this.read_raw_data(GYRO_YOUT_H)
 		const z = this.read_raw_data(GYRO_ZOUT_H)
@@ -63,6 +67,7 @@ export default class MPU9250 {
 
 	//Read Accel raw xyz
 	get_accel_xyz() {
+		if (!this.bus) return
 		const x = this.read_raw_data(ACCEL_XOUT_H)
 		const y = this.read_raw_data(ACCEL_YOUT_H)
 		const z = this.read_raw_data(ACCEL_ZOUT_H)
@@ -76,6 +81,7 @@ export default class MPU9250 {
 
 	//Full scale range +/- 250 degree/C as per sensitivity scale factor
 	get_roll_pitch(gyro_xyz: { x: number; y: number; z: number }, accel_xyz: { x: number; y: number; z: number }) {
+		if (!this.bus) return
 		const Ax = accel_xyz.x / 16384.0
 		const Ay = accel_xyz.y / 16384.0
 		const Az = accel_xyz.z / 16384.0
