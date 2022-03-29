@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"start": "git pull && node main.js",
-		"test": "moka --recursive --exit"
+		"test": "moka main.test.js"
 	},
 	"repository": {
 		"type": "git",
