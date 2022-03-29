@@ -53,6 +53,18 @@ describe("GET /fetch-status", () => {
 		})
 	})
 
+	describe("Create Profile with error", () => {
+		test("Should respond with a 400 status code because their is no actions", async () => {
+			const response = await request(server).post("/create-profile").send({
+				label: "jest test of the dead",
+			})
+
+			if (response) {
+				return expect(response.statusCode).toBe(400)
+			}
+		})
+	})
+
 	describe("Delete Profile", () => {
 		test("Should respond with a 200 status code", async () => {
 			const response = await request(server).get("/delete-profile?fileName=jest_test_of_the_dead")
