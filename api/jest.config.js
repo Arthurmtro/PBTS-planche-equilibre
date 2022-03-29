@@ -3,7 +3,7 @@
 // Sync object
 // const config: Config.InitialOptions = {
 const config = {
-	verbose: true,
+	verbose: false,
 	preset: "ts-jest",
 	testEnvironment: "node",
 	modulePathIgnorePatterns: ["<rootDir>/src"],
