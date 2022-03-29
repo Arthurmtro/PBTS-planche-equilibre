@@ -283,8 +283,6 @@ class Controller {
 			// Checks
 			if (!fileName) throw "Missing argument: fileName"
 
-			console.log("fileName", fileName)
-
 			// Check if filename already exist
 			const associatedProfile = this.profiles.find((profile) => profile.fileName === fileName)
 

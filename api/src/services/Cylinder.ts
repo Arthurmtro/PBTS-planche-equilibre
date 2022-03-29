@@ -44,11 +44,11 @@ export class Cylinder {
 		try {
 			if (!this.pca9685Driver) throw "pca9685Driver is not initialised !"
 
-			console.log("Execution de la sequence: Initialisation")
+			// console.log("Execution de la sequence: Initialisation")
 
 			// console.log("Cylinder " + this.id)
 			this.stop()
-			this.close(1)
+			this.close(1, false)
 
 			delayFunction(23000)
 
@@ -69,10 +69,12 @@ export class Cylinder {
 		}
 	}
 
-	public close(speed: number) {
+	public close(speed: number, debug = true) {
 		try {
 			this.stop()
-			console.log("close", speed)
+			if (debug) {
+				console.log("close", speed)
+			}
 			this.pca9685Driver.setDutyCycle(this.backwardId, speed)
 		} catch (error) {
 			console.log("Cylinder:close", error)

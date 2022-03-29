@@ -37,7 +37,6 @@ router.post("/create-profile", (req, res) => {
 })
 
 router.get("/delete-profile", (req, res) => {
-	console.log("req.body", String(req.query.profileId))
 	return ApiController.deleteProfile(String(req.query.fileName), res)
 })
 
