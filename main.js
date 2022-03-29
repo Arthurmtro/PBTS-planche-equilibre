@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { mpu9250 } = require("./dist/mpu9250")
-// Instantiate and initialize.
-;("use strict")
+	// Instantiate and initialize.
+	; ("use strict")
 
 // These values were generated using calibrate_gyro.js - you will want to create your own.
 // NOTE: These are temperature dependent.
@@ -29,7 +29,7 @@ var ACCEL_CALIBRATION = {
 // Instantiate and initialize.
 var mpu = new mpu9250({
 	// i2c path (default is '/dev/i2c-1')
-	device: "/dev/i2c-1",
+	device: "/dev/i2c-4",
 
 	// Enable/Disable debug mode (default false)
 	DEBUG: true,
@@ -39,19 +39,10 @@ var mpu = new mpu9250({
 	//      1 => 500 degrees / second
 	//      2 => 1000 degrees / second
 	//      3 => 2000 degrees / second
-	GYRO_FS: 0,
-
-	// Set the Accelerometer sensitivity (default 2), where:
-	//      0 => +/- 2 g
-	//      1 => +/- 4 g
-	//      2 => +/- 8 g
-	//      3 => +/- 16 g
+	GYRO_FS: 3,
 	ACCEL_FS: 0,
-
 	scaleValues: true,
-
 	gyroBiasOffset: GYRO_OFFSET,
-
 	accelCalibration: ACCEL_CALIBRATION,
 })
 
@@ -61,25 +52,21 @@ if (mpu.initialize()) {
 	var HEADING_NAME = "Heading (°)"
 	var stats = new Stats([ACCEL_NAME, GYRO_NAME, HEADING_NAME], 1000)
 
-	console.log("\n   Time     Accel.x  Accel.y  Accel.z  Gyro.x   Gyro.y   Gyro.z")
+	console.log("\nGyro.x   Gyro.y ")
 	setInterval(function () {
-		var start = new Date().getTime()
 		var m6
 		m6 = mpu.getMotion6()
 
-		var end = new Date().getTime()
-		var t = (end - start) / 1000
 
 		// Make the numbers pretty
 		var str = ""
-		for (var i = 0; i < m6.length; i++) {
+		for (var i = 3; i <= 4; i++) {
 			str += p(m6[i])
 		}
-		stats.add(ACCEL_NAME, m6[0], m6[1], m6[2])
 		stats.add(GYRO_NAME, m6[3], m6[4], m6[5])
 
 		// eslint-disable-next-line no-undef
-		process.stdout.write(p(t) + str + "  \r")
+		process.stdout.write(str + "  \r")
 	}, 5)
 }
 
