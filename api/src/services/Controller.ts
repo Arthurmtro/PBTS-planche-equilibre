@@ -197,7 +197,7 @@ class Controller {
 			if (this.profiles.find((profile) => profile.label === body.label)) throw "This profile name already exist !"
 
 			// Create new profile
-			const fileName: string = body.label.trim().split(" ").join("_")
+			const fileName: string = body.label.trim().replace(/ /g, "_")
 
 			let duration = 0
 

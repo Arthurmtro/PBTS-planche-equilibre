@@ -16,17 +16,22 @@ afterEach(() => {
 describe("GET /fetch-status", () => {
 	describe("Fetch Server Status", () => {
 		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get("/fetch-status").end()
+			const response = await request(server).get("/fetch-status")
 
-			return expect(response.statusCode).toBe(200)
+			return
+			if (response) {
+				expect(response.statusCode).toBe(200)
+			}
 		})
 	})
 
 	describe("Init cylinder", () => {
 		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get("/init").end()
+			const response = await request(server).get("/init")
 
-			expect(response.statusCode).toBe(200)
+			if (response) {
+				expect(response.statusCode).toBe(200)
+			}
 		})
 	})
 
@@ -42,17 +47,20 @@ describe("GET /fetch-status", () => {
 						{ cylinderId: 2, commands: [] },
 					],
 				})
-				.end()
 
-			expect(response.statusCode).toBe(200)
+			if (response) {
+				expect(response.statusCode).toBe(200)
+			}
 		})
 	})
 
 	describe("Delete Profile", () => {
 		test("Should respond with a 200 status code", async () => {
-			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead").end()
+			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead")
 
-			expect(response.statusCode).toBe(200)
+			if (response) {
+				expect(response.statusCode).toBe(200)
+			}
 		})
 	})
 })
