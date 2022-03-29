@@ -39,7 +39,6 @@ describe("GET /fetch-status", () => {
 					],
 				})
 
-			console.log("response", response)
 			expect(response.statusCode).toBe(200)
 		})
 	})
@@ -48,7 +47,6 @@ describe("GET /fetch-status", () => {
 		test("Should respond with a 200 status code", async () => {
 			const response = await request(server).get("/create-profile?fileName=jest_test_of_the_dead").send()
 
-			console.log("response", response)
 			expect(response.statusCode).toBe(200)
 		})
 	})

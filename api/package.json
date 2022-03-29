@@ -2,11 +2,6 @@
 	"name": "api",
 	"version": "0.0.0",
 	"main": "./bin/www.js",
-	"jest": {
-		"testPathIgnorePatterns": [
-			"src"
-		]
-	},
 	"private": true,
 	"scripts": {
 		"start": "yarn build && node ./dist/bin/www.js",
