@@ -1,4 +1,6 @@
-import i2c from "i2c-bus"
+import { runningOnRasberry } from "./runningOnRasberry"
+
+const i2c = runningOnRasberry && require("i2c-bus")
 
 // MPU6050 Registers
 const PWR_MGMT_1 = 0x6b,
@@ -17,7 +19,7 @@ const GYRO_XOUT_H = 0x43,
 	GYRO_ZOUT_H = 0x47
 
 export default class MPU9250 {
-	bus: i2c.I2CBus
+	bus: any
 	address: number
 
 	constructor(i2cbus: number, mpuaddress: number) {
