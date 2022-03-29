@@ -9,6 +9,10 @@ beforeAll(async () => {
 	server = await createServer(app)
 })
 
+afterAll(async () => {
+	await server.close()
+})
+
 describe("GET /fetch-status", () => {
 	describe("Fetch Server Status", () => {
 		test("Should respond with a 200 status code", async () => {
