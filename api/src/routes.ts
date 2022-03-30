@@ -2,7 +2,9 @@ import { Router } from "express"
 import os from "os"
 
 // Services
-import { ApiController } from "./services/Controller"
+import Controller from "./services/Controller"
+
+export const ApiController = new Controller()
 
 const router = Router()
 

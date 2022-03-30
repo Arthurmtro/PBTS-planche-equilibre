@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Cylinder } from "./Cylinder"
 import { unlinkSync, writeFileSync } from "fs"
 import { Response } from "express"
 import { join } from "path"
@@ -15,22 +14,23 @@ import { fetchAllProfiles } from "../libs/fetchAllProfiles"
 import { delayFunction } from "../libs/delayFunction"
 import MPU9250 from "../libs/mpu9250"
 
-const CYLINDER_SPEED = 4.35
+// Services
+import { Cylinder } from "./Cylinder"
+import { convertToSpeed } from "../libs/convertors"
 
-export const ConvertMsToS = (ms: number) => {
-	return (ms / 1000).toPrecision(5)
-}
-
-export const speedPercentToRealSpeed = (speedPercent: number) => {
-	// return (speedPercent * CYLINDER_SPEED) /  100
-	return (speedPercent / 100) * CYLINDER_SPEED
-}
-
-export const convertToSpeed = (opening: number, speed: number) => {
-	return (opening / speedPercentToRealSpeed(speed)) * 10e2
-}
-
-class Controller {
+/**
+ * Controller is the class that controll all interactions
+ * between the api, the client and the rasberry
+ *
+ * it store all data required for the use of the project
+ *
+ * @member {cylinderType[]} cylindersData
+ * @member {profileType[]} profiles
+ * @member {Cylinder[]} Cylinders
+ * @member {boolean} isActive
+ * @member {MPU9250} mpu
+ */
+export default class Controller {
 	private cylindersData: cylinderType[]
 	private profiles: profileType[]
 	private cylinders: Cylinder[]
@@ -51,17 +51,12 @@ class Controller {
 
 			// Init Cylinder
 			for (let idxCylinder = 0; idxCylinder < this.cylindersData.length; idxCylinder++) {
-				if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId || !this.cylindersData[idxCylinder].maxSpeed) {
+				if (!this.cylindersData[idxCylinder].forwardId || !this.cylindersData[idxCylinder].backwardId) {
 					throw "Missing informations, cannot initialise Cylinders"
 				}
 
 				this.cylinders.push(
-					new Cylinder(
-						this.cylindersData[idxCylinder].id,
-						this.cylindersData[idxCylinder].forwardId,
-						this.cylindersData[idxCylinder].backwardId,
-						this.cylindersData[idxCylinder].maxSpeed
-					)
+					new Cylinder(this.cylindersData[idxCylinder].id, this.cylindersData[idxCylinder].forwardId, this.cylindersData[idxCylinder].backwardId)
 				)
 			}
 		} catch (error) {
@@ -70,8 +65,10 @@ class Controller {
 	}
 
 	/**
+	 * Ask the cylinders to initialize
 	 *
-	 **/
+	 * @param res Optional, The api response
+	 */
 	public init(res?: Response) {
 		try {
 			this.isActive = false
@@ -86,6 +83,12 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Fetch the status of the api,
+	 * used by the client to ensure connexion is good
+	 *
+	 * @param res The api response
+	 */
 	public fetchStatus(res: Response) {
 		try {
 			if (!runningOnRasberry) {
@@ -99,6 +102,11 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Fetch all the stored cylinder data as JSON
+	 *
+	 * @param res The api response
+	 */
 	public fetchCylindersInfos(res: Response) {
 		try {
 			res.status(200).send(JSON.stringify(this.cylindersData))
@@ -107,6 +115,11 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Fetch all the stored profiles data as JSON
+	 *
+	 * @param res The api response
+	 */
 	public fetchProfiles(res: Response) {
 		try {
 			if (!this.profiles) throw "No profiles in database !"
@@ -117,6 +130,12 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Run a specific profile with is Id (associated to it filename)
+	 *
+	 * @param {string} profileId The Id to run
+	 * @param res The api response
+	 */
 	public async runProfileWithId(profileId: string, res?: Response) {
 		try {
 			if (profileId === undefined) throw "Their is no profile ID"
@@ -183,6 +202,12 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Create a new profile then store it into storage if it's OK
+	 *
+	 * @param {profileType} body The new profile that will be stored into the storage
+	 * @param res The api response
+	 */
 	public async createProfile(body: profileType, res: Response) {
 		try {
 			console.log("body", body)
@@ -228,6 +253,12 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Populate a specific profile with new informations
+	 *
+	 * @param {profileType} body The profile informations for updating profile
+	 * @param res The api response
+	 */
 	public updateProfile(body: profileType, res: Response) {
 		try {
 			// Checks
@@ -278,6 +309,12 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Delete a specific profile from storage
+	 *
+	 * @param {string} fileName The profile filename (can be seen as an ID)
+	 * @param res The api response
+	 */
 	public async deleteProfile(fileName: string, res: Response) {
 		try {
 			// Checks
@@ -299,27 +336,4 @@ class Controller {
 			res.status(400).send(error)
 		}
 	}
-}
-
-export const ApiController = new Controller()
-
-export const getMpuInfos = () => {
-	if (!runningOnRasberry) return
-
-	const gyro_xyz = ApiController.mpu.get_gyro_xyz()
-	// const accel_xyz = ApiController.mpu.get_accel_xyz()
-
-	// const gyro_data = {
-	// 	gyro_xyz: gyro_xyz,
-	// 	accel_xyz: accel_xyz,
-	// 	rollpitch: ApiController.mpu.get_roll_pitch(gyro_xyz, accel_xyz),
-	// }
-
-	const stuctData = {
-		gyroX: gyro_xyz?.x,
-		gyroY: gyro_xyz?.y,
-	}
-
-	// process.stdout.write(m6[3], m6[4])
-	return stuctData
 }

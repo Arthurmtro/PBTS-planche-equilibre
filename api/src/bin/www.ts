@@ -1,11 +1,11 @@
+import { runningOnRasberry } from "./../libs/runningOnRasberry"
 /* eslint-disable indent */
 import { DefaultEventsMap } from "socket.io/dist/typed-events"
 import { Server, Socket } from "socket.io"
 import { createServer } from "http"
 
-import { getMpuInfos } from "./../services/Controller"
-
 import app from "../app"
+import Controller from "../services/Controller"
 
 const port = 8080
 
@@ -59,9 +59,32 @@ io.on("connection", (socket) => {
 	})
 })
 
-const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
-	// Emitting a new message. Will be consumed by the client
-	socket.emit("mpuInfos", getMpuInfos())
+export const getMpuInfos = (ApiController: Controller) => {
+	if (!runningOnRasberry) return
 
-	console.log("Mpu infos: ", getMpuInfos()) // Debug
+	const gyro_xyz = ApiController.mpu.get_gyro_xyz()
+	// const accel_xyz = ApiController.mpu.get_accel_xyz()
+
+	// const gyro_data = {
+	// 	gyro_xyz: gyro_xyz,
+	// 	accel_xyz: accel_xyz,
+	// 	rollpitch: ApiController.mpu.get_roll_pitch(gyro_xyz, accel_xyz),
+	// }
+
+	const stuctData = {
+		gyroX: gyro_xyz?.x,
+		gyroY: gyro_xyz?.y,
+	}
+
+	// process.stdout.write(m6[3], m6[4])
+	return stuctData
+}
+
+const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
+	const ApiController = new Controller()
+
+	// Emitting a new message. Will be consumed by the client
+	socket.emit("mpuInfos", getMpuInfos(ApiController))
+
+	console.log("Mpu infos: ", getMpuInfos(ApiController)) // Debug
 }

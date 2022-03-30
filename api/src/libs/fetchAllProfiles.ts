@@ -3,6 +3,10 @@ import { readdirSync, readFileSync } from "fs"
 // Types
 import { profileType } from "../types/profileTypes"
 
+/**
+ * Fetch profiles from storage then return a array
+ *
+ */
 export const fetchAllProfiles = () => {
 	try {
 		const profilesFiles = readdirSync("./config/profiles/")

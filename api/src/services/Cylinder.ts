@@ -5,22 +5,30 @@ import { runningOnRasberry } from "./../libs/runningOnRasberry"
 import { delayFunction } from "./../libs/delayFunction"
 
 const i2cBus = runningOnRasberry && require("i2c-bus")
-
+/**
+ * Cylinder is the class associated to a
+ * cylinder, defined at it creation.
+ *
+ * it translate requests from @Controller to
+ * the physical Rasberry
+ *
+ * @member {number} id
+ * @member {number} backwardId
+ * @member {number} forwardId
+ * @member {Pca9685Driver} pca9685Driver
+ */
 export class Cylinder {
 	public id: number
-
 	// Cylinder Properties infos
 	private backwardId: number
 	private forwardId: number
-	private maxSpeed: number
 
 	private pca9685Driver: Pca9685Driver
 
-	constructor(id: number, forwardId: number, backwardId: number, maxSpeed: number) {
+	constructor(id: number, forwardId: number, backwardId: number) {
 		this.id = id
 		this.forwardId = forwardId
 		this.backwardId = backwardId
-		this.maxSpeed = maxSpeed
 
 		this.pca9685Driver =
 			i2cBus &&
@@ -31,7 +39,7 @@ export class Cylinder {
 					frequency: 1000,
 					debug: false,
 				},
-				(error) => {
+				(error: unknown) => {
 					if (error) {
 						throw new Error(`Error initializing, ${error}`)
 					}
@@ -40,6 +48,9 @@ export class Cylinder {
 			)
 	}
 
+	/**
+	 * initialise a specific cylinder to his initial position
+	 */
 	public init() {
 		try {
 			if (!this.pca9685Driver) throw "pca9685Driver is not initialised !"
@@ -48,7 +59,7 @@ export class Cylinder {
 
 			// console.log("Cylinder " + this.id)
 			this.stop()
-			this.close(1, false)
+			this.close(1)
 
 			delayFunction(23000)
 
@@ -59,6 +70,11 @@ export class Cylinder {
 		}
 	}
 
+	/**
+	 * Open the cylinder
+	 *
+	 * @param {number} speed Between 0 and 1, it's the speed percent of deploy
+	 */
 	public open(speed: number) {
 		try {
 			this.stop()
@@ -69,18 +85,24 @@ export class Cylinder {
 		}
 	}
 
-	public close(speed: number, debug = true) {
+	/**
+	 * Close the cylinder
+	 *
+	 * @param {number} speed Between 0 and 1, it's the speed percent of deploy
+	 */
+	public close(speed: number) {
 		try {
 			this.stop()
-			if (debug) {
-				console.log("close", speed)
-			}
+			console.log("close", speed)
 			this.pca9685Driver.setDutyCycle(this.backwardId, speed)
 		} catch (error) {
 			console.log("Cylinder:close", error)
 		}
 	}
 
+	/**
+	 * Stop the cylinder from any actions
+	 */
 	public stop() {
 		try {
 			this.pca9685Driver.channelOff(this.forwardId)
