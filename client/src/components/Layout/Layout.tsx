@@ -21,15 +21,22 @@ export default function Layout({ children }: ParamsType) {
 
 	useEffect(() => {
 		console.log("runningProfile :>> ", runningProfile)
-		if (!runningProfile) return clearInterval(interval)
-
-		interval = setInterval(() => {
-			setTimeSpend((prev) => prev + 10)
-		}, 10)
+		if (!runningProfile) {
+			clearInterval(interval)
+		} else {
+			interval = setInterval(() => {
+				setTimeSpend((prev) => prev + 10)
+			}, 10)
+		}
 
 		const socket = io(api_url, {
 			transports: ["websocket"],
 		})
+
+		if (!runningProfile) {
+			socket.disconnect()
+			return
+		}
 
 		socket.on("connect", () => console.log("socket.id: ", socket.id))
 		socket.on("connect_error", () => {
@@ -86,9 +93,7 @@ export default function Layout({ children }: ParamsType) {
 					<NavBar />
 				</div>
 
-				<div className={styles["page-content"]}>
-					<div>{children}</div>
-				</div>
+				<div className={styles["page-content"]}>{children}</div>
 			</div>
 		</div>
 	)

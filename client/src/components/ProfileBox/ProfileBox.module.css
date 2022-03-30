@@ -1,17 +1,23 @@
 .content {
 	display: flex;
 	justify-content: space-between;
+	flex-direction: column;
 	height: 100%;
-	padding: 1vw 1.5vw;
+	padding: 1rem 1.5rem;
+}
+
+.infos {
+	display: flex;
+	justify-content: space-between;
+	/* align-items: center; */
 }
 
 .actions {
 	display: flex;
-	justify-content: space-between;
 	align-items: flex-end;
-	flex-direction: column;
-	padding-bottom: 2.9vw;
-	padding-right: 2.9vw;
+	justify-content: flex-end;
+	padding-bottom: 2.9rem;
+	gap: 1rem;
 }
 
 /* .infos {
@@ -19,10 +25,10 @@
 } */
 
 .infos h1 {
-	font-size: 2vw;
+	font-size: 2rem;
 }
 
 .infos h3 {
-	font-size: 1vw;
+	font-size: 1rem;
 	opacity: 0.7;
 }

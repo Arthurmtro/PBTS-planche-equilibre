@@ -1,8 +1,7 @@
 .slider {
-	padding: 1vh 0;
+	padding: 0.5rem 0;
 	display: flex;
 	justify-content: space-around;
-	
 }
 
 .number-input {
@@ -10,11 +9,10 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.281);
 	border-right: 1px solid rgba(0, 0, 0, 0.281);
 	background: none;
-    outline: none;
+	outline: none;
 	color: var(--font-color);
-	
 }
 
-.back-slider{
+.back-slider {
 	background-image: none;
 }

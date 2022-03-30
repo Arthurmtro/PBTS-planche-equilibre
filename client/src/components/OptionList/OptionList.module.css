@@ -1,40 +1,48 @@
 .commands {
 	display: flex;
 	justify-content: space-between;
-	flex-direction:row;
-	padding: 1vh 1vh;
+	flex-direction: row;
+	padding: 1rem 1rem;
 }
 
 .option-container {
-	display:flex;
-	flex-direction:row;
-	
+	display: flex;
+	flex-direction: row;
 	align-items: center;
 }
 
 .spacer-slider {
-	padding: 1vh 1vh;
-	border: 1px solid black;
-}
-
-.seleter {
-	color: rgba(255, 255, 255, 0.6);
-	background-color: #0563af;
-	color: white;
-	padding: 12px;
-	border: none;
-	font-size: 20px;
-	outline: none;
+	padding: 1rem 1rem;
 }
 
 .content {
+	padding: 1rem 1.5rem;
+}
+
+.header {
+	display: flex;
 	justify-content: space-between;
-	height: 100%;
-	padding: 1vw 1.5vw;
+	align-items: center;
 }
 
-.test {
-	padding: 0vh 1vh;
+.header span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: rgb(var(--color-danger));
+	cursor: pointer;
+	border: 1px solid rgb(var(--color-danger));
+	border-radius: 100%;
+	width: 1.5rem;
+	height: 1.5rem;
 }
 
+.header span:hover {
+	color: var(--font-color);
+	border: 1px solid rgb(var(--color-danger));
+	background-color: rgb(var(--color-danger));
+}
 
+.box-container {
+	padding: 0rem 0.5rem;
+}

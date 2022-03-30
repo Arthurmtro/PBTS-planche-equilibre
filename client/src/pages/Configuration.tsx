@@ -3,6 +3,7 @@
 import { useTheme } from "../contexts/themeProvider"
 
 // Components
+import Button from "../components/Button"
 import Box from "../components/Box"
 
 export default function ConfigurationPage() {
@@ -12,13 +13,12 @@ export default function ConfigurationPage() {
 
 	return (
 		<div>
-			<Box />
-			<button
+			<Button
 				onClick={() => {
 					setDarkMode((prev) => !prev)
 				}}>
-				toggle Theme: {String(darkMode)}
-			</button>
+				toggle Theme: {String(darkMode) ? "Dark" : "Light"}
+			</Button>
 		</div>
 	)
 }

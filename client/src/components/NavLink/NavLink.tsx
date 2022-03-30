@@ -9,7 +9,7 @@ interface INavLinkParams {
 
 export default function NavLink({ label, path, icon }: INavLinkParams) {
 	return (
-		<Link className={({ isActive }: { isActive: boolean }) => (isActive ? styles["link-active"] : styles.link)} to={path}>
+		<Link className={({ isActive }: { isActive: boolean }) => `${styles.link} ${isActive ? styles.active : null}`} to={path}>
 			{icon === "home" ? (
 				<svg width="41" height="42" viewBox="0 0 41 42" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path

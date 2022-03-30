@@ -1,18 +1,32 @@
+.header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .verrins {
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 	align-items: flex-start;
-	margin: 0 auto;
-	padding-bottom: 1vh;
+	padding-bottom: 1rem;
 }
 
 .slider {
 	margin: 0 auto;
 }
 
-.title{
+.title {
 	display: flex;
 	flex-direction: row;
-	align-items:center;
+	align-items: center;
+	gap: 2rem;
+}
+
+.title input {
+	font-size: 1rem;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	border: none;
 }

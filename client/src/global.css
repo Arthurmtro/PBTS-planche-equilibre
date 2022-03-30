@@ -12,21 +12,22 @@
 }
 
 :root {
-	--color-primary: rgb(132, 83, 252);
-	--color-secondary: rgb(211, 160, 248);
+	/* --color-primary: rgb(132, 83, 252); */
+	--color-primary: #e2e2e2;
+	--color-secondary: rgb(17, 104, 92);
 	--color-background: #f7f7f7;
 
 	--font-color: #202020;
 
 	--box-background: #e2e2e2;
-	--box-border-radius: 3vw;
+	--box-border-radius: 3rem;
 
-	--button-border-radius: 3vw;
+	--button-border-radius: 3rem;
 
 	--color-success: 56, 236, 40;
 	--color-danger: 223, 13, 13;
-	--color-rgb-primary: 132, 83, 252;
-	--color-rgb-secondary: 211, 160, 248;
+	--color-rgb-primary: 27, 134, 80;
+	--color-rgb-secondary: 27, 134, 120;
 }
 
 html.dark {
@@ -77,7 +78,7 @@ li {
 }
 
 ::-webkit-scrollbar {
-	width: 1vw;
+	width: 1rem;
 }
 
 /* Track */

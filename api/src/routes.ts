@@ -10,7 +10,7 @@ const router = Router()
 
 router.get("/", (req, res) => {
 	res.send(
-		"<h1  style='display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 5rem; color: pink'>Welcome to the super hyper mega giga ultra API of the dead</h1>"
+		"<h1  style='display: flex; justify-content: center; align-items: center; height: 100rem; font-size: 5rem; color: pink'>Welcome to the super hyper mega giga ultra API of the dead</h1>"
 	)
 })
 

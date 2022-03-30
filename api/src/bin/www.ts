@@ -1,11 +1,9 @@
 import { runningOnRasberry } from "./../libs/runningOnRasberry"
-/* eslint-disable indent */
 import { DefaultEventsMap } from "socket.io/dist/typed-events"
 import { Server, Socket } from "socket.io"
 import { createServer } from "http"
 
 import app from "../app"
-import Controller from "../services/Controller"
 import { ApiController } from "../routes"
 
 const port = 8080

@@ -15,7 +15,6 @@ import styles from "./ProfileBox.module.css"
 import Button from "../Button"
 import Badge from "../Badge"
 import Box from "../Box"
-import deleteProfile from "../../api/deleteProfile"
 
 type ProfileBoxParams = {
 	profile: IProfile
@@ -44,29 +43,21 @@ export default function ProfileBox({ profile }: ProfileBoxParams) {
 		initPlanche()
 	}
 
-	const handleDelete = (fileName: string) => {
-		deleteProfile(fileName)
-		window.location.reload()
-	}
-
 	return (
 		<Box size="fill">
 			<div className={styles.content}>
 				<div className={styles.infos}>
 					<h1>{profile.label}</h1>
+					<Badge disabled color={runningProfile && runningProfile.fileName === profile.fileName ? "success" : "danger"} />
 				</div>
 				<div className={styles.actions}>
-					<Badge disabled color={runningProfile && runningProfile.fileName === profile.fileName ? "success" : "danger"} />
 					{runningProfile && runningProfile.fileName === profile.fileName ? (
 						<Button disabled={runningProfile.label === "init"} color="danger" onClick={() => stopProfile()}>
 							Stop
 						</Button>
 					) : (
 						<>
-							<Button disabled={runningProfile !== null} color="danger" onClick={() => handleDelete(String(profile.fileName))}>
-								Delete
-							</Button>
-							<Button disabled={runningProfile !== null} color="white" onClick={() => navigate(`/edit-profile/${profile.fileName}`)}>
+							<Button disabled={runningProfile !== null} color="primary" onClick={() => navigate(`/edit-profile/${profile.fileName}`)}>
 								Edit
 							</Button>
 							<Button disabled={runningProfile !== null} color="secondary" onClick={() => setProfile()}>
