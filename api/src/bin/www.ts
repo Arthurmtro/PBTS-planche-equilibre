@@ -6,6 +6,7 @@ import { createServer } from "http"
 
 import app from "../app"
 import Controller from "../services/Controller"
+import { ApiController } from "../routes"
 
 const port = 8080
 
@@ -59,7 +60,7 @@ io.on("connection", (socket) => {
 	})
 })
 
-export const getMpuInfos = (ApiController: Controller) => {
+export const getMpuInfos = () => {
 	if (!runningOnRasberry) return
 
 	const gyro_xyz = ApiController.mpu.get_gyro_xyz()
@@ -81,10 +82,8 @@ export const getMpuInfos = (ApiController: Controller) => {
 }
 
 const getApiAndEmit = (socket: Socket<DefaultEventsMap>) => {
-	const ApiController = new Controller()
-
 	// Emitting a new message. Will be consumed by the client
-	socket.emit("mpuInfos", getMpuInfos(ApiController))
+	socket.emit("mpuInfos", getMpuInfos())
 
-	console.log("Mpu infos: ", getMpuInfos(ApiController)) // Debug
+	console.log("Mpu infos: ", getMpuInfos()) // Debug
 }
