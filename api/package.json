@@ -7,7 +7,7 @@
 		"start": "yarn build && node ./dist/bin/www.js",
 		"watch": "tsc -p tsconfig.json -w",
 		"dev": "nodemon ./src/bin/www.ts",
-		"test": "jest --runInBand --forceExit",
+		"test": "jest --runInBand --forceExit --silent",
 		"build": "tsc --project ./"
 	},
 	"dependencies": {
