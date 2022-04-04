@@ -26,7 +26,7 @@
 		"start": "cross-env PORT=80 REACT_APP_NODE_ENV=production REACT_APP_API_URL=pied.local react-scripts start",
 		"dev": "cross-env PORT=80 REACT_APP_API_URL=localhost react-scripts start",
 		"build": "react-scripts build",
-		"test": "react-scripts test --watchAll",
+		"test": "react-scripts test --watchAll=false",
 		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
