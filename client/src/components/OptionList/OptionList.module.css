@@ -16,21 +16,10 @@
 }
 
 .content {
-<<<<<<< HEAD
-	
 	display: flex;
 	justify-content: space-between;
 	height: 100%;
 	padding: 1vw 0.5vw;
-=======
-	padding: 1rem 1.5rem;
-}
-
-.header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
->>>>>>> 66c039a539b629cf63df97471b80e6d18f6cbd1a
 }
 
 .header span {
@@ -45,24 +34,14 @@
 	height: 1.5rem;
 }
 
-<<<<<<< HEAD
-.styleSVG{
+.styleSVG {
 	width: 2rem;
 	transition: all 0.5s ease-in-out;
-	
 }
 
-.styleSVG:hover{
-	transform: rotate(90deg) ;
+.styleSVG:hover {
+	transform: rotate(90deg);
 }
-
-=======
-.header span:hover {
-	color: var(--font-color);
-	border: 1px solid rgb(var(--color-danger));
-	background-color: rgb(var(--color-danger));
-}
->>>>>>> 66c039a539b629cf63df97471b80e6d18f6cbd1a
 
 .box-container {
 	padding: 0rem 0.5rem;
