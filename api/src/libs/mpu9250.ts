@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { runningOnRasberry } from "./runningOnRasberry"
 
 const i2c = runningOnRasberry && require("i2c-bus")
@@ -19,8 +20,8 @@ const GYRO_XOUT_H = 0x43,
 	GYRO_ZOUT_H = 0x47
 
 export default class MPU9250 {
-	bus: any
-	address: number
+	private bus: any
+	private address: number
 
 	constructor(i2cbus: number, mpuaddress: number) {
 		this.address = mpuaddress
@@ -40,11 +41,11 @@ export default class MPU9250 {
 		}
 	}
 
-	read_raw_data(addr: number) {
+	private read_raw_data(addr: number) {
 		if (!this.bus) return
 		const high = this.bus.readByteSync(this.address, addr)
 		const low = this.bus.readByteSync(this.address, addr + 1)
-		let value = (high << 8) + low
+		let value: number = (high << 8) + low
 		if (value > 32768) {
 			value = value - 65536
 		}
@@ -52,7 +53,7 @@ export default class MPU9250 {
 	}
 
 	//Read Gyroscope raw xyz
-	get_gyro_xyz() {
+	public get_gyro_xyz() {
 		if (!this.bus) return
 		const x = this.read_raw_data(GYRO_XOUT_H)
 		const y = this.read_raw_data(GYRO_YOUT_H)
@@ -66,7 +67,7 @@ export default class MPU9250 {
 	}
 
 	//Read Accel raw xyz
-	get_accel_xyz() {
+	public get_accel_xyz() {
 		if (!this.bus) return
 		const x = this.read_raw_data(ACCEL_XOUT_H)
 		const y = this.read_raw_data(ACCEL_YOUT_H)
@@ -80,20 +81,20 @@ export default class MPU9250 {
 	}
 
 	//Full scale range +/- 250 degree/C as per sensitivity scale factor
-	get_roll_pitch(gyro_xyz: { x: number; y: number; z: number }, accel_xyz: { x: number; y: number; z: number }) {
-		if (!this.bus) return
-		const Ax = accel_xyz.x / 16384.0
-		const Ay = accel_xyz.y / 16384.0
-		const Az = accel_xyz.z / 16384.0
-		const Gx = gyro_xyz.x / 131.0
-		const Gy = gyro_xyz.y / 131.0
-		const Gz = gyro_xyz.z / 131.0
-		const roll = Ax * -100
-		const pitch = Ay * -100
-		const roll_pitch = {
-			roll: roll,
-			pitch: pitch,
-		}
-		return roll_pitch
-	}
+	// 	public get_roll_pitch(gyro_xyz: { x: number; y: number; z: number }, accel_xyz: { x: number; y: number; z: number }) {
+	// 		if (!this.bus) return
+	// 		const Ax = accel_xyz.x / 16384.0
+	// 		const Ay = accel_xyz.y / 16384.0
+	// 		const Az = accel_xyz.z / 16384.0
+	// 		const Gx = gyro_xyz.x / 131.0
+	// 		const Gy = gyro_xyz.y / 131.0
+	// 		const Gz = gyro_xyz.z / 131.0
+	// 		const roll = Ax * -100
+	// 		const pitch = Ay * -100
+	// 		const roll_pitch = {
+	// 			roll: roll,
+	// 			pitch: pitch,
+	// 		}
+	// 		return roll_pitch
+	// 	}
 }

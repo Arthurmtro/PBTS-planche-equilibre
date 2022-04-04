@@ -93,7 +93,8 @@ export default class Controller {
 		try {
 			if (!runningOnRasberry) {
 				console.log("Connexion OK, Not using I2C, You are not on raspberrypi", os.arch())
-				return res.status(200).send("Connexion OK, Not using I2C, You are not on raspberrypi")
+				res.status(200).send("Connexion OK, Not using I2C, You are not on raspberrypi")
+				return
 			}
 
 			res.sendStatus(200)
