@@ -1,5 +1,5 @@
 import styles from "./OptionList.module.css"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 
 // Types
 import { ActionsType, CommandsType } from "../../types/commands"
@@ -12,7 +12,6 @@ import Slider from "../Slider"
 import Button from "../Button"
 import Select from "../Select"
 import Box from "../Box"
-import { IBoxParams } from "../Box/Box"
 
 type OptionListType = {
 	actionId: number
@@ -27,8 +26,6 @@ type SlidersProps = {
 }
 
 export default function OptionList({ actionId, actions, setActions }: OptionListType) {
-	const [boxSize, setBoxSize] = useState<IBoxParams["size"]>("md")
-
 	const updateCommands = (commandId: number, key: string, value: string | number) => {
 		const newArray: ActionsType[] = [...actions]
 
@@ -67,7 +64,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 					</>
 				)
 			case "stop":
-				setBoxSize("md")
 				return (
 					<>
 						<Slider
@@ -86,7 +82,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 				)
 
 			case "bascule-avant":
-				setBoxSize("fill")
 				return (
 					<>
 						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
@@ -95,7 +90,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 					</>
 				)
 			case "bascule-arriere":
-				setBoxSize("fill")
 				return (
 					<>
 						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
@@ -105,7 +99,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 				)
 
 			case "basculeD":
-				setBoxSize("fill")
 				return (
 					<>
 						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
@@ -115,7 +108,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 				)
 
 			case "basculeG":
-				setBoxSize("fill")
 				return (
 					<>
 						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
@@ -124,7 +116,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 					</>
 				)
 			case "roulis":
-				setBoxSize("fill")
 				return (
 					<>
 						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
@@ -139,14 +130,14 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 
 	return (
 		<article className={styles["option-container"]}>
-			{console.log("Refresh")}
 			<h4>Verin: {actionId}</h4>
 			<div className={styles.commands}>
 				{actions[actionId].commands &&
 					actions[actionId].commands.map((action, idx) => (
-						<div key={idx} className={styles.test}>
-							<Box size={boxSize}>
+						<div key={idx} className={styles["box-container"]}>
+							<Box size="fit">
 								<div className={styles.content}>
+<<<<<<< HEAD
 
 									<Select idx={idx} setter={updateCommands} value={action.action} />
 
@@ -161,6 +152,13 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 										<Sliders idx={idx} action={action} />
 									</div>
 
+=======
+									<div className={styles.header}>
+										<Select idx={idx} setter={updateCommands} value={action.action} />
+										<span onClick={() => deleteCommand(idx)}>X</span>
+									</div>
+									<Sliders idx={idx} action={action} />
+>>>>>>> 66c039a539b629cf63df97471b80e6d18f6cbd1a
 								</div>
 							</Box>
 						</div>

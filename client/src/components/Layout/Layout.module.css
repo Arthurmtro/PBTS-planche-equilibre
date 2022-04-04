@@ -15,23 +15,19 @@
 }
 
 .nav-bar {
-	width: 15%;
+	width: 15rem;
 }
 
 .page-content {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	flex-direction: column;
 
 	overflow: hidden;
 	overflow-y: scroll;
 
-	margin-top: 3.5vw;
-	padding: 2vw;
-	width: 85%;
-}
-
-.page-content div {
+	margin-top: 3.5rem;
+	padding: 2rem;
 	width: 100%;
 }
 

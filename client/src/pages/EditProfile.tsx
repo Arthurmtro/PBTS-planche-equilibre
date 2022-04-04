@@ -13,6 +13,7 @@ import OptionList from "../components/OptionList"
 import { IProfile } from "../types/Infos"
 import { useProfilesData } from "../contexts/profilesProvider"
 import Button from "../components/Button"
+import deleteProfile from "../api/deleteProfile"
 
 const INITIAL_STATE = [
 	{
@@ -77,11 +78,19 @@ export default function EditProfilePage() {
 		window.location.reload()
 	}
 
+	const handleDelete = (fileName: string) => {
+		deleteProfile(fileName)
+		window.location.reload()
+	}
+
 	return (
 		<>
-			<div className={styles.title}>
-				<h1>{!profileId ? "Ajouter un profile" : "Edit profile"}</h1>
-				<input type="text" value={label} onChange={(event) => setLabel(event.target.value)} />
+			<div className={styles.header}>
+				<div className={styles.title}>
+					<h1>{!profileId ? "Ajouter un profile" : "Edit profile"}</h1>
+					<input type="text" value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Profile name" required maxLength={25} />
+				</div>
+				{profileId && <Button onClick={() => handleDelete(findedProfile.fileName)}>Delete Profile</Button>}
 			</div>
 
 			<div className={styles.verrins}>

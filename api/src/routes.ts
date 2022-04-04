@@ -2,30 +2,32 @@ import { Router } from "express"
 import os from "os"
 
 // Services
-import { ApiController } from "./services/Controller"
+import Controller from "./services/Controller"
+
+export const ApiController = new Controller()
 
 const router = Router()
 
 router.get("/", (req, res) => {
 	res.send(
-		"<h1  style='display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 5rem; color: pink'>Welcome to the super hyper mega giga ultra API of the dead</h1>"
+		"<h1  style='display: flex; justify-content: center; align-items: center; height: 100rem; font-size: 5rem; color: pink'>Welcome to the super hyper mega giga ultra API of the dead</h1>"
 	)
 })
 
 router.get("/hostname/", (req, res) => {
-	res.send(`hostname is ${os.hostname()}`)
+	return res.send(`hostname is ${os.hostname()}`)
 })
 
 router.get("/fetch-status", async (req, res) => {
-	return await ApiController.fetchStatus(res)
+	return ApiController.fetchStatus(res)
 })
 
 router.get("/fetch-cylinders-infos", async (req, res) => {
-	return await ApiController.fetchCylindersInfos(res)
+	return ApiController.fetchCylindersInfos(res)
 })
 
 router.get("/fetch-profiles", async (req, res) => {
-	return await ApiController.fetchProfiles(res)
+	return ApiController.fetchProfiles(res)
 })
 
 router.get("/run-profile", (req, res) => {
@@ -37,7 +39,6 @@ router.post("/create-profile", (req, res) => {
 })
 
 router.get("/delete-profile", (req, res) => {
-	console.log("req.body", String(req.query.profileId))
 	return ApiController.deleteProfile(String(req.query.fileName), res)
 })
 

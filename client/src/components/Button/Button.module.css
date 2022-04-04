@@ -3,8 +3,8 @@
 	font-weight: var(--font-weight);
 	color: var(--button-color);
 	font-weight: bold;
-	padding: 1vw 2vw;
-	font-size: 1vw;
+	padding: 1rem 2rem;
+	font-size: 1rem;
 
 	min-width: fit-content;
 
@@ -19,9 +19,9 @@
 
 .button:hover:enabled {
 	cursor: pointer;
-	box-shadow: 0 0 2vw #c8c9cc00;
+	box-shadow: 0 0 2rem #c8c9cc00;
 
-	box-shadow: 0 0 1vw rgb(var(--button-background));
+	box-shadow: 0 0 1rem rgb(var(--button-background));
 }
 
 .button:disabled {

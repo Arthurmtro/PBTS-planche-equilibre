@@ -1760,6 +1760,7 @@
   integrity sha512-xfVcv5zjC6fGf6axPyKxdXNm9RKK9OFzSIyZeCR3r9h4zDuqSpHc8ilTBtfQ1zU/uCx+tAsB+W6vzdCBMu1jtg==
   dependencies:
     react-query "*"
+<<<<<<< HEAD
 
 "@types/react-test-renderer@^17.0.1":
   version "17.0.1"
@@ -1767,6 +1768,8 @@
   integrity sha512-3Fi2O6Zzq/f3QR9dRnlnHso9bMl7weKCviFmfF6B4LS1Uat6Hkm15k0ZAQuDz+UBq6B3+g+NM6IT2nr5QgPzCw==
   dependencies:
     "@types/react" "*"
+=======
+>>>>>>> 66c039a539b629cf63df97471b80e6d18f6cbd1a
 
 "@types/react@*", "@types/react@^17.0.38":
   version "17.0.38"
@@ -7066,7 +7069,11 @@ react-scripts@5.0.0:
 
 react-shallow-renderer@^16.13.1:
   version "16.14.1"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/react-shallow-renderer/-/react-shallow-renderer-16.14.1.tgz#bf0d02df8a519a558fd9b8215442efa5c840e124"
+=======
+  resolved "https://registry.npmjs.org/react-shallow-renderer/-/react-shallow-renderer-16.14.1.tgz"
+>>>>>>> 66c039a539b629cf63df97471b80e6d18f6cbd1a
   integrity sha512-rkIMcQi01/+kxiTE9D3fdS959U1g7gs+/rborw++42m1O9FAQiNI/UNRZExVUoAOprn4umcXf+pFRou8i4zuBg==
   dependencies:
     object-assign "^4.1.1"
@@ -7074,7 +7081,11 @@ react-shallow-renderer@^16.13.1:
 
 react-test-renderer@^17.0.2:
   version "17.0.2"
+<<<<<<< HEAD
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-17.0.2.tgz#4cd4ae5ef1ad5670fc0ef776e8cc7e1231d9866c"
+=======
+  resolved "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-17.0.2.tgz"
+>>>>>>> 66c039a539b629cf63df97471b80e6d18f6cbd1a
   integrity sha512-yaQ9cB89c17PUb0x6UfWRs7kQCorVdHlutU1boVPEsB8IDZH6n9tHxMacc3y0JoXOJUsZb/t/Mb8FUWMKaM7iQ==
   dependencies:
     object-assign "^4.1.1"

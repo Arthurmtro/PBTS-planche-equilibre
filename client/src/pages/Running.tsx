@@ -49,7 +49,7 @@ export default function RunningPage() {
 
 						<Box size="fill">
 							<div className={styles["model-container"]}>
-								<ModelViewer debug />
+								<ModelViewer />
 							</div>
 						</Box>
 					</section>
