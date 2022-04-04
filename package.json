@@ -7,7 +7,7 @@
 		"start": "npm-run-all -p start:client start:api",
 		"prod": "git pull && yarn && npm-run-all -p start:client start:api",
 		"dev": "npm-run-all -p dev:client dev:api",
-		"test": "npm-run-all -p test:client test:api",
+		"test": "test:client && test:api",
 		"test:client": "cd client && npm run test",
 		"test:api": "cd api && npm run test",
 		"test:unit": "npm-run-all -p start:client start:api",
