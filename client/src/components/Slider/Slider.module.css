@@ -12,7 +12,7 @@
 	background: none;
     outline: none;
 	color: var(--font-color);
-	
+	width: 5vh;
 }
 
 .back-slider{

@@ -147,11 +147,20 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 						<div key={idx} className={styles.test}>
 							<Box size={boxSize}>
 								<div className={styles.content}>
+
 									<Select idx={idx} setter={updateCommands} value={action.action} />
-									<Button onClick={() => deleteCommand(idx)} color="danger">
-										Delete
-									</Button>
-									<Sliders idx={idx} action={action} />
+
+									<svg width="254" height="254" viewBox="0 0 254 254" fill="none" className={styles.styleSVG} onClick={() => deleteCommand(idx)}>
+										<rect x="23.335" width="326" height="33" rx="16.5" transform="rotate(45 23.335 0)" fill="#CB0303" />
+										<rect y="230.517" width="326" height="33" rx="16.5" transform="rotate(-45 0 230.517)" fill="#CB0303" />
+									</svg>
+
+
+									<div>
+
+										<Sliders idx={idx} action={action} />
+									</div>
+
 								</div>
 							</Box>
 						</div>
