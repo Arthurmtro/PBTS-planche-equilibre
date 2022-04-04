@@ -6,17 +6,19 @@
 		"@testing-library/jest-dom": "^5.16.1",
 		"@testing-library/react": "^12.1.2",
 		"@testing-library/user-event": "^13.5.0",
-		"@types/jest": "^27.4.0",
+		"@types/jest": "^27.4.1",
 		"@types/node": "^16.11.20",
 		"@types/react": "^17.0.38",
 		"@types/react-dom": "^17.0.11",
 		"@types/react-query": "^1.2.9",
 		"babel-plugin-macros": "^3.1.0",
+		"jest": "^27.5.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-query": "^3.34.8",
 		"react-scripts": "5.0.0",
 		"react-test-renderer": "^17.0.2",
+		"ts-jest": "^27.1.4",
 		"typescript": "^4.5.4",
 		"web-vitals": "^2.1.3"
 	},
@@ -46,12 +48,7 @@
 		]
 	},
 	"devDependencies": {
-<<<<<<< HEAD
 		"@types/react-test-renderer": "^17.0.1",
 		"cross-env": "^7.0.3"
-=======
-		"cross-env": "^7.0.3",
-		"react-test-renderer": "^17.0.2"
->>>>>>> 66c039a539b629cf63df97471b80e6d18f6cbd1a
 	}
 }

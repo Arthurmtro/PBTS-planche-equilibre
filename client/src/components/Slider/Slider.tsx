@@ -3,13 +3,13 @@ import styles from "./Slider.module.css"
 
 type SliderType = {
 	label: string
-	setter: (arg1: number) => void
+	setter?: (arg1: number) => void
 	value?: number
 	min?: number
 	max?: number
 }
 
-export default function Slider({ label, setter, value = 0, min = 0, max = 100 }: SliderType) {
+export default function Slider({ label, setter = () => {}, value = 0, min = 0, max = 100 }: SliderType) {
 	const [sliderValue, setSliderValue] = useState<number>(value)
 	return (
 		<div className={styles.slider}>
@@ -29,6 +29,7 @@ export default function Slider({ label, setter, value = 0, min = 0, max = 100 }:
 				}}
 			/>
 			<input
+				aria-label="number-input"
 				className={styles["number-input"]}
 				type="number"
 				min={min}
