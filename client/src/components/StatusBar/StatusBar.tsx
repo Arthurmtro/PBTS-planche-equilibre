@@ -33,13 +33,13 @@ export default function StatusBar() {
 				) : runningProfile !== null && runningProfile.label === "init" ? (
 					<>
 						<Button disabled color="secondary" thin>
-							initialisation planche...
+							Initialisation planche...
 						</Button>
 					</>
 				) : (
 					<>
 						<Button color="primary" onClick={() => stopProfile(setTimeSpend, setRunningProfile)}>
-							initialiser planche
+							Initialiser planche
 						</Button>
 					</>
 				)}

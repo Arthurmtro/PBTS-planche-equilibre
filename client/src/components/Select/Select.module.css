@@ -1,11 +1,8 @@
-.select{
-    background-color: var(--color-primary);
-      color: var(--font-color);
-      padding: 2px;
-      border: none;
-      font-size: 15px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-      outline: none;
-      
-      border: 2px solid rgba(71, 71, 71, 0.781);
+.select {
+	background-color: var(--color-secondary);
+	color: var(--font-color);
+	border: none;
+	border-radius: var(--box-border-radius);
+	padding: 0.5rem 0.25rem;
+	font-size: medium;
 }

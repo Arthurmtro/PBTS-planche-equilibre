@@ -43,8 +43,6 @@ export default function EditProfilePage() {
 	const [actions, setActions] = useState<ActionsType[]>(profiles && findedProfile ? findedProfile.actions : INITIAL_STATE)
 	const [runningProfile] = useState<IProfile | null>(null)
 
-	console.log("actions :>> ", actions)
-
 	useEffect(() => {
 		if ((profileId && !profiles) || runningProfile) {
 			navigate("/")
@@ -87,10 +85,19 @@ export default function EditProfilePage() {
 		<>
 			<div className={styles.header}>
 				<div className={styles.title}>
-					<h1>{!profileId ? "Ajouter un profile" : "Edit profile"}</h1>
-					<input type="text" value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Profile name" required maxLength={25} />
+					<h1>{!profileId ? "Ajouter un profil" : "Edit profil"}</h1>
+					<input type="text" value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Nom du profil" required maxLength={25} />
 				</div>
-				{profileId && <Button onClick={() => handleDelete(findedProfile.fileName)}>Delete Profile</Button>}
+				<div>
+					{profileId && (
+						<Button color="danger" onClick={() => handleDelete(findedProfile.fileName)}>
+							Supprimer
+						</Button>
+					)}
+					<Button color="primary" onClick={() => handleFinishProfile()}>
+						Terminer
+					</Button>
+				</div>
 			</div>
 
 			<div className={styles.verrins}>
@@ -98,9 +105,6 @@ export default function EditProfilePage() {
 					<OptionList key={action.cylinderId} actionId={key} actions={actions} setActions={setActions} />
 				))}
 			</div>
-			<Button color="secondary" onClick={() => handleFinishProfile()}>
-				Fini chef
-			</Button>
 		</>
 	)
 }

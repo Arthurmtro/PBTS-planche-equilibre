@@ -13,7 +13,7 @@ afterEach(() => {
 	server.close()
 })
 
-describe("GET /fetch-status", () => {
+describe("API TESTS: ", () => {
 	describe("Fetch Server Status", () => {
 		test("Should respond with a 200 status code", async () => {
 			const response = await request(server).get("/fetch-status")

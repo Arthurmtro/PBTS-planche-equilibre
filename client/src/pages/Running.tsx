@@ -9,7 +9,7 @@ import Button from "../components/Button"
 import Box from "../components/Box"
 import ModelViewer from "../components/ModelViewer"
 
-import logo from "../assets/logo.gif"
+// import logo from "../assets/logo.gif"
 
 export default function RunningPage() {
 	const { runningProfile, gyroValues } = useRunningProfile()
@@ -29,17 +29,11 @@ export default function RunningPage() {
 
 					<section className={styles["running-infos"]}>
 						<div className={styles["infos-contents"]}>
-							<Box size="block">
+							<Box size="fill">
 								<div className={styles.info}>
-									<span />
 									<h4>
-										Durée : <strong>{runningProfile.duration / 1000} secondes</strong>
+										Durée : <strong>{Math.floor(runningProfile.duration / 1000)} secondes</strong>
 									</h4>
-									<span />
-								</div>
-							</Box>
-							<Box size="block">
-								<div className={styles.info}>
 									<h4>Donnée temps :</h4>
 									<span>GyroX: {Math.floor(gyroValues?.gyroX)}</span>
 									<span>GyroY: {Math.floor(gyroValues?.gyroY)}</span>
@@ -57,9 +51,11 @@ export default function RunningPage() {
 			) : (
 				<div className={styles["no-profile"]}>
 					<h1>Aucun profil en cours</h1>
+					{/*
 					<a href="https://www.youtube.com/watch?v=x0jPbnuZ3Rc">
 						<img alt="404" src={logo} />
-					</a>
+					</a> 
+					*/}
 				</div>
 			)}
 		</>

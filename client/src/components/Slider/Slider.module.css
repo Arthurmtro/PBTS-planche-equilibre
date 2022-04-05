@@ -1,17 +1,13 @@
 .slider {
-	padding: 0.5rem 0;
 	display: flex;
 	justify-content: space-around;
 }
 
 .number-input {
 	border: none;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.281);
-	border-right: 1px solid rgba(0, 0, 0, 0.281);
 	background: none;
 	outline: none;
 	color: var(--font-color);
-	width: 5vh;
 }
 
 .back-slider {

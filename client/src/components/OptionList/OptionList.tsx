@@ -32,8 +32,6 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 		// @ts-ignore
 		newArray[actionId].commands[commandId][key] = value
 
-		console.log("newArray", newArray)
-
 		setActions(newArray)
 	}
 
@@ -82,39 +80,9 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 				)
 
 			case "bascule-avant":
-				return (
-					<>
-						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
-						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-					</>
-				)
 			case "bascule-arriere":
-				return (
-					<>
-						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
-						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-					</>
-				)
-
 			case "basculeD":
-				return (
-					<>
-						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
-						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-					</>
-				)
-
 			case "basculeG":
-				return (
-					<>
-						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
-						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
-						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
-					</>
-				)
 			case "roulis":
 				return (
 					<>
@@ -124,7 +92,7 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 					</>
 				)
 			default:
-				return <div>No command.action</div>
+				return <div>Aucune action</div>
 		}
 	}
 
@@ -137,22 +105,22 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 						<div key={idx} className={styles["box-container"]}>
 							<Box size="fit">
 								<div className={styles.content}>
-									<Select idx={idx} setter={updateCommands} value={action.action} />
+									<div className={styles.header}>
+										<Select idx={idx} setter={updateCommands} value={action.action} />
 
-									<svg width="254" height="254" viewBox="0 0 254 254" fill="none" className={styles.styleSVG} onClick={() => deleteCommand(idx)}>
-										<rect x="23.335" width="326" height="33" rx="16.5" transform="rotate(45 23.335 0)" fill="#CB0303" />
-										<rect y="230.517" width="326" height="33" rx="16.5" transform="rotate(-45 0 230.517)" fill="#CB0303" />
-									</svg>
-
-									<div>
-										<Sliders idx={idx} action={action} />
+										<span className={styles.close} onClick={() => deleteCommand(idx)}>
+											X
+										</span>
 									</div>
+									<Sliders idx={idx} action={action} />
 								</div>
 							</Box>
 						</div>
 					))}
 			</div>
-			<Button onClick={() => handleClick()}>Add Line</Button>
+			<Button color="secondary" onClick={() => handleClick()}>
+				Ajouter un block
+			</Button>
 		</article>
 	)
 }

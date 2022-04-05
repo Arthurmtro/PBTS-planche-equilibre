@@ -19,7 +19,7 @@ export default function Slider({ label, setter = () => {}, value = 0, min = 0, m
 				type="range"
 				min={min}
 				max={max}
-				step="1"
+				step={1}
 				value={sliderValue}
 				onChange={(event) => {
 					setSliderValue(Number(event.target.value))
