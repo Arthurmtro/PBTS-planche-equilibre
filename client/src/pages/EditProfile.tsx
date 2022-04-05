@@ -85,7 +85,7 @@ export default function EditProfilePage() {
 		<>
 			<div className={styles.header}>
 				<div className={styles.title}>
-					<h1>{!profileId ? "Ajouter un profil" : "Edit profil"}</h1>
+					<h1>{!profileId ? "Ajouter un profil" : "Modifier le profil"}</h1>
 					<input type="text" value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Nom du profil" required maxLength={25} />
 				</div>
 				<div>

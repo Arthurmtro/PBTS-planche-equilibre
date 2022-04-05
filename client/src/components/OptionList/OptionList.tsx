@@ -56,8 +56,8 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 			case "forward":
 				return (
 					<>
-						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
-						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						<Slider label="Deploiment (%)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (%)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
 						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
 					</>
 				)
@@ -65,7 +65,7 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 				return (
 					<>
 						<Slider
-							label="Temp d'arret (en ms)"
+							label="Temp d'arret (ms)"
 							min={1}
 							max={25000}
 							value={action.time}
@@ -86,8 +86,8 @@ export default function OptionList({ actionId, actions, setActions }: OptionList
 			case "roulis":
 				return (
 					<>
-						<Slider label="Deploiment (en %)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
-						<Slider label="Vitesse (en %)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
+						<Slider label="Deploiment (%)" min={1} max={100} value={action.opening} setter={(val) => updateCommands(idx, "opening", val)} />
+						<Slider label="Vitesse (%)" min={1} max={100} value={action.speed} setter={(val) => updateCommands(idx, "speed", val)} />
 						{action.opening && action.speed && <p>Temp: {ConvertMsToS(convertToSpeed(action.opening, action.speed))}s</p>}
 					</>
 				)
