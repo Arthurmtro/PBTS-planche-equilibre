@@ -35,13 +35,9 @@ const pwm = new Pca9685Driver(options, function (err) {
   pwm.setDutyCycle(15, 1); // teste osciloscope
   //pwm.allChannelsOff();// tout eteindre
 
-  pwm.setPulseLength(0, 300); // pour le serveau moteur sa marche (regler sicle d inpultion)
+  //pwm.setPulseLength(0, 300); // pour le serveau moteur sa marche (regler sicle d inpultion)
 
   // a 100% le chanel il fais avancer et reculer le verrin
   //pwm.channelOff(5);
   //pwm.channelOn(4);
 });
-
-
-
- 
