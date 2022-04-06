@@ -27,26 +27,15 @@ const pwm = new Pca9685Driver(options, function (err) {
 
   // il fais avancer et reculer mais on choisie la vitesse sa vas de 0.1 a 1
 
-  pwm.setDutyCycle(2, 1); // gérer 1 verin 7 desendre / 2 monter
+  pwm.setDutyCycle(2, 1); // gérer 1 verin 3 desendre / 2 monter
   pwm.setDutyCycle(4, 1); // gérer l autre 5 desendre / 4 monter
   pwm.setDutyCycle(7, 1); // gérer l autre 7 desendre / 6 monter
 
-  /* pwm.setPulseRange(1, 50, 255, function() {
-         if (err) {
-             console.error("Error setting pulse range.");
-         } else {
-             console.log("Pulse range set.");
-            }
- */
-  //pwm.setPulseLength(0, 300);// pour le serveau moteur sa marche
+  //pwm.allChannelsOff(); // tout eteindre
 
   // a 100% le chanel il fais avancer et reculer le verrin
   //pwm.channelOff(7);
   //pwm.channelOn(8);
 
-  // a voir
-  //pwm.setPWM(pin, 0, 4096); //allumer
-  //pwm.setPWM(pin, 4096, 0);// eteindre
   /////////////////////////////////////////////////////////profile inclinaisonss//////////////////////////////////////////////////
 });
-//pwm.allChannelsOff(); // tout eteindre
