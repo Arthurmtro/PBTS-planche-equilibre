@@ -20,13 +20,13 @@ class Mpu9250 {
 
 		// On Allume le capteur
 		this.bus.writeByteSync(this.address, PWR_MGMT_1, 0)
-		//write to sample rate register
+		//écriture dans le registre de taux d'échantillonnage
 		this.bus.writeByteSync(this.address, SMPLRT_DIV, 7)
-		//Write to Configuration register
+		//Ecriture dans le registre de configuration
 		this.bus.writeByteSync(this.address, CONFIG, 0)
-		//Write to Gyro configuration register
+		//Ecriture dans le registre de configuration du gyroscope
 		this.bus.writeByteSync(this.address, GYRO_CONFIG, 24)
-		//Write to interrupt enable register
+		//Écriture dans le registre de validation d'interruption
 		this.bus.writeByteSync(this.address, INT_ENABLE, 1)
 	}
 
