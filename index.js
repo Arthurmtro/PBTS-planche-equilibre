@@ -29,7 +29,7 @@ const pwm = new Pca9685Driver(options, function (err) {
 
   pwm.setDutyCycle(2, 1); // gérer 1 verin 3 desendre / 2 monter
   pwm.setDutyCycle(4, 1); // gérer l autre 5 desendre / 4 monter
-  pwm.setDutyCycle(6, 1); // gérer l autre 7 desendre / 6 monter
+  pwm.setDutyCycle(7, 1); // gérer l autre 7 desendre / 6 monter
 
   //pwm.allChannelsOff(); // tout eteindre
 
