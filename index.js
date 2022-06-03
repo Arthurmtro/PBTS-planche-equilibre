@@ -34,7 +34,7 @@ const pwm = new Pca9685Driver(options, function (err) {
   //pwm.allChannelsOff(); // tout eteindre
 
   // a 100% le chanel il fais avancer et reculer le verrin
-  //pwm.channelOff(6);
+  pwm.channelOff(6);
   //pwm.channelOn(8);
 
   /////////////////////////////////////////////////////////profile inclinaisonss//////////////////////////////////////////////////
