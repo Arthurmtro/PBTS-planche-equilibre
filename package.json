@@ -1,0 +1,23 @@
+{
+  "name": "mpu-new",
+  "version": "1.1.1",
+  "description": "Reads roll and pitch from a mpu6050",
+  "homepage": "https://github.com/lesitevideo/MPU6050-gyro#readme",
+  "main": "index.js",
+  "author": "kinoki.fr",
+  "license": "MIT",
+  "dependencies": {
+    "i2c-bus": "latest"
+  },
+  "devDependencies": {
+    "@types/i2c-bus": "^5.1.0",
+    "@types/node": "^17.0.21",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^7.13.0",
+    "typescript": "^4.0.5"
+  },
+  "scripts": {
+    "start": "ts-node index.ts"
+  }
+}

@@ -1,0 +1,78 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const i2c_bus_1 = __importDefault(require("i2c-bus"));
+// MPU6050 Registers
+const PWR_MGMT_1 = 0x6b, SMPLRT_DIV = 0x19;
+const CONFIG = 0x1a, GYRO_CONFIG = 0x1b, INT_ENABLE = 0x38;
+const ACCEL_XOUT_H = 0x3b, ACCEL_YOUT_H = 0x3d, ACCEL_ZOUT_H = 0x3f;
+const GYRO_XOUT_H = 0x43, GYRO_YOUT_H = 0x45, GYRO_ZOUT_H = 0x47;
+class MPU9250 {
+    constructor(i2cbus, mpuaddress) {
+        this.address = mpuaddress;
+        this.bus = i2c_bus_1.default.openSync(i2cbus);
+        // On rÃ©veille le capteur
+        this.bus.writeByteSync(this.address, PWR_MGMT_1, 0);
+        //write to sample rate register
+        this.bus.writeByteSync(this.address, SMPLRT_DIV, 7);
+        //Write to Configuration register
+        this.bus.writeByteSync(this.address, CONFIG, 0);
+        //Write to Gyro configuration register
+        this.bus.writeByteSync(this.address, GYRO_CONFIG, 24);
+        //Write to interrupt enable register
+        this.bus.writeByteSync(this.address, INT_ENABLE, 1);
+    }
+    read_raw_data(addr) {
+        const high = this.bus.readByteSync(this.address, addr);
+        const low = this.bus.readByteSync(this.address, addr + 1);
+        let value = (high << 8) + low;
+        if (value > 32768) {
+            value = value - 65536;
+        }
+        return value;
+    }
+    //Read Gyroscope raw xyz
+    get_gyro_xyz() {
+        const x = this.read_raw_data(GYRO_XOUT_H);
+        const y = this.read_raw_data(GYRO_YOUT_H);
+        const z = this.read_raw_data(GYRO_ZOUT_H);
+        const gyro_xyz = {
+            x: x,
+            y: y,
+            z: z,
+        };
+        return gyro_xyz;
+    }
+    //Read Accel raw xyz
+    get_accel_xyz() {
+        const x = this.read_raw_data(ACCEL_XOUT_H);
+        const y = this.read_raw_data(ACCEL_YOUT_H);
+        const z = this.read_raw_data(ACCEL_ZOUT_H);
+        const accel_xyz = {
+            x: x,
+            y: y,
+            z: z,
+        };
+        return accel_xyz;
+    }
+    //Full scale range +/- 250 degree/C as per sensitivity scale factor
+    get_roll_pitch(gyro_xyz, accel_xyz) {
+        const Ax = accel_xyz.x / 16384.0;
+        const Ay = accel_xyz.y / 16384.0;
+        const Az = accel_xyz.z / 16384.0;
+        const Gx = gyro_xyz.x / 131.0;
+        const Gy = gyro_xyz.y / 131.0;
+        const Gz = gyro_xyz.z / 131.0;
+        const roll = Ax * -100;
+        const pitch = Ay * -100;
+        const roll_pitch = {
+            roll: roll,
+            pitch: pitch,
+        };
+        return roll_pitch;
+    }
+}
+exports.default = MPU9250;
+//# sourceMappingURL=mpu9250.js.map
