@@ -1,10 +1,10 @@
 {
-  "name": "mpu-new",
-  "version": "1.1.1",
-  "description": "Reads roll and pitch from a mpu6050",
-  "homepage": "https://github.com/lesitevideo/MPU6050-gyro#readme",
-  "main": "index.js",
-  "author": "kinoki.fr",
+  "name": "mpu-damien",
+  "version": "1.0",
+  "description": "",
+  "homepage": "",
+  "main": "dist/mpu9250.js",
+  "author": "",
   "license": "MIT",
   "dependencies": {
     "i2c-bus": "latest"
@@ -18,6 +18,6 @@
     "typescript": "^4.0.5"
   },
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "clear && echo Démarrage des instances MPU9250... && ts-node index.ts"
   }
 }

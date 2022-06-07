@@ -14,7 +14,6 @@ async function updateTelemetry(gyro: MPU9250 | MPU9250[]) {
 		gyro.map((myGyro: MPU9250) => {
 			console.log(`Bus N°${myGyro.busNumber}`)
 			console.log(myGyro.getTelemetry())
-			
 		})
 	}
 }
