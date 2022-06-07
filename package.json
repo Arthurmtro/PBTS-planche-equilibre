@@ -1,0 +1,16 @@
+{
+  "name": "test_unitaire_damien",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "clear && jest"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "i2c-bus": "^5.2.2"
+  }
+}
