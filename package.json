@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "clear && jest"
+    "test": "clear && echo Démarrage des test unitaires... && jest"
   },
   "devDependencies": {
     "jest": "^27.5.1"
