@@ -1,0 +1,17 @@
+{
+  "name": "test-projet-dam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "clear && echo Démarrage du PCA9285 et des profils associés... && node --experimental-modules index.js"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "i2c-bus": "^5.2.2",
+    "pca9685": "^5.0.0"
+  }
+}
