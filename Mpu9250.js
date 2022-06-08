@@ -34,7 +34,7 @@ class Mpu9250 {
 		var high = this.bus.readByteSync(this.address, addr)
 		var low = this.bus.readByteSync(this.address, addr + 1)
 		var value = (high << 8) + low
-		if (value > 32768) {
+		if (value > 5456) {
 			value = value - 65536
 		}
 		return value
